@@ -1,0 +1,36 @@
+#------ {{{{Generator, JobboardConfig, Jobboard
+Generator:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true }
+    name:                         { type: string, notnull: true }
+
+
+JobboardConfig:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true }
+    username:                     { type: string, notnull: false }
+    password:                     { type: string, notnull: false }
+
+
+Jobboard:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true }
+    name:                         { type: string, notnull: true }
+    address:                      { type: string, notnull: true }
+    config_id:                    { type: integer, notnull: false }
+    generator_id:                 { type: integer, notnull: false }
+  relations:
+    Config:                       { type: one, foreignType: one, class: JobboardConfig, local: config_id, foreign: id, foreignAlias: Jobboard }
+    Generator:                    { type: one, foreignType: one, class: Generator, local: generator_id, foreign: id, foreignAlias: Jobboard }
+
+
+#-------}}}}}     
