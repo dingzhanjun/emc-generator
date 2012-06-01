@@ -32,5 +32,25 @@ Jobboard:
     Config:                       { type: one, foreignType: one, class: JobboardConfig, local: config_id, foreign: id, foreignAlias: Jobboard }
     Generator:                    { type: one, foreignType: one, class: Generator, local: generator_id, foreign: id, foreignAlias: Jobboard }
 
-
-#-------}}}}}     
+#-------}}}}}
+#-------{{{{ Loads
+Loads:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true }
+    reference:                    { type: string, notnull: true }
+    jobboard_id:                  { type: integer, notnull: true }
+    age:                          { type: time, notnull: false }
+    date:                         { type: date, notnull: true }
+    truck_id:                     { type: integer, notnull: true }
+    loads_type:                   { type: enum, values: ['FULL', 'PARTIAL', 'BOTH'], notnull:true, default: 'FULL' }
+    origin:                       { type: string }
+    origin_radius:                { type: integer, notnull: false }
+    destination:                  { type: string }
+    destination_radius:           { type: integer, notnull: false }
+    contact:                      { type: string, notnull: true }
+    distance:                     { type: integer, notnull: false }
+    #--- and more colums will be updated -- #
+#-------}}}}
