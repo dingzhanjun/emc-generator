@@ -1,0 +1,10 @@
+State:
+  Alabama:
+    code: AL
+    country_code: USA
+    name: Alabama
+    
+  Alaska:
+    code: AK
+    country_code: USA
+    name: Alaska
