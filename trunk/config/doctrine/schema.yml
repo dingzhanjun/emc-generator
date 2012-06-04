@@ -4,8 +4,8 @@ Generator:
     Timestampable:                  ~
   connection:                     doctrine
   columns:
-    id:                           { type: integer, primary: true }
-    name:                         { type: string, notnull: true }
+    id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string(255), notnull: true }
 
 
 JobboardConfig:
@@ -13,9 +13,9 @@ JobboardConfig:
     Timestampable:                  ~
   connection:                     doctrine
   columns:
-    id:                           { type: integer, primary: true }
-    username:                     { type: string, notnull: false }
-    password:                     { type: string, notnull: false }
+    id:                           { type: integer, primary: true, autoincrement: true }
+    username:                     { type: string(255), notnull: false }
+    password:                     { type: string(255), notnull: false }
 
 
 Jobboard:
@@ -23,9 +23,9 @@ Jobboard:
     Timestampable:                  ~
   connection:                     doctrine
   columns:
-    id:                           { type: integer, primary: true }
-    name:                         { type: string, notnull: true }
-    address:                      { type: string, notnull: true }
+    id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string(255), notnull: true }
+    address:                      { type: string(255), notnull: true }
     config_id:                    { type: integer, notnull: false }
     generator_id:                 { type: integer, notnull: false }
   relations:
@@ -39,18 +39,47 @@ Loads:
     Timestampable:                  ~
   connection:                     doctrine
   columns:
-    id:                           { type: integer, primary: true }
-    reference:                    { type: string, notnull: true }
+    hash:                         { type: string(255), primary: true }
+    web_reference:                { type: string(255), notnull: false }
     jobboard_id:                  { type: integer, notnull: true }
     age:                          { type: time, notnull: false }
     date:                         { type: date, notnull: true }
-    truck_id:                     { type: integer, notnull: true }
-    loads_type:                   { type: enum, values: ['FULL', 'PARTIAL', 'BOTH'], notnull:true, default: 'FULL' }
-    origin:                       { type: string }
+    truck_type:                   { type: string(20), notnull: true }
+    loads_type:                   { type: string(20), notnull: false }
+    origin:                       { type: string(255) }
     origin_radius:                { type: integer, notnull: false }
-    destination:                  { type: string }
+    destination:                  { type: string(255) }
     destination_radius:           { type: integer, notnull: false }
-    contact:                      { type: string, notnull: true }
+    contact:                      { type: string(255), notnull: true }
     distance:                     { type: integer, notnull: false }
+    company:                      { type: string(255), notnull: false }
     #--- and more colums will be updated -- #
+#-------}}}}
+#-------{{{{ country, state, city
+Country:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    code:                         { type: string(255), primary: true }
+    name:                         { type: string(255), notnull: true }
+
+State:
+  actAs:
+    Timestampable:                 ~
+  connection:                     doctrine
+  columns:
+    code:                         { type: string(255), primary: true }
+    country_code:                 { type: string(255), primary: true }
+    name:                         { type: string(255), notnull: true }
+  relations:
+    Country:                      { onDelete: CASCADE, local: country_code, foreign: code, foreignAlias: States }
+
+City:
+  actAs:
+    Timestampable:                 ~
+  connection:                    doctrine
+  columns:
+    state_code:                  { type: string(255), primary: true }
+    name:                        { type: string(255), primary: true }
 #-------}}}}
