@@ -16,8 +16,8 @@ abstract class BaseJobboardForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
-      'name'         => new sfWidgetFormTextarea(),
-      'address'      => new sfWidgetFormTextarea(),
+      'name'         => new sfWidgetFormInputText(),
+      'address'      => new sfWidgetFormInputText(),
       'config_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Config'), 'add_empty' => true)),
       'generator_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Generator'), 'add_empty' => true)),
       'created_at'   => new sfWidgetFormDateTime(),
@@ -26,8 +26,8 @@ abstract class BaseJobboardForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'name'         => new sfValidatorString(),
-      'address'      => new sfValidatorString(),
+      'name'         => new sfValidatorString(array('max_length' => 255)),
+      'address'      => new sfValidatorString(array('max_length' => 255)),
       'config_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Config'), 'required' => false)),
       'generator_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Generator'), 'required' => false)),
       'created_at'   => new sfValidatorDateTime(),
