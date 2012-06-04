@@ -34,14 +34,17 @@ abstract class BaseJobboardConfig extends sfDoctrineRecord
         $this->hasColumn('id', 'integer', null, array(
              'type' => 'integer',
              'primary' => true,
+             'autoincrement' => true,
              ));
-        $this->hasColumn('username', 'string', null, array(
+        $this->hasColumn('username', 'string', 255, array(
              'type' => 'string',
              'notnull' => false,
+             'length' => 255,
              ));
-        $this->hasColumn('password', 'string', null, array(
+        $this->hasColumn('password', 'string', 255, array(
              'type' => 'string',
              'notnull' => false,
+             'length' => 255,
              ));
     }
 
