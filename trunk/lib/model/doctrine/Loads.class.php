@@ -12,4 +12,10 @@
  */
 class Loads extends BaseLoads
 {
+	public function getCurrentLoadsAge() {
+		$adding_time = strtotime("now") - strtotime($this->created_at);
+		$age = date('Y-m-d').' '.$this->age;
+		$age = $adding_time + strtotime($age);
+		return date('H:i:s', $age);
+	}
 }
