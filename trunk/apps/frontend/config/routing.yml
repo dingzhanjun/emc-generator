@@ -14,3 +14,7 @@ default_index:
 
 default:
   url:   /:module/:action/*
+  
+loads:
+  url:   /loads
+  param: { module: loads, action: index }
