@@ -130,7 +130,8 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 		} else {
 			$loads = new Loads();
 			$loads->jobboard_id = Doctrine_Core::getTable('Jobboard')->findOneByName('Truckersedge')->id;
-			$loads->age = $items[0];
+			$age = preg_split('/:/', $items[0]);
+			$loads->created_at = date(DATE_ISO8601, strtotime('-'.$age[0].' hour -'.$age[1].' minutes'));
 			$date = date('Y').'-'.$items[1];
 			$date = str_replace('/', '-', $date);
 			$loads->date = date('Y-m-d', strtotime($date));
