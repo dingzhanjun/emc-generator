@@ -1,0 +1,400 @@
+body
+{
+	color:#030824;
+	background:url("/images/body-strip.gif") repeat-x fixed 0 365px #0B2743;
+}
+
+body a
+{
+	color:#030824;
+	font-weight:bold;
+}
+
+body a:hover
+{
+	text-decoration:underline;
+}
+
+#bodylight
+{
+	background:url("/images/body-light2.jpg") no-repeat scroll 50% 0 transparent;
+}
+
+.main_content
+{
+	margin: 0 auto;
+	width:100%;
+	position:relative;
+	/*background:url(/images/bg.png) #B2B6BF repeat-y;*/
+	padding:0;
+}
+
+#logo
+{
+	display:block;
+	height:100px;
+	text-align:left;
+}
+
+h1
+{
+	margin:0;
+	padding:10px 0;
+}
+
+#main_tabs
+{
+	width:668px;
+	height:337px;
+	margin:auto;
+	position:relative;
+}
+
+#login_form
+{
+	width:668px;
+	height:337px;
+	margin:auto;
+	background:url(/images/login_form.png) no-repeat;
+	position:relative;
+}
+
+#username, #password
+{
+	display:block;
+	font-size:15px;
+	color:#808080;
+	background:none;
+	left:195px;
+	border:none;
+	position:absolute;
+	outline:none;
+	height:30px;
+	width:280px;
+}
+
+#username
+{
+	top:196px;
+}
+
+#password
+{
+	top:246px;
+}
+
+#wrap_remember
+{
+	position:absolute;
+	top:300px;
+	left:270px;
+	color:#2f2f2f;
+	font-size:15px;
+}
+
+/* Main Tabs */
+
+.tab_icon
+{
+	display:block;
+	width:128px;
+	height:128px;
+	position:absolute;
+	cursor:pointer;
+}
+
+#grounds_manager
+{
+	top:16px;
+	left:1px;
+}
+
+#users_manager
+{
+	top:16px;
+	left:184px;
+}
+
+#services_manager
+{
+	top:16px;
+	right:184px;
+}
+
+#cms_manager
+{
+	top:16px;
+	right:1px;
+}
+
+#pages_manager 
+{
+	bottom:16px;
+	left:1px;
+}
+
+#gallery_manager
+{
+	bottom:16px;
+	left:184px;
+}
+
+#backup_manager
+{
+	bottom:16px;
+	right:184px;
+}
+
+#system_manager
+{
+	bottom:16px;
+	right:1px;
+}
+
+#notify
+{
+	display:block;
+	bottom:345px;
+	left:195px;
+	font-size:13px;
+	font-weight:bold;
+	position:absolute;
+}
+
+#notify ul
+{
+	list-style:none;
+	margin:0;padding:0;
+}
+
+#notify li
+{
+	margin:0;padding:0;
+}
+
+#left_tabs, #right_tabs
+{
+	position:fixed;
+	top:100px;
+	display:block;
+	width:96px;
+	left:10px;
+}
+
+#right_tabs
+{
+	left:auto;
+	right:35px;
+}
+
+#left_tabs .below_tab_icon, #right_tabs .below_tab_icon 
+{
+	display:block;
+	margin-bottom:30px;
+	padding: 0 12px;
+	opacity:0.5;
+	-moz-opacity: 0.5; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
+	/* For IE 5-7 */
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+	/* For IE 8 */
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";	
+	position:relative;
+}
+
+#left_tabs .below_tab_icon img:hover, #right_tabs .below_tab_icon img:hover
+{
+	opacity:1;
+	-moz-opacity: 1; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
+	/* For IE 5-7 */
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	/* For IE 8 */
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";	
+}
+
+#left_tabs .below_tab_icon:hover, #right_tabs .below_tab_icon:hover
+{
+	opacity:1;
+	-moz-opacity: 1; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
+	/* For IE 5-7 */
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	/* For IE 8 */
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+#left_tabs .active, #right_tabs .active 
+{
+	opacity:1;
+	-moz-opacity: 1; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
+	/* For IE 5-7 */
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	/* For IE 8 */
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+#left_tabs .below_tab_label, #right_tabs .below_tab_label
+{
+	display:none;
+	font-weight:bold;
+	font-size:12px;
+	color:#e7ebf0;
+	position:absolute;
+}
+
+#left_tabs .below_tab_icon:hover .below_tab_label, #left_tabs .active .below_tab_label, #right_tabs .below_tab_icon:hover .below_tab_label, #right_tabs .active .below_tab_label
+{
+	position:absolute;
+	top:-20px;
+	display:block;
+	text-align:center;
+	width:96px;	
+}
+
+#main_tabs .tab_icon .tab_label
+{
+	display:none;
+	position:absolute;
+	bottom:135px;
+	font-size:12px;
+	width:128px;
+	text-align:center;
+	font-weight:bold;
+	color:#e7ebf0;
+}
+
+#main_tabs .tab_icon:hover .tab_label
+{
+	display:block;
+}
+
+.backend_form input[type=text], .backend_form textarea, .backend_form select, .sf_admin_filter input[type=text], .sf_admin_filter textarea, .sf_admin_filter select
+{
+	padding:3px;
+	border:1px solid #ccc;
+	background:#fff;
+	color:#030824;
+	width:200px;
+	font-size:12px;
+}
+
+.backend_form select, .sf_admin_filter select
+{
+	width:67px;
+}
+
+.sf_admin_filter_field_is_active select
+{
+	width:150px;
+}
+
+.sf_admin_filter_field_permissions_list select, .sf_admin_filter_field_groups_list select
+{
+	width:208px;
+}
+
+.backend_form textarea, .sf_admin_filter textarea
+{
+	width:400px;
+	height:100px;
+}
+
+.backend_form input[type=text]:hover, .backend_form textarea:hover, .backend_form select:hover, .sf_admin_filter input[type=text]:hover, .sf_admin_filter textarea:hover, .sf_admin_filter select:hover
+{
+	border:1px solid #aaa;
+}
+
+.backend_form input[type=submit], .backend_form input[type=button], .backend_form input[type=reset], .sf_admin_filter input[type=submit], .sf_admin_filter input[type=button], .sf_admin_filter input[type=reset], .btn a
+{
+	padding:3px 7px;
+	border:1px solid #172259;
+	background:#172259;
+	color:#fff;
+	font-weight:bold;
+	font-size:12px;
+	cursor:pointer;
+	display:block;
+	float:left;
+	margin:0 10px;
+}
+
+.btn a
+{
+	text-decoration:none;
+	padding:4px 7px;
+}
+
+.backend_form input[type=submit]:hover, .backend_form input[type=button]:hover, .backend_form input[type=reset]:hover, .sf_admin_filter input[type=submit]:hover, .sf_admin_filter input[type=button]:hover, .sf_admin_filter input[type=reset]:hover, .btn a:hover
+{
+	border:1px solid #172259;
+}
+
+.backend_form
+{
+
+}
+
+.backend_form td, .backend_form th, .sf_admin_filter td, .sf_admin_filter th
+{
+	padding:5px;
+	text-align:left;
+	font-size:12px;
+}
+
+.filter_form table
+{
+	border-collapse:collapse;
+	width:100%;
+}
+
+.filter_form td, .filter_form th
+{
+	padding:5px 15px;
+	font-size:12px;
+	border-top:1px solid #172259;
+	border-bottom:1px solid #172259;
+	border-left:1px dotted #172259;
+	border-right:1px dotted #172259;
+}
+
+.filter_form tr.light
+{
+	background:#fff;
+}
+
+.filter_form td
+{
+	text-align:left;
+}
+
+.filter_form th
+{
+	text-align:center;
+	background:#172259;
+	color:#fff;
+	font-size:13px;
+}
+
+.filter_form th a
+{
+	color:#fff !important;
+}
+
+.filter_form th a:hover
+{
+	text-decoration:underline;
+}
+
+h1
+{
+	color:#172259;
+}
+
+#signout
+{
+	display:block;
+	width:26px;
+	height:27px;
+	background:url(/images/logout.png) no-repeat;
+	position:absolute;
+	top:20px;
+	right:15px;
+}
