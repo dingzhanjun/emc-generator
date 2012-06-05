@@ -12,10 +12,17 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [main.css, frontend/main.css, jquery-ui.css]
 
   javascripts:
-    - "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"
+    - "jquery/jquery.min.js"
+    - "jquery/jquery-ui.min.js"
+    - "jquery/jquery.ui.core.js"
+    - "jquery/jquery.ui.widget.js"
+    - "jquery/jquery.ui.datepicker.js"
+    - "jquery/jquery.ui.datepicker-vi.js"
+    - "tiny_mce/tiny_mce.js"
+    - "frontend.js"
 
   has_layout:     true
   layout:         layout

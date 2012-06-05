@@ -40,3 +40,16 @@ all:
 
     # Enable the database manager
     use_database:           true
+    standard_helpers:
+      - Partial
+      - Date
+      - Number
+      - I18N
+      - Url
+      - JavascriptBase
+     
+    login_module:           sfGuardAuth
+    login_action:           signin
+
+    secure_module:          sfGuardAuth
+    secure_action:          secure

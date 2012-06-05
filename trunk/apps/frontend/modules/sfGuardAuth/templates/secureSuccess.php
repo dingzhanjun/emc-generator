@@ -1,0 +1,1 @@
+<?php echo get_component('sfGuardAuth', 'signin_form') ?>
