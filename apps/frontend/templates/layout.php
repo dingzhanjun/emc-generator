@@ -9,6 +9,35 @@
     <?php include_javascripts() ?>
   </head>
   <body>
-    <?php echo $sf_content ?>
+  <?php
+  $sf_context->getUser()->setCulture('vi');
+  ?>
+  <div id='bodylight'>
+  	<table width='100%' cellpadding="0" cellspacing="0">
+    	<tr>
+        	<td width = '136'></td>
+            <td width = ''>
+            	<div class='main_content'>
+                	<div style='padding:0 20px'>
+                        <div id='logo'><img src='/images/logo.png' /></div>
+                    </div>
+                    <div class='bg_main_content'>
+                    	<div style='padding:0 20px;'>
+							<?php echo $sf_content ?>
+                            <div style='display:block;width:100%;height:116px'>
+                            <?php
+                                if ($sf_context->getModuleName() != 'default' && $sf_context->getUser()->isAuthenticated()) {
+                                    echo get_partial('default/tabs');
+                                }
+                            ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td width = '136'></td>
+        </tr>
+    </table>
+  </div>	
   </body>
 </html>
