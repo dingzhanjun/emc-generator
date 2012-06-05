@@ -10,7 +10,6 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @property string $hash
  * @property string $web_reference
  * @property integer $jobboard_id
- * @property time $age
  * @property date $date
  * @property string $truck_type
  * @property string $loads_type
@@ -25,7 +24,6 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @method string  getHash()               Returns the current record's "hash" value
  * @method string  getWebReference()       Returns the current record's "web_reference" value
  * @method integer getJobboardId()         Returns the current record's "jobboard_id" value
- * @method time    getAge()                Returns the current record's "age" value
  * @method date    getDate()               Returns the current record's "date" value
  * @method string  getTruckType()          Returns the current record's "truck_type" value
  * @method string  getLoadsType()          Returns the current record's "loads_type" value
@@ -39,7 +37,6 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @method Loads   setHash()               Sets the current record's "hash" value
  * @method Loads   setWebReference()       Sets the current record's "web_reference" value
  * @method Loads   setJobboardId()         Sets the current record's "jobboard_id" value
- * @method Loads   setAge()                Sets the current record's "age" value
  * @method Loads   setDate()               Sets the current record's "date" value
  * @method Loads   setTruckType()          Sets the current record's "truck_type" value
  * @method Loads   setLoadsType()          Sets the current record's "loads_type" value
@@ -74,10 +71,6 @@ abstract class BaseLoads extends sfDoctrineRecord
         $this->hasColumn('jobboard_id', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             ));
-        $this->hasColumn('age', 'time', null, array(
-             'type' => 'time',
-             'notnull' => false,
              ));
         $this->hasColumn('date', 'date', null, array(
              'type' => 'date',
