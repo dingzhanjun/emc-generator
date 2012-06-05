@@ -20,7 +20,7 @@
 	           	<?php echo link_to_function('<span>Destination Radius</span>', 'sort(\'destination_radius\', 1)') ?>
 	        </th>
 		<th>
-           	<?php echo link_to_function('<span>Age</span>', 'sort(\'age\', 1)') ?>
+           	<?php echo link_to_function('<span>Age</span>', 'sort(\'created_at\', 1)') ?>
         </th>
 		<th>
             <?php echo link_to_function('<span>Pickup Date</span>', 'sort(\'date\', 1)') ?>
