@@ -42,7 +42,6 @@ Loads:
     hash:                         { type: string(255), primary: true }
     web_reference:                { type: string(255), notnull: false }
     jobboard_id:                  { type: integer, notnull: true }
-    age:                          { type: time, notnull: false }
     date:                         { type: date, notnull: true }
     truck_type:                   { type: string(20), notnull: true }
     loads_type:                   { type: string(20), notnull: false }
