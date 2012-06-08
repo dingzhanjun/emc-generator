@@ -52,13 +52,15 @@ class TruckersedgeGeneratorTask extends sfBaseTask
     $client->fill($tag['login']);
     $client->post('https://www.truckersedge.net/a/secure/login.aspx?app=truckersedge&');
     $client->get('http://www.truckersedge.net/a/app/default.aspx');
-    
+    $this->log('login'.date(DATE_ISO8601).'.html', $client->getBody());
     if (!preg_match('#TruckersEdge.net - My Overview#', $client->getBody(), $match)) {
         $this->logSection('info', "Login fail");
         exit;
     }
     $this->logSection('info', 'login success !!! Redirecting to seaching page');
+
     $client->get('http://www.truckersedge.net/a/app/Search.aspx');
+	$this->log('searching_page'.date(DATE_ISO8601).'.html', $client->getBody());
 	$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
 	$client->validate(array(
 	                '__EVENTTARGET'                                             => 'input-hidden',
@@ -94,13 +96,13 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 	$client->removeField('ctl00$cphMain$btnClear');
 	$tag['search'] = $client->getData();
 	$tag['search']['VAM_JSE'] = 1;
-	$tag['search']['ctl00$cphMain$locDestination$hdnNGL'] = 'n=Philadelphia|Philadelphia|PA|19102|US|39.95222|-75.16417|';
-	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = 'Philadelphia, PA';
+	//$tag['search']['ctl00$cphMain$locDestination$hdnNGL'] = 'n=Philadelphia|Philadelphia|PA|19102|US|39.95222|-75.16417|';
+	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = 'Los Angeles, CA';
 	$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
 	$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
 	$client->fill($tag['search']);
 	$client->post('http://www.truckersedge.net/a/app/Search.aspx');
-	$this->log('step1.html', $client->getBody());
+	$this->log('step1'.date(DATE_ISO8601).'.html', $client->getBody());
 	// parsing reponse
 	
 	$doc = new DOMDocument();
@@ -137,6 +139,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 			$loads->date = date('Y-m-d', strtotime($date));
 			$loads->truck_type = $items[2];
 			$loads->loads_type = $items[3];
+			$loads->origin_radius = $items[4];
 			$loads->origin = $items[5];
 			$loads->distance = $items[6];
 			$loads->destination = $items[7];
