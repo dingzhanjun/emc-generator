@@ -347,8 +347,8 @@ h1
 
 .filter_form td, .filter_form th
 {
-	padding:5px 15px;
-	font-size:12px;
+	padding:5px 5px;
+	font-size:10px;
 	border-top:1px solid #172259;
 	border-bottom:1px solid #172259;
 	border-left:1px dotted #172259;
@@ -370,7 +370,7 @@ h1
 	text-align:center;
 	background:#172259;
 	color:#fff;
-	font-size:13px;
+	font-size:11px;
 }
 
 .filter_form th a
