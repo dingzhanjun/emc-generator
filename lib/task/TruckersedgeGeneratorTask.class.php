@@ -12,7 +12,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
             ));
   }
 
-  public function log($filename, $content) {
+  public function create_log($filename, $content) {
 	$file = dirname(dirname(dirname(__FILE__))).'/log/'.$filename;
 	file_put_contents($file, $content);
 	//$fp = fopen(dirname(dirname(dirname(__FILE__))).'/log/'.$file_name, 'w');
@@ -52,7 +52,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
     $client->fill($tag['login']);
     $client->post('https://www.truckersedge.net/a/secure/login.aspx?app=truckersedge&');
     $client->get('http://www.truckersedge.net/a/app/default.aspx');
-    $this->log('login'.date(DATE_ISO8601).'.html', $client->getBody());
+    $this->create_log('login'.date(DATE_ISO8601).'.html', $client->getBody());
     if (!preg_match('#TruckersEdge.net - My Overview#', $client->getBody(), $match)) {
         $this->logSection('info', "Login fail");
         exit;
@@ -60,7 +60,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
     $this->logSection('info', 'login success !!! Redirecting to seaching page');
 
     $client->get('http://www.truckersedge.net/a/app/Search.aspx');
-	$this->log('searching_page'.date(DATE_ISO8601).'.html', $client->getBody());
+	$this->create_log('searching_page'.date(DATE_ISO8601).'.html', $client->getBody());
 	$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
 	$client->validate(array(
 	                '__EVENTTARGET'                                             => 'input-hidden',
@@ -102,7 +102,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 	$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
 	$client->fill($tag['search']);
 	$client->post('http://www.truckersedge.net/a/app/Search.aspx');
-	$this->log('step1'.date(DATE_ISO8601).'.html', $client->getBody());
+	$this->create_log('step1'.date(DATE_ISO8601).'.html', $client->getBody());
 	// parsing reponse
 	
 	$doc = new DOMDocument();
