@@ -16,10 +16,8 @@ default:
 default_logout:
   url:  /default/logout
   param: { module: default, action: logout }
-loads:
-  url:   /loads
-  param: { module: loads, action: index }
-  
+
+# users  
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }
@@ -35,3 +33,16 @@ sf_guard_password:
 sf_guard_user:
   url:   /user
   param: { module: sfGuardUser, action: index }
+
+# others
+loads:
+  url:   /loads
+  param: { module: loads, action: index }
+  
+config:
+  url:   /config
+  param: { module: config, action: index }
+ 
+config_create:
+  url:  /config/create
+  param: { module: config, action: edit }
