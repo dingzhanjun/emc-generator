@@ -50,7 +50,7 @@ class loadsActions extends sfActions
  
   private function executeFilters($form_data, $q)
   {
-	if (!empty($form_data['jobboard_id']))
+	if (!empty($form_data['jobboard_id']) && $form_data['jobboard_id'] != 'all')
 		$q->addWhere('l.jobboard_id = ?', $form_data['jobboard_id']);
 	if (!empty($form_data['origin']))
 		$q->addWhere('l.origin LIKE "%'.$form_data['origin'].'%"');
@@ -60,6 +60,9 @@ class loadsActions extends sfActions
 		$q->addWhere('l.destination LIKE "%'.$form_data['destination'].'%"');
 	if (!empty($form_data['destination_radius']))
 		$q->addWhere('l.destination_radius <= ?', $form_data['destination_radius']);
+		
+	if (!empty($form_data['loads_age']))
+		$q->addWhere('(unix_timestamp(now()) - unix_timestamp(l.created_at))/60 <= '.$form_data['loads_age']);
 		
 	return $q;
   }
