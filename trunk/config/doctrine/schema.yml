@@ -1,22 +1,16 @@
 #------ {{{{Generator, JobboardConfig, Jobboard
-Generator:
+Config:
   actAs:
     Timestampable:                  ~
   connection:                     doctrine
   columns:
     id:                           { type: integer, primary: true, autoincrement: true }
-    name:                         { type: string(255), notnull: true }
-
-
-JobboardConfig:
-  actAs:
-    Timestampable:                  ~
-  connection:                     doctrine
-  columns:
-    id:                           { type: integer, primary: true, autoincrement: true }
-    username:                     { type: string(255), notnull: false }
-    password:                     { type: string(255), notnull: false }
-
+    max_age:                      { type: integer, notnull: false }
+    origin:                       { type: string(255), notnull: true }
+    origin_radius:                { type: integer, notnull: false }
+    destination:                  { type: string(255), notnull: false }
+    destination_radius:           { type: integer, notnull: false }
+    frequence:                    { type: integer, notnull: true }
 
 Jobboard:
   actAs:
@@ -26,11 +20,20 @@ Jobboard:
     id:                           { type: integer, primary: true, autoincrement: true }
     name:                         { type: string(255), notnull: true }
     address:                      { type: string(255), notnull: true }
-    config_id:                    { type: integer, notnull: false }
-    generator_id:                 { type: integer, notnull: false }
+    username:                     { type: string(255), notnull: false }
+    password:                     { type: string(255), notnull: false }
+
+JobboardConfig:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    jobboard_id:                  { type: integer, primary: true }
+    config_id:                    { type: integer, primary: true }
   relations:
-    Config:                       { type: one, foreignType: one, class: JobboardConfig, local: config_id, foreign: id, foreignAlias: Jobboard }
-    Generator:                    { type: one, foreignType: one, class: Generator, local: generator_id, foreign: id, foreignAlias: Jobboard }
+    Jobboard:                     { class: Jobboard, local: jobboard_id, foreign: id, foreignAlias: Configs }
+    Config:                       { class: Config, local: config_id, foreign: id, foreignAlias: JobboardConfigs }
+  
 
 #-------}}}}}
 #-------{{{{ Loads
