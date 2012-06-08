@@ -3,3 +3,6 @@ Jobboard:
     name: Truckersedge
     address: 'https://www.truckersedge.net/a/secure/Login.aspx?app=truckersedge&'
     
+  Truckstop:
+    name: Truck Stop
+    address: 'truckstop.com/lite'
