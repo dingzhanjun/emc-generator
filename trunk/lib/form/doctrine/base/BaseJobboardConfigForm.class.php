@@ -15,19 +15,17 @@ abstract class BaseJobboardConfigForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'         => new sfWidgetFormInputHidden(),
-      'username'   => new sfWidgetFormInputText(),
-      'password'   => new sfWidgetFormInputText(),
-      'created_at' => new sfWidgetFormDateTime(),
-      'updated_at' => new sfWidgetFormDateTime(),
+      'jobboard_id' => new sfWidgetFormInputHidden(),
+      'config_id'   => new sfWidgetFormInputHidden(),
+      'created_at'  => new sfWidgetFormDateTime(),
+      'updated_at'  => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'username'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'password'   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'created_at' => new sfValidatorDateTime(),
-      'updated_at' => new sfValidatorDateTime(),
+      'jobboard_id' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('jobboard_id')), 'empty_value' => $this->getObject()->get('jobboard_id'), 'required' => false)),
+      'config_id'   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('config_id')), 'empty_value' => $this->getObject()->get('config_id'), 'required' => false)),
+      'created_at'  => new sfValidatorDateTime(),
+      'updated_at'  => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('jobboard_config[%s]');

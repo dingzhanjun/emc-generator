@@ -10,25 +10,22 @@ Doctrine_Manager::getInstance()->bindComponent('Jobboard', 'doctrine');
  * @property integer $id
  * @property string $name
  * @property string $address
- * @property integer $config_id
- * @property integer $generator_id
- * @property JobboardConfig $Config
- * @property Generator $Generator
+ * @property string $username
+ * @property string $password
+ * @property Doctrine_Collection $Configs
  * 
- * @method integer        getId()           Returns the current record's "id" value
- * @method string         getName()         Returns the current record's "name" value
- * @method string         getAddress()      Returns the current record's "address" value
- * @method integer        getConfigId()     Returns the current record's "config_id" value
- * @method integer        getGeneratorId()  Returns the current record's "generator_id" value
- * @method JobboardConfig getConfig()       Returns the current record's "Config" value
- * @method Generator      getGenerator()    Returns the current record's "Generator" value
- * @method Jobboard       setId()           Sets the current record's "id" value
- * @method Jobboard       setName()         Sets the current record's "name" value
- * @method Jobboard       setAddress()      Sets the current record's "address" value
- * @method Jobboard       setConfigId()     Sets the current record's "config_id" value
- * @method Jobboard       setGeneratorId()  Sets the current record's "generator_id" value
- * @method Jobboard       setConfig()       Sets the current record's "Config" value
- * @method Jobboard       setGenerator()    Sets the current record's "Generator" value
+ * @method integer             getId()       Returns the current record's "id" value
+ * @method string              getName()     Returns the current record's "name" value
+ * @method string              getAddress()  Returns the current record's "address" value
+ * @method string              getUsername() Returns the current record's "username" value
+ * @method string              getPassword() Returns the current record's "password" value
+ * @method Doctrine_Collection getConfigs()  Returns the current record's "Configs" collection
+ * @method Jobboard            setId()       Sets the current record's "id" value
+ * @method Jobboard            setName()     Sets the current record's "name" value
+ * @method Jobboard            setAddress()  Sets the current record's "address" value
+ * @method Jobboard            setUsername() Sets the current record's "username" value
+ * @method Jobboard            setPassword() Sets the current record's "password" value
+ * @method Jobboard            setConfigs()  Sets the current record's "Configs" collection
  * 
  * @package    emc
  * @subpackage model
@@ -55,26 +52,24 @@ abstract class BaseJobboard extends sfDoctrineRecord
              'notnull' => true,
              'length' => 255,
              ));
-        $this->hasColumn('config_id', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('username', 'string', 255, array(
+             'type' => 'string',
              'notnull' => false,
+             'length' => 255,
              ));
-        $this->hasColumn('generator_id', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('password', 'string', 255, array(
+             'type' => 'string',
              'notnull' => false,
+             'length' => 255,
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('JobboardConfig as Config', array(
-             'local' => 'config_id',
-             'foreign' => 'id'));
-
-        $this->hasOne('Generator', array(
-             'local' => 'generator_id',
-             'foreign' => 'id'));
+        $this->hasMany('JobboardConfig as Configs', array(
+             'local' => 'id',
+             'foreign' => 'jobboard_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
