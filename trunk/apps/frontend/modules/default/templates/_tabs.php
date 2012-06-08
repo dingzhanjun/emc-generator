@@ -1,3 +1,6 @@
+<?
+/*
+
 <div id="signout"><a href="#"><img src='/images/logout.png' onclick="sign_out()" /></a></div>
 <div id='left_tabs'>
     <a href='<?php //echo url_for('@ground'); ?>' id='below_grounds_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'ground')?"active":"" ?>'><img src='/images/icon_ground.png' height="96" /><div class='below_tab_label'>Sân bãi</div></a>
@@ -26,10 +29,12 @@
 		});
 	}
 </script>
+*/
+?>
 <style>
 	.bg_main_content
 	{
-		/*background:#3e93cc;*/
+		
 		-webkit-border-top-right-radius: 10px;
 		-webkit-border-top-left-radius: 10px;
 		-moz-border-radius-topright: 10px;
@@ -56,3 +61,4 @@
 		);
 	}
 </style>
+
