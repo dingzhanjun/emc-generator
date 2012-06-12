@@ -13,8 +13,14 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @property integer $origin_radius
  * @property string $destination
  * @property integer $destination_radius
+ * @property integer $loads_type
+ * @property double $length
+ * @property double $weight
+ * @property date $from_date
+ * @property date $to_date
  * @property integer $frequence
  * @property Doctrine_Collection $JobboardConfigs
+ * @property Doctrine_Collection $ConfigTrucks
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method integer             getMaxAge()             Returns the current record's "max_age" value
@@ -22,16 +28,28 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @method integer             getOriginRadius()       Returns the current record's "origin_radius" value
  * @method string              getDestination()        Returns the current record's "destination" value
  * @method integer             getDestinationRadius()  Returns the current record's "destination_radius" value
+ * @method integer             getLoadsType()          Returns the current record's "loads_type" value
+ * @method double              getLength()             Returns the current record's "length" value
+ * @method double              getWeight()             Returns the current record's "weight" value
+ * @method date                getFromDate()           Returns the current record's "from_date" value
+ * @method date                getToDate()             Returns the current record's "to_date" value
  * @method integer             getFrequence()          Returns the current record's "frequence" value
  * @method Doctrine_Collection getJobboardConfigs()    Returns the current record's "JobboardConfigs" collection
+ * @method Doctrine_Collection getConfigTrucks()       Returns the current record's "ConfigTrucks" collection
  * @method Config              setId()                 Sets the current record's "id" value
  * @method Config              setMaxAge()             Sets the current record's "max_age" value
  * @method Config              setOrigin()             Sets the current record's "origin" value
  * @method Config              setOriginRadius()       Sets the current record's "origin_radius" value
  * @method Config              setDestination()        Sets the current record's "destination" value
  * @method Config              setDestinationRadius()  Sets the current record's "destination_radius" value
+ * @method Config              setLoadsType()          Sets the current record's "loads_type" value
+ * @method Config              setLength()             Sets the current record's "length" value
+ * @method Config              setWeight()             Sets the current record's "weight" value
+ * @method Config              setFromDate()           Sets the current record's "from_date" value
+ * @method Config              setToDate()             Sets the current record's "to_date" value
  * @method Config              setFrequence()          Sets the current record's "frequence" value
  * @method Config              setJobboardConfigs()    Sets the current record's "JobboardConfigs" collection
+ * @method Config              setConfigTrucks()       Sets the current record's "ConfigTrucks" collection
  * 
  * @package    emc
  * @subpackage model
@@ -70,6 +88,26 @@ abstract class BaseConfig extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => false,
              ));
+        $this->hasColumn('loads_type', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             ));
+        $this->hasColumn('length', 'double', null, array(
+             'type' => 'double',
+             'notnull' => false,
+             ));
+        $this->hasColumn('weight', 'double', null, array(
+             'type' => 'double',
+             'notnull' => false,
+             ));
+        $this->hasColumn('from_date', 'date', null, array(
+             'type' => 'date',
+             'notnull' => true,
+             ));
+        $this->hasColumn('to_date', 'date', null, array(
+             'type' => 'date',
+             'notnull' => true,
+             ));
         $this->hasColumn('frequence', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
@@ -80,6 +118,10 @@ abstract class BaseConfig extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('JobboardConfig as JobboardConfigs', array(
+             'local' => 'id',
+             'foreign' => 'config_id'));
+
+        $this->hasMany('ConfigTruck as ConfigTrucks', array(
              'local' => 'id',
              'foreign' => 'config_id'));
 
