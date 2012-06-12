@@ -10,6 +10,11 @@ class TruckersedgeGeneratorTask extends sfBaseTask
             new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
             new sfCommandOption('exp', null, sfCommandOption::PARAMETER_OPTIONAL, 'The new expiration date', ''),
             ));
+    $this->addArgument('origin', sfCommandArgument::REQUIRED, 'The origin of loads we want to search');
+    $this->addArgument('origin_radius', sfCommandArgument::OPTIONAL, 'The radius from origin we will looking for', 0);
+    $this->addArgument('max_age', sfCommandArgument::OPTIONAL, 'The max age of loads we want to search', 1);
+    $this->addArgument('destination', sfCommandArgument::OPTIONAL, 'The destination of loads we will looking for', '');
+	$this->addArgument('destination_radius', sfCommandArgument::OPTIONAL, 'The radius from destination we will looking for', 0);
   }
 
   public function create_log($filename, $content) {
@@ -21,6 +26,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
  
   public function execute($arguments = array(), $options = array())
   {
+	var_dump($arguments);
     // initialize database connection  
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
@@ -96,10 +102,15 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 	$client->removeField('ctl00$cphMain$btnClear');
 	$tag['search'] = $client->getData();
 	$tag['search']['VAM_JSE'] = 1;
-	//$tag['search']['ctl00$cphMain$locDestination$hdnNGL'] = 'n=Philadelphia|Philadelphia|PA|19102|US|39.95222|-75.16417|';
-	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = 'Los Angeles, CA';
+	$tag['search']['ctl00$cphMain$locDestination$hdnNGL'] = '';
+	$tag['search']['ctl00$cphMain$txtAge'] = $arguments['max_age'];
+	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = $arguments['origin'];
+	$tag['search']['ctl00$cphMain$txtOriginRadius'] = $arguments['origin_radius'];
+	$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $arguments['destination'];
+	$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $arguments['destination_radius'];
 	$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
 	$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
+	$tag['search']['ctl00$cphMain$locOrigin$hdnNGL'] = '';
 	$client->fill($tag['search']);
 	$client->post('http://www.truckersedge.net/a/app/Search.aspx');
 	$this->create_log('step1'.date(DATE_ISO8601).'.html', $client->getBody());
