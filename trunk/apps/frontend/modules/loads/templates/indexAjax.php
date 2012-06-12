@@ -31,7 +31,7 @@
 		<th>
            	<?php echo link_to_function('<span>Loads type</span>', 'sort(\'truck_type\', 1)') ?>
         </th>
-		<th>
+		<th width="80">
            	<?php echo link_to_function('<span>Contact</span>', 'sort(\'contact\', 1)') ?>
         </th>
 		<th>

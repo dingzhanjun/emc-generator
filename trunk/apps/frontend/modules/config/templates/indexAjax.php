@@ -5,7 +5,10 @@
       <tr>
 		  
         <th>
-			<?php echo link_to_function('<span>Website</span>', 'sort(\'jobboard_id\', 1)') ?>
+			<span>Website</span>
+        </th>
+		<th>
+			<span>Truck Type</span>
         </th>
 		<th>
            	<?php echo link_to_function('<span>Max Loads Age</span>', 'sort(\'max_age\', 1)') ?>
@@ -23,18 +26,35 @@
            	<?php echo link_to_function('<span>Destination Radius</span>', 'sort(\'destination_radius\', 1)') ?>
         </th>
 		<th>
+           	<?php echo link_to_function('<span>Length</span>', 'sort(\'length\', 1)') ?>
+        </th>
+		<th>
+           	<?php echo link_to_function('<span>Weight</span>', 'sort(\'weight\', 1)') ?>
+        </th>
+		<th>
+           	<?php echo link_to_function('<span>From Date</span>', 'sort(\'from_date\', 1)') ?>
+        </th>
+		<th>
+           	<?php echo link_to_function('<span>To Date</span>', 'sort(\'to_date\', 1)') ?>
+        </th>
+		<th>
             <?php echo link_to_function('<span>Frequence</span>', 'sort(\'frequence\', 1)') ?>
         </th>
       </tr>
 
 	<?php foreach ($pager->getResults() as $config) :?>
     <tr>
-        <td style="text-align:center"><?php $jobboard_configs = $config->JobboardConfigs; foreach ($jobboard_configs as $jobboard_config) echo $jobboard_config->Jobboard->name.', ' ?></td>
+        <td style="text-align:center"><?php $jobboard_configs = $config->JobboardConfigs; foreach ($jobboard_configs as $jobboard_config) echo $jobboard_config->Jobboard->name.'; ' ?></td>
+		<td style="text-align:center"><?php $truck_types = $config->ConfigTrucks; foreach ($truck_types as $truck_type) echo $truck_type->Truck->name.'; ' ?></td>
 		<td style="text-align:center"><?php echo $config->max_age ?></td>
 		<td style="text-align:center"><?php echo $config->origin ?></td>
 		<td style="text-align:center"><?php echo $config->origin_radius ?></td>
 		<td style="text-align:center"><?php echo $config->destination ?></td>
 		<td style="text-align:center"><?php echo $config->destination_radius ?></td>
+		<td style="text-align:center"><?php echo $config->length ?></td>
+		<td style="text-align:center"><?php echo $config->weight ?></td>
+		<td style="text-align:center"><?php echo $config->from_date ?></td>
+		<td style="text-align:center"><?php echo $config->to_date ?></td>
 		<td style="text-align:center"><?php echo $config->frequence ?></td>
     </tr>
   <?php endforeach ?>
