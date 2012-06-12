@@ -20,13 +20,10 @@ class TruckersedgeGeneratorTask extends sfBaseTask
   public function create_log($filename, $content) {
 	$file = dirname(dirname(dirname(__FILE__))).'/log/'.$filename;
 	file_put_contents($file, $content);
-	//$fp = fopen(dirname(dirname(dirname(__FILE__))).'/log/'.$file_name, 'w');
-	//fwrite($fp, $content);
   }
  
   public function execute($arguments = array(), $options = array())
   {
-	var_dump($arguments);
     // initialize database connection  
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
