@@ -10,6 +10,11 @@ Config:
     origin_radius:                { type: integer, notnull: false }
     destination:                  { type: string(255), notnull: false }
     destination_radius:           { type: integer, notnull: false }
+    loads_type:                   { type: integer, notnull: true }
+    length:                       { type: double, notnull: false }
+    weight:                       { type: double, notnull: false }
+    from_date:                    { type: date, notnull: true }
+    to_date:                      { type: date, notnull: true }
     frequence:                    { type: integer, notnull: true }
 
 Jobboard:
@@ -56,6 +61,25 @@ Loads:
     distance:                     { type: integer, notnull: false }
     company:                      { type: string(255), notnull: false }
     #--- and more colums will be updated -- #
+
+Truck:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string, notnull: trye }
+
+ConfigTruck:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    config_id:                    { type: integer, primary: true }
+    truck_id:                     { type: integer, primary: true }
+  relations:
+    Config:                       { class: Config, local: config_id, foreign: id, foreignAlias: ConfigTrucks }
+    Truck:                        { class: Truck, local: truck_id, foreign: id, foreignAlias: ConfigTrucks }  
 #-------}}}}
 #-------{{{{ country, state, city
 Country:
