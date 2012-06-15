@@ -1,13 +1,16 @@
-<?
-/*
-
 <div id="signout"><a href="#"><img src='/images/logout.png' onclick="sign_out()" /></a></div>
 <div id='left_tabs'>
-    <a href='<?php //echo url_for('@ground'); ?>' id='below_grounds_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'ground')?"active":"" ?>'><img src='/images/icon_ground.png' height="96" /><div class='below_tab_label'>Sân bãi</div></a>
-    <a href='<?php //echo url_for('@customer'); ?>' id='below_users_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'customer')?"active":"" ?>'><img src='/images/icon_user.png' height="96" /><div class='below_tab_label'>Khách hàng</div></a>
-    <a href='<?php //echo url_for('@ground_order'); ?>' id='below_services_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'groundOrder')?"active":"" ?>'><img src='/images/icon_services.png' height="96" /><div class='below_tab_label'>Đặt sân</div></a>
+    <a href='<?php echo url_for('@config'); ?>' id='below_grounds_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'config')?"active":"" ?>'><img src='/images/icon_system.png' height="96" /><div class='below_tab_label'>Config</div></a>
+    <a href='<?php echo url_for('@loads'); ?>' id='below_users_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'loads')?"active":"" ?>'><img src='/images/icon_trucks.png' height="96" /><div class='below_tab_label'>Loads</div></a>
+    <a href='<?php //echo url_for('@ground_order'); ?>' id='below_services_manager' class='below_tab_icon <?php // echo ($sf_context->getModuleName() == 'groundOrder')?"active":"" ?>'><img src='/images/icon_search.png' height="96" /><div class='below_tab_label'>Quick Search</div></a>
+<?
+/*
     <a href='<?php //echo url_for('@cms_category_list'); ?>' id='below_cms_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'cms')?"active":"" ?>'><img src='/images/icon_news.png' height="96" /><div class='below_tab_label'>Tin tức</div></a>
+*/
+?>
 </div>
+<?
+/*
 <div id="right_tabs">    
     <a href='<?php //echo url_for('@page'); ?>' id='below_pages_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'page')?"active":"" ?>'><img src='/images/icon_notes.png' height="96" /><div class='below_tab_label'>Nội dung</div></a>
     <a href='<?php //echo url_for('@facility'); ?>' id='gallery_manager_below' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'facility')?"active":"" ?>'><img src='/images/icon_image.png' height="96" /><div class='below_tab_label'>Dịch vụ khác</div></a>
