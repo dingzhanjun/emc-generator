@@ -44,7 +44,7 @@ h1
 
 #main_tabs
 {
-	width:668px;
+	width:500px;
 	height:337px;
 	margin:auto;
 	position:relative;
@@ -118,7 +118,7 @@ h1
 #services_manager
 {
 	top:16px;
-	right:184px;
+	right:1px;
 }
 
 #cms_manager
@@ -251,19 +251,14 @@ h1
 
 #main_tabs .tab_icon .tab_label
 {
-	display:none;
+	display:block;
 	position:absolute;
 	bottom:135px;
 	font-size:12px;
 	width:128px;
 	text-align:center;
 	font-weight:bold;
-	color:#e7ebf0;
-}
-
-#main_tabs .tab_icon:hover .tab_label
-{
-	display:block;
+	color:#000a8a;
 }
 
 .backend_form input[type=text], .backend_form textarea, .backend_form select, .sf_admin_filter input[type=text], .sf_admin_filter textarea, .sf_admin_filter select
