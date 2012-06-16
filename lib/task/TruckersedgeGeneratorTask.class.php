@@ -10,11 +10,8 @@ class TruckersedgeGeneratorTask extends sfBaseTask
             new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
             new sfCommandOption('exp', null, sfCommandOption::PARAMETER_OPTIONAL, 'The new expiration date', ''),
             ));
-    $this->addArgument('origin', sfCommandArgument::REQUIRED, 'The origin of loads we want to search');
-    $this->addArgument('origin_radius', sfCommandArgument::OPTIONAL, 'The radius from origin we will looking for', 0);
-    $this->addArgument('max_age', sfCommandArgument::OPTIONAL, 'The max age of loads we want to search', 1);
-    $this->addArgument('destination', sfCommandArgument::OPTIONAL, 'The destination of loads we will looking for', '');
-	$this->addArgument('destination_radius', sfCommandArgument::OPTIONAL, 'The radius from destination we will looking for', 0);
+
+    $this->addArgument('config', sfCommandArgument::REQUIRED, 'The config id');
   }
 
   public function create_log($filename, $content) {
@@ -30,7 +27,16 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 
     date_default_timezone_set('Asia/Bangkok');
     $client = new WebFormClient();
-    //$client->setLogpPrefix('vtns');
+
+    // getting config
+	$config_id = $arguments['config'];
+	$config = Doctrine_Core::getTable('Config')->find($config_id);
+	if (!$config) {
+		$this->logSection('Error', 'Config not found');
+		exit;
+	}
+
+	$this->logSection('info', 'Executing generator with config: '.$config->id);
     $client->get('https://www.truckersedge.net/a/secure/login.aspx?app=truckersedge');
     $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
     $client->validate(array(
@@ -49,8 +55,9 @@ class TruckersedgeGeneratorTask extends sfBaseTask
                     ));
     $client->removeField('NoJS');
     $tag['login'] = $client->getData();
-    $tag['login']['ctl00$cphMain$txtUserName'] = 'southernrt';
-    $tag['login']['ctl00$cphMain$txtPassword'] = 'S4lt4you';
+	$jobboard = Doctrine_Core::getTable('Jobboard')->findOneByName('Truckersedge');
+    $tag['login']['ctl00$cphMain$txtUserName'] = $jobboard->username;
+    $tag['login']['ctl00$cphMain$txtPassword'] = $jobboard->password;
     $tag['login']['ctl00$cphMain$hfUserTimezoneOffset'] = -420;
     $client->fill($tag['login']);
     $client->post('https://www.truckersedge.net/a/secure/login.aspx?app=truckersedge&');
@@ -100,14 +107,17 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 	$tag['search'] = $client->getData();
 	$tag['search']['VAM_JSE'] = 1;
 	$tag['search']['ctl00$cphMain$locDestination$hdnNGL'] = '';
-	$tag['search']['ctl00$cphMain$txtAge'] = $arguments['max_age'];
-	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = $arguments['origin'];
-	$tag['search']['ctl00$cphMain$txtOriginRadius'] = $arguments['origin_radius'];
-	$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $arguments['destination'];
-	$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $arguments['destination_radius'];
-	$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
-	$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
+	$tag['search']['ctl00$cphMain$txtAge'] = $config->max_age;
+	$tag['search']['ctl00$cphMain$locOrigin$txtLocationEntry'] = $config->origin;
+	$tag['search']['ctl00$cphMain$txtOriginRadius'] = $config->origin_radius;
+	$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $config->destination;
+	$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $config->destination_radius;
+	$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y', strtotime($config->from_date));
+	$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y', strtotime($config->to_date));
 	$tag['search']['ctl00$cphMain$locOrigin$hdnNGL'] = '';
+	$tag['search']['ctl00$cphMain$ddlLoadType'] = $this->mapping($config->loads_type, array( '0'  =>  'Both',
+																							 '1'  =>  'Full',
+																							 '2'  =>  'Partial'));
 	$client->fill($tag['search']);
 	$client->post('http://www.truckersedge.net/a/app/Search.aspx');
 	$this->create_log('step1'.date(DATE_ISO8601).'.html', $client->getBody());
@@ -158,6 +168,14 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 			$loads->save();
 		}
 	}
+  }
+
+
+  private function mapping($value, $mapping)
+  {
+	if (array_key_exists($value, $mapping))
+		return $mapping[$value];
+	else return null;
   }
 }
 ?>
