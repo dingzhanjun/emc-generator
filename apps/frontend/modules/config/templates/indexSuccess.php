@@ -29,7 +29,7 @@ function sort(type, default_order) {
 }
 -->
 </script>
-<h1>Loads list</h1>
+<h1>Configs list</h1>
 <div id="SearchForm" class='backend_form'>
   <form id="filterSearch" action="<?php echo url_for('@config') ?>" method="post">
     <table>
