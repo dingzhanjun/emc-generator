@@ -24,6 +24,7 @@ Jobboard:
   columns:
     id:                           { type: integer, primary: true, autoincrement: true }
     name:                         { type: string(255), notnull: true }
+    generator_name:               { type: string(255), notnull: true }
     address:                      { type: string(255), notnull: true }
     username:                     { type: string(255), notnull: false }
     password:                     { type: string(255), notnull: false }
