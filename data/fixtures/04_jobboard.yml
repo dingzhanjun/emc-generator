@@ -1,8 +1,10 @@
 Jobboard:
   Truckersedge:
     name: Truckersedge
+    generator_name: TruckersedgeGeneratorTask
     address: 'https://www.truckersedge.net/a/secure/Login.aspx?app=truckersedge&'
     
   Truckstop:
     name: Truck Stop
+    generator_name: TruckstopTask
     address: 'truckstop.com/lite'
