@@ -17,6 +17,7 @@ class ConfigForm extends BaseConfigForm
 	);
   	public function configure()
 	{
+		$module = sfContext::getInstance()->getModuleName();	
 		$this->setWidgets(array(
 			'jobboard_id'				=>		new sfWidgetFormChoice(array('choices' => $this->getJobboards(), 'multiple' => true)),
 			'truck_type'				=>		new sfWidgetFormChoice(array('choices' => $this->getTrucks(), 'multiple' => true)),
@@ -28,10 +29,8 @@ class ConfigForm extends BaseConfigForm
 			'loads_type'				=>		new sfWidgetFormChoice(array('choices' => self::$loads_types)),
 			'length'					=> 		new sfWidgetFormInput(),
 			'weight'					=>		new sfWidgetFormInput(),
-			'from_date'					=>		new sfWidgetFormInput(),
-			'to_date'					=>		new sfWidgetFormInput(),
-			'frequence'					=>		new sfWidgetFormInput(),	
 		));
+		
 		
 		$this->setValidators(array(
 			'jobboard_id'				=>		new sfValidatorChoice(array('choices' => array_keys($this->getJobboards()), 'required' => true, 'multiple' => true)),
@@ -44,10 +43,17 @@ class ConfigForm extends BaseConfigForm
 			'loads_type'				=>		new sfValidatorChoice(array('choices' => array_keys(self::$loads_types))),
 			'length'					=>		new sfValidatorString(array('required' => false)),
 			'weight'					=>		new sfValidatorString(array('required' => false)),
-			'from_date'					=>		new sfValidatorString(array('required' => true)),
-			'to_date'					=>		new sfValidatorString(array('required' => true)),
-			'frequence'					=>		new sfValidatorNumber(array('required' => true)),
 		));
+		
+		if ($module == 'quickSearch') {
+			$this->setWidget('from_date', new sfWidgetFormInput());
+			$this->setWidget('to_date', new sfWidgetFormInput());
+			$this->setValidator('from_date', new sfValidatorString(array('required' => true)));
+			$this->setValidator('to_date', new sfValidatorString(array('required' => true)));
+		} elseif ($module == 'config') {
+			$this->setWidget('frequence', new sfWidgetFormInput());
+			$this->setValidator('frequence', new sfValidatorNumber(array('required' => true)));
+		}
 		
 		$this->widgetSchema->setNameFormat('config[%s]');
 		$this->widgetSchema->setLabels(array(
@@ -61,7 +67,7 @@ class ConfigForm extends BaseConfigForm
 			'loads_type'				=>		'Full/Partial',
 			'length'					=>		'Length',
 			'weight'					=>		'Weight',
-			'from_data'					=>		'From',
+			'from_date'					=>		'From',
 			'to_date'					=>		'To',
 			'frequence'					=>		'Frequence',
 		));
