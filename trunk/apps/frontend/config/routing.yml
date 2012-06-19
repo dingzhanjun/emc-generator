@@ -44,5 +44,13 @@ config:
   param: { module: config, action: index }
  
 config_create:
-  url:  /config/create
+  url:   /config/create
   param: { module: config, action: edit }
+  
+config_edit:
+  url:   /config/edit/:config_id
+  param: { module: config, action: edit }
+  
+quick_search:
+  url: /quick_search
+  param: { module: quickSearch, action: index }
