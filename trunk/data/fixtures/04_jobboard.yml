@@ -3,6 +3,8 @@ Jobboard:
     name: Truckersedge
     generator_name: TruckersedgeGeneratorTask
     address: 'https://www.truckersedge.net/a/secure/Login.aspx?app=truckersedge&'
+    username: 'southernrt'
+    password: 'S4lt4you'
     
   Truckstop:
     name: Truck Stop
