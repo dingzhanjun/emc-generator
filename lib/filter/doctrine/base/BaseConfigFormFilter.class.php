@@ -13,6 +13,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'name'               => new sfWidgetFormFilterInput(),
       'max_age'            => new sfWidgetFormFilterInput(),
       'origin'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'origin_radius'      => new sfWidgetFormFilterInput(),
@@ -24,11 +25,13 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'from_date'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'to_date'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'frequence'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'type'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
+      'name'               => new sfValidatorPass(array('required' => false)),
       'max_age'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'origin'             => new sfValidatorPass(array('required' => false)),
       'origin_radius'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -40,6 +43,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'from_date'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'to_date'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'frequence'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'type'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'created_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'updated_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
@@ -62,6 +66,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                 => 'Number',
+      'name'               => 'Text',
       'max_age'            => 'Number',
       'origin'             => 'Text',
       'origin_radius'      => 'Number',
@@ -73,6 +78,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'from_date'          => 'Date',
       'to_date'            => 'Date',
       'frequence'          => 'Number',
+      'type'               => 'Number',
       'created_at'         => 'Date',
       'updated_at'         => 'Date',
     );

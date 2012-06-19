@@ -16,6 +16,7 @@ abstract class BaseConfigForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                 => new sfWidgetFormInputHidden(),
+      'name'               => new sfWidgetFormTextarea(),
       'max_age'            => new sfWidgetFormInputText(),
       'origin'             => new sfWidgetFormInputText(),
       'origin_radius'      => new sfWidgetFormInputText(),
@@ -27,12 +28,14 @@ abstract class BaseConfigForm extends BaseFormDoctrine
       'from_date'          => new sfWidgetFormDate(),
       'to_date'            => new sfWidgetFormDate(),
       'frequence'          => new sfWidgetFormInputText(),
+      'type'               => new sfWidgetFormInputText(),
       'created_at'         => new sfWidgetFormDateTime(),
       'updated_at'         => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
       'id'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'name'               => new sfValidatorString(array('required' => false)),
       'max_age'            => new sfValidatorInteger(array('required' => false)),
       'origin'             => new sfValidatorString(array('max_length' => 255)),
       'origin_radius'      => new sfValidatorInteger(array('required' => false)),
@@ -44,6 +47,7 @@ abstract class BaseConfigForm extends BaseFormDoctrine
       'from_date'          => new sfValidatorDate(),
       'to_date'            => new sfValidatorDate(),
       'frequence'          => new sfValidatorInteger(),
+      'type'               => new sfValidatorInteger(array('required' => false)),
       'created_at'         => new sfValidatorDateTime(),
       'updated_at'         => new sfValidatorDateTime(),
     ));
