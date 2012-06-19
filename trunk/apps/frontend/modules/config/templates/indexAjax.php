@@ -32,12 +32,6 @@
            	<?php echo link_to_function('<span>Weight</span>', 'sort(\'weight\', 1)') ?>
         </th>
 		<th>
-           	<?php echo link_to_function('<span>From Date</span>', 'sort(\'from_date\', 1)') ?>
-        </th>
-		<th>
-           	<?php echo link_to_function('<span>To Date</span>', 'sort(\'to_date\', 1)') ?>
-        </th>
-		<th>
             <?php echo link_to_function('<span>Frequence</span>', 'sort(\'frequence\', 1)') ?>
         </th>
       </tr>
@@ -53,8 +47,6 @@
 		<td style="text-align:center"><?php echo $config->destination_radius ?></td>
 		<td style="text-align:center"><?php echo $config->length ?></td>
 		<td style="text-align:center"><?php echo $config->weight ?></td>
-		<td style="text-align:center"><?php echo $config->from_date ?></td>
-		<td style="text-align:center"><?php echo $config->to_date ?></td>
 		<td style="text-align:center"><?php echo $config->frequence ?></td>
     </tr>
   <?php endforeach ?>
