@@ -21,6 +21,7 @@ class MainTask extends sfBaseTask
 	    $client = new WebFormClient();
 		$configs = Doctrine_Query::create()
 			->from('Config c')
+			->addWhere('c.type = ?', 0)
 			->execute();
 			
 		foreach ($configs as $config) {
