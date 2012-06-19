@@ -19,7 +19,8 @@ class configActions extends sfActions
   {
 	$this->config_form = new SearchingConfigForm();
 	$q = Doctrine_Query::create()
-		->from('Config c');
+		->from('Config c')
+		->addWhere('c.type = ?', 0);
 	if ($request->hasParameter('search_config')) {
 		$form_data = $request->getParameter('search_config');
 		$q = $this->executeFilters($form_data, $q);
@@ -54,7 +55,7 @@ class configActions extends sfActions
 	} else {
 		$config = new Config();
 	}
-	$this->config_form = new ConfigForm();
+	$this->config_form = new ConfigForm($config);
 	if ($request->hasParameter('config')) {
 		$data = $request->getParameter('config');
 		$this->config_form->bind($data);
@@ -97,8 +98,6 @@ class configActions extends sfActions
 	$config->loads_type = $form['loads_type'];
 	$config->length = $form['length'];
 	$config->weight = $form['weight'];
-	$config->from_date = date('d/m/y', strtotime($form['from_date']));
-	$config->to_date = date('d/m/y', strtotime($form['to_date']));
 	$config->save();
 	
 	// jobboard config
