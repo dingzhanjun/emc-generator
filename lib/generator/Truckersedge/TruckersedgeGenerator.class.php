@@ -4,7 +4,7 @@ class TruckersedgeGenerator
 {
 	protected $config_id;
 	protected $jobboard_name;
-	protected $loads;
+	protected $loads= array();
 	
 	public function __construct($config_id, $jobboard_name)
 	{
@@ -129,8 +129,14 @@ class TruckersedgeGenerator
 		$tag['search']['ctl00$cphMain$txtOriginRadius'] = $config->origin_radius;
 		$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $config->destination;
 		$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $config->destination_radius;
-		$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y', strtotime($config->from_date));
-		$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y', strtotime($config->to_date));
+		if ($config_type == 0) { // native run
+			$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
+			$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
+		} elseif ($config_type == 1) {
+			$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y', strtotime($config->from_date));
+			$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y', strtotime($config->to_date));
+		}
+	
 		$tag['search']['ctl00$cphMain$locOrigin$hdnNGL'] = '';
 		$tag['search']['ctl00$cphMain$ddlLoadType'] = $this->mapping($config->loads_type, array( '0'  =>  'Both',
 																								 '1'  =>  'Full',
