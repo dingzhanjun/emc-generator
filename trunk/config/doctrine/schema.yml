@@ -5,6 +5,7 @@ Config:
   connection:                     doctrine
   columns:
     id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string, notnull: false }
     max_age:                      { type: integer, notnull: false }
     origin:                       { type: string(255), notnull: true }
     origin_radius:                { type: integer, notnull: false }
@@ -16,6 +17,7 @@ Config:
     from_date:                    { type: date, notnull: true }
     to_date:                      { type: date, notnull: true }
     frequence:                    { type: integer, notnull: true }
+    type:                         { type: integer, notnull: true, default: 0 }
 
 Jobboard:
   actAs:
