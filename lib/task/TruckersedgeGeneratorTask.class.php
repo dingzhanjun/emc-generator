@@ -21,7 +21,7 @@ class TruckersedgeGeneratorTask extends sfBaseTask
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-    date_default_timezone_set('Asia/Bangkok');
+    date_default_timezone_set('America/Phoenix');
     $client = new WebFormClient();
 
     // getting config
