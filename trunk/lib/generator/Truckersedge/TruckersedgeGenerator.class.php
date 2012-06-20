@@ -129,12 +129,12 @@ class TruckersedgeGenerator
 		$tag['search']['ctl00$cphMain$txtOriginRadius'] = $config->origin_radius;
 		$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $config->destination;
 		$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $config->destination_radius;
-		if ($config_type == 0) { // native run
+		if ($config->type == 0) { // native run
 			$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
 			$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
-		} elseif ($config_type == 1) {
-			$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y', strtotime($config->from_date));
-			$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y', strtotime($config->to_date));
+		} elseif ($config->type == 1) {
+			$tag['search']['ctl00$cphMain$txtDateFrom'] = date('y/m/d', strtotime($config->from_date));
+			$tag['search']['ctl00$cphMain$txtDateTo'] = date('y/m/d', strtotime($config->to_date));
 		}
 	
 		$tag['search']['ctl00$cphMain$locOrigin$hdnNGL'] = '';
