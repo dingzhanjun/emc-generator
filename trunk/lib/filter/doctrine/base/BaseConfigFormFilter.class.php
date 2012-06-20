@@ -26,6 +26,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'to_date'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'frequence'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'type'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'last_executed_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
@@ -44,6 +45,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'to_date'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
       'frequence'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'type'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'last_executed_at'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'created_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'updated_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
@@ -79,6 +81,7 @@ abstract class BaseConfigFormFilter extends BaseFormFilterDoctrine
       'to_date'            => 'Date',
       'frequence'          => 'Number',
       'type'               => 'Number',
+      'last_executed_at'   => 'Date',
       'created_at'         => 'Date',
       'updated_at'         => 'Date',
     );

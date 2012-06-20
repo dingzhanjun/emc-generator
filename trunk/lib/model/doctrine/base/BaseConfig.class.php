@@ -21,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @property date $to_date
  * @property integer $frequence
  * @property integer $type
+ * @property datetime $last_executed_at
  * @property Doctrine_Collection $JobboardConfigs
  * @property Doctrine_Collection $ConfigTrucks
  * 
@@ -38,6 +39,7 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @method date                getToDate()             Returns the current record's "to_date" value
  * @method integer             getFrequence()          Returns the current record's "frequence" value
  * @method integer             getType()               Returns the current record's "type" value
+ * @method datetime            getLastExecutedAt()     Returns the current record's "last_executed_at" value
  * @method Doctrine_Collection getJobboardConfigs()    Returns the current record's "JobboardConfigs" collection
  * @method Doctrine_Collection getConfigTrucks()       Returns the current record's "ConfigTrucks" collection
  * @method Config              setId()                 Sets the current record's "id" value
@@ -54,6 +56,7 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @method Config              setToDate()             Sets the current record's "to_date" value
  * @method Config              setFrequence()          Sets the current record's "frequence" value
  * @method Config              setType()               Sets the current record's "type" value
+ * @method Config              setLastExecutedAt()     Sets the current record's "last_executed_at" value
  * @method Config              setJobboardConfigs()    Sets the current record's "JobboardConfigs" collection
  * @method Config              setConfigTrucks()       Sets the current record's "ConfigTrucks" collection
  * 
@@ -126,6 +129,10 @@ abstract class BaseConfig extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => 0,
+             ));
+        $this->hasColumn('last_executed_at', 'datetime', null, array(
+             'type' => 'datetime',
+             'notnull' => false,
              ));
     }
 
