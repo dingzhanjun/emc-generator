@@ -2,7 +2,7 @@
 <div id='left_tabs'>
     <a href='<?php echo url_for('@config'); ?>' id='below_grounds_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'config')?"active":"" ?>'><img src='/images/icon_system.png' height="96" /><div class='below_tab_label'>Config</div></a>
     <a href='<?php echo url_for('@loads'); ?>' id='below_users_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'loads')?"active":"" ?>'><img src='/images/icon_trucks.png' height="96" /><div class='below_tab_label'>Loads</div></a>
-    <a href='<?php //echo url_for('@ground_order'); ?>' id='below_services_manager' class='below_tab_icon <?php // echo ($sf_context->getModuleName() == 'groundOrder')?"active":"" ?>'><img src='/images/icon_search.png' height="96" /><div class='below_tab_label'>Quick Search</div></a>
+    <a href='<?php echo url_for('@quick_search'); ?>' id='below_services_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'quickSearch')?"active":"" ?>'><img src='/images/icon_search.png' height="96" /><div class='below_tab_label'>Quick Search</div></a>
 <?
 /*
     <a href='<?php //echo url_for('@cms_category_list'); ?>' id='below_cms_manager' class='below_tab_icon <?php echo ($sf_context->getModuleName() == 'cms')?"active":"" ?>'><img src='/images/icon_news.png' height="96" /><div class='below_tab_label'>Tin tức</div></a>
