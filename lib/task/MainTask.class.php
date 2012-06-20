@@ -24,18 +24,21 @@ class MainTask extends sfBaseTask
 			->addWhere('c.type = ?', 0)
 			->execute();
 			
-		foreach ($configs as $config) {
-			$this->logSection('info', 'Executing config with id:'.$config->id);
-			$jobboard_configs = $config->JobboardConfigs;
-			foreach ($jobboard_configs as $jobboard_config) {
-				$jobboard = $jobboard_config->Jobboard;
-				$this->logSection('info', 'Executing generator for '.$jobboard->name);
+		foreach ($configs as $config)
+			if (strtotime("now") - strtotime($config->last_executed_at) >= ($config->frequence*60)) {
+				$config->last_executed_at = date(DATE_ISO8601);
+				$config->save();
+				$this->logSection('info', 'Executing config with id:'.$config->id);
+				$jobboard_configs = $config->JobboardConfigs;
+				foreach ($jobboard_configs as $jobboard_config) {
+					$jobboard = $jobboard_config->Jobboard;
+					$this->logSection('info', 'Executing generator for '.$jobboard->name);
 
-				$generator = new $jobboard->generator_name($this->dispatcher, $this->formatter);
-				if ($generator) {
-					//$arguments = array("Los Angeles, CA", 200, 2);
-					$options = array();
-					$generator->run($arguments = array($config->id), $options = array());
+					$generator = new $jobboard->generator_name($this->dispatcher, $this->formatter);
+					if ($generator) {
+						//$arguments = array("Los Angeles, CA", 200, 2);
+						$options = array();
+						$generator->run($arguments = array($config->id), $options = array());
 				}
 			}
 		}
