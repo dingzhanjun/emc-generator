@@ -29,6 +29,7 @@ abstract class BaseConfigForm extends BaseFormDoctrine
       'to_date'            => new sfWidgetFormDate(),
       'frequence'          => new sfWidgetFormInputText(),
       'type'               => new sfWidgetFormInputText(),
+      'last_executed_at'   => new sfWidgetFormInputText(),
       'created_at'         => new sfWidgetFormDateTime(),
       'updated_at'         => new sfWidgetFormDateTime(),
     ));
@@ -48,6 +49,7 @@ abstract class BaseConfigForm extends BaseFormDoctrine
       'to_date'            => new sfValidatorDate(),
       'frequence'          => new sfValidatorInteger(),
       'type'               => new sfValidatorInteger(array('required' => false)),
+      'last_executed_at'   => new sfValidatorPass(array('required' => false)),
       'created_at'         => new sfValidatorDateTime(),
       'updated_at'         => new sfValidatorDateTime(),
     ));
