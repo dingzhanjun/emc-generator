@@ -18,6 +18,7 @@ Config:
     to_date:                      { type: date, notnull: true }
     frequence:                    { type: integer, notnull: true }
     type:                         { type: integer, notnull: true, default: 0 }
+    last_executed_at:             { type: datetime, notnull: false }
 
 Jobboard:
   actAs:
