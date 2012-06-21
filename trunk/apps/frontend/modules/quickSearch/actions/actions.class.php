@@ -56,7 +56,6 @@ class quickSearchActions extends sfActions
 	$config->origin_radius = $form['origin_radius'];
 	$config->destination = $form['destination'];
 	$config->destination_radius = $form['destination_radius'];
-	$config->frequence = $form['frequence'];
 	$config->loads_type = $form['loads_type'];
 	$config->length = $form['length'];
 	$config->weight = $form['weight'];
