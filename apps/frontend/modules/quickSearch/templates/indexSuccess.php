@@ -21,3 +21,7 @@ $(function() {
     </table>
   </form>
 </div>
+
+<div id='indexAjax' style='padding-top:10px;'>
+	<?php include 'indexAjax.php' ?>
+</div>
