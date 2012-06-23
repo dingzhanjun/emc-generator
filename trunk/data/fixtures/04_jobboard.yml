@@ -6,7 +6,9 @@ Jobboard:
     username: 'southernrt'
     password: 'S4lt4you'
     
-  Truckstop:
-    name: Truck Stop
-    generator_name: TruckstopTask
-    address: 'truckstop.com/lite'
+  Freightview:
+    name: Freightview
+    generator_name: FreightviewGeneratorTask
+    address: 'https://freightview.com/Home.aspx'
+    username: 'q_trucking@hotmail.com'
+    password: 'S4lt5you'
