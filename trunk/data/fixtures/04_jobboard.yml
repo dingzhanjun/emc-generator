@@ -12,3 +12,10 @@ Jobboard:
     address: 'https://freightview.com/Home.aspx'
     username: 'q_trucking@hotmail.com'
     password: 'S4lt5you'
+
+  Gofmi:
+    name: Gofmi
+    generator_name: GofmiGeneratorTask
+    address: 'http://www.gofmi.wooie.com/Loads'
+    username: ''
+    password: ''
