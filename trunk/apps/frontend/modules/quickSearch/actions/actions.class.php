@@ -39,10 +39,12 @@ class quickSearchActions extends sfActions
                     $this->loads[$jobboard->name] = $generator->getLoads();
                 }
             }
-            $this->setlayout(false);
-            $this->getResponse()->setHttpHeader('Content-Type', 'text/csv');
-            $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=quick_search ' . date("Y-m-d_Hi") . '.csv');
-            return 'CSV';
+			
+            //$this->setlayout(false);
+            //$this->getResponse()->setHttpHeader('Content-Type', 'text/csv');
+            //$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=quick_search ' . date("Y-m-d_Hi") . '.csv');
+            //return 'CSV';
+			return sfView::SUCCESS;
         }   
     }
     return sfView::SUCCESS;
