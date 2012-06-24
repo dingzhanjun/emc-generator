@@ -48,6 +48,7 @@ class WebClient
 
         // HTTPS
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);
 
         return $ch;
     }
