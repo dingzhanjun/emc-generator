@@ -22,6 +22,9 @@
 		<th>
            	<?php echo link_to_function('<span>Age</span>', 'sort(\'created_at\', 1)') ?>
         </th>
+        <th>
+           	<?php echo link_to_function('<span>Deadline</span>', 'sort(\'created_at\', 1)') ?>
+        </th>
 		<th>
             <?php echo link_to_function('<span>Pickup Date</span>', 'sort(\'date\', 1)') ?>
         </th>
@@ -49,7 +52,16 @@
 		<td style="text-align:center"><?php echo $loads->origin_radius ?></td>
 		<td style="text-align:center"><?php echo $loads->destination ?></td>
 		<td style="text-align:center"><?php echo $loads->destination_radius ?></td>
+		<?php if (in_array($loads->jobboard_id, array(1))): ?>
 		<td style="text-align:center"><?php echo $loads->getCurrentLoadsAge() ?></td>
+		<?php else: ?>
+		<td style="text-align:center">--</td>
+		<?php endif?>
+		<?php if (in_array($loads->jobboard_id, array(2))):?>
+		<td style="text-align:center"><?php echo $loads->deadline ?></td>
+		<?php else: ?>
+		<td style="text-align:center">--</td>
+		<?php endif ?>
 		<td style="text-align:center"><?php echo $loads->date ?></td>
 		<td style="text-align:center"><?php echo $loads->truck_type ?></td>
 		<td style="text-align:center"><?php echo $loads->loads_type ?></td>
