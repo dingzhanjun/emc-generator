@@ -80,7 +80,6 @@ class FreightviewGenerator
             echo "Login fail";
             exit;
         }
-        echo "Login Success\n";
 
         // second step, searching loads
         $client->get('http://freightview.com/ProviderContent/AvailableLoads.aspx?rfm=1');
@@ -123,15 +122,18 @@ class FreightviewGenerator
         $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityOrigin'] = $full_origin[0];
         $tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateOrigin'] = $full_origin[1];
         $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityOriginRadius'] = $config->origin_radius;
-        $full_destination = str_replace(' ', '', $config->destination);
-        $full_destination = preg_split('#,#', $full_destination);
-        $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDest'] = $full_destination[0];
-        $tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateDest'] = $full_destination[1];
-        $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDestRadius'] = $config->destination_radius;
+        if (!empty($config->destination)) {
+            $full_destination = str_replace(' ', '', $config->destination);
+            $full_destination = preg_split('#,#', $full_destination);
+            $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDest'] = $full_destination[0];
+            $tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateDest'] = $full_destination[1];
+            $tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDestRadius'] = $config->destination_radius;
+        }
         $tag['search']['ctl00$ProviderContentPlaceHolder$rbnAllLanes'] = 'rbnAllLanes';
 
         // only 1 truck type is accepted for this website, we take the first one
-        foreach ($config->ConfigTrucks as $config_truck) {
+        $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
+        foreach ($config_trucks as $config_truck) {
             $truck_id = $config_truck->Truck->id;
             // will be remapping later
             $tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchEquipmentType'] = $this->mapping($truck_id, array(
