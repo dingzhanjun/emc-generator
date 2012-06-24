@@ -20,6 +20,7 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @property string $contact
  * @property integer $distance
  * @property string $company
+ * @property string $deadline
  * 
  * @method string  getHash()               Returns the current record's "hash" value
  * @method string  getWebReference()       Returns the current record's "web_reference" value
@@ -34,6 +35,7 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @method string  getContact()            Returns the current record's "contact" value
  * @method integer getDistance()           Returns the current record's "distance" value
  * @method string  getCompany()            Returns the current record's "company" value
+ * @method string  getDeadline()           Returns the current record's "deadline" value
  * @method Loads   setHash()               Sets the current record's "hash" value
  * @method Loads   setWebReference()       Sets the current record's "web_reference" value
  * @method Loads   setJobboardId()         Sets the current record's "jobboard_id" value
@@ -47,6 +49,7 @@ Doctrine_Manager::getInstance()->bindComponent('Loads', 'doctrine');
  * @method Loads   setContact()            Sets the current record's "contact" value
  * @method Loads   setDistance()           Sets the current record's "distance" value
  * @method Loads   setCompany()            Sets the current record's "company" value
+ * @method Loads   setDeadline()           Sets the current record's "deadline" value
  * 
  * @package    emc
  * @subpackage model
@@ -112,6 +115,11 @@ abstract class BaseLoads extends sfDoctrineRecord
              'notnull' => false,
              ));
         $this->hasColumn('company', 'string', 255, array(
+             'type' => 'string',
+             'notnull' => false,
+             'length' => 255,
+             ));
+        $this->hasColumn('deadline', 'string', 255, array(
              'type' => 'string',
              'notnull' => false,
              'length' => 255,

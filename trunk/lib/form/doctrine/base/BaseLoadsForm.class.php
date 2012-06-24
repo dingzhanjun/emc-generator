@@ -28,6 +28,7 @@ abstract class BaseLoadsForm extends BaseFormDoctrine
       'contact'            => new sfWidgetFormInputText(),
       'distance'           => new sfWidgetFormInputText(),
       'company'            => new sfWidgetFormInputText(),
+      'deadline'           => new sfWidgetFormInputText(),
       'created_at'         => new sfWidgetFormDateTime(),
       'updated_at'         => new sfWidgetFormDateTime(),
     ));
@@ -46,6 +47,7 @@ abstract class BaseLoadsForm extends BaseFormDoctrine
       'contact'            => new sfValidatorString(array('max_length' => 255)),
       'distance'           => new sfValidatorInteger(array('required' => false)),
       'company'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'deadline'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'created_at'         => new sfValidatorDateTime(),
       'updated_at'         => new sfValidatorDateTime(),
     ));
