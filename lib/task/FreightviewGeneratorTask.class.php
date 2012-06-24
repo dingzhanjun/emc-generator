@@ -51,6 +51,7 @@ class FreightviewGeneratorTask extends sfBaseTask
           $loads->distance = $items[8];
           $loads->destination = $items[4].' '.$items[5];
           $loads->company = $items[7].' Ref: '.$items[0];
+          $loads->deadline = $items[6];
           $loads->hash = $hash;
           $this->logSection('info', 'Found new loads with hash code '.$hash);
           $loads->save();
