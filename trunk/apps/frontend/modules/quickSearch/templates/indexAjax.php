@@ -108,6 +108,9 @@ function sort_js(type, default_order) {
             	<?php echo link_to_function('<span>Age</span>', 'sort_js(\'loads_1\', 1)') ?>
             </th>
             <th>
+            	<?php echo link_to_function('<span>Deadline</span>', 'sort_js(\'loads_1\', 1)') ?>
+            </th>
+            <th>
             	<?php echo link_to_function('<span>Pick-up Date</span>', 'sort_js(\'loads_2\', 0)') ?>
             </th>
             <th>
@@ -161,16 +164,53 @@ function sort_js(type, default_order) {
 					echo "<tr class='tr_loads ".(($check)?"":"tr_hide")."' numero='".$count."'>";
 					$indexKey = 0;
 					echo "<td class='loads_".$indexKey."'>".$jobboard_name.'</td>';
-					foreach ($loads as $key => $value) {
-						if ($indexKey < 14)
-						{
-							$indexKey ++;
-							echo "<td class='loads_".$indexKey."'>".$value.'</td>';
-						}
-					}
-					echo "</tr>";
+					if ($jobboard_name == 'Truckersedge') {
+					    foreach ($loads as $key => $value) {
+						    if ($indexKey < 15) {
+							    $indexKey ++;
+							    echo "<td class='loads_".$indexKey."'>".$value.'</td>';
+							    if ($indexKey == 1) {
+							        $indexKey++;
+							        echo "<td class='loads_".$indexKey."'>--</td>";
+							    }
+							        
+						    }
+					    }
+					    
+				    } elseif ($jobboard_name == 'Freightview') {
+				        $indexKey = 1;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[6].'</td>'; // deadline
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[1].'</td>'; // pickup date
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[9].'</td>'; // truck type
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no loads type
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no DH(O)
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[2].' '.$loads[3].'</td>';
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[8].'</td>';
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[4].' '.$loads[5].'</td>';
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[7].' Ref:'.$loads[0].'</td>';
+				    }
+				    echo "</tr>";
 				}
-				
 			}
 		?>
     </tbody>
