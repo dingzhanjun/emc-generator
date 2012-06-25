@@ -176,7 +176,6 @@ function sort_js(type, default_order) {
 							        
 						    }
 					    }
-					    
 				    } elseif ($jobboard_name == 'Freightview') {
 				        $indexKey = 1;
 				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
@@ -208,8 +207,48 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>--</td>";
 				        $indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[7].' Ref:'.$loads[0].'</td>';
-				    }
-				    echo "</tr>";
+				    
+					} elseif ($jobboard_name == 'Gofmi') {
+						$indexKey = 1;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // no age
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // no deadline
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$loads[1].'</td>'; // pickup date
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$loads[2].'</td>'; // truck type
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$loads[5]."</td>"; // loads type
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // no DH(O)
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$loads[3]."</td>";
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // no trip
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$loads[4].'</td>';
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // no DH(D)
+						$indexKey++;
+						$contact = $loads[6];
+						$company = "";
+						for ($index_contact = 0; $index_contact < strlen($contact); $index_contact++)
+							if (($contact[$index_contact] >= 'a' && $contact[$index_contact] <= 'z') || ($contact[$index_contact] >= 'A' && $contact[$index_contact] <= 'Z')) {
+								$company = trim(substr($contact, $index_contact)); 
+								$contact = trim(substr($contact, 0, $index_contact-1));
+								break;
+							}
+						echo "<td class='loads_".$indexKey."'>".$contact."</td>"; // contact
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // credit score
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // ft
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>--</td>"; // Klbs
+						$indexKey++;
+						echo "<td class='loads_".$indexKey."'>".$company."</td>"; // Company
+					}
+					echo "</tr>";
 				}
 			}
 		?>
