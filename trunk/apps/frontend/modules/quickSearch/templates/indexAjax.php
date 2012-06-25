@@ -108,7 +108,7 @@ function sort_js(type, default_order) {
             	<?php echo link_to_function('<span>Age</span>', 'sort_js(\'loads_1\', 1)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Deadline</span>', 'sort_js(\'loads_1\', 1)') ?>
+            	<?php echo link_to_function('<span>Deadline</span>', 'sort_js(\'loads_1\', 0)') ?>
             </th>
             <th>
             	<?php echo link_to_function('<span>Pick-up Date</span>', 'sort_js(\'loads_2\', 0)') ?>
@@ -277,3 +277,9 @@ function sort_js(type, default_order) {
 <?
 }
 ?>
+<script>
+	$(window).load(function()
+	{
+		$(".pagination a:first").click();
+	});
+</script>
