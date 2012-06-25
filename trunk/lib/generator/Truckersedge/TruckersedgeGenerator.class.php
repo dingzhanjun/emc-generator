@@ -14,8 +14,9 @@ class TruckersedgeGenerator
 	
 
 	private function create_log($filename, $content) {
-		$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
-		file_put_contents($file, $content);
+	    // no longer create log
+		//$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+		//file_put_contents($file, $content);
 	}
 	
 	
