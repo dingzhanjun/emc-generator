@@ -53,7 +53,7 @@ class LandstarbrokerGeneratorTask extends sfBaseTask
 			$loads->created_at = date(DATE_ISO8601);
 			$date = explode("/", strip_tags(trim($items[3])));
 			$loads->date = date('Y-m-d', strtotime($date[0]."/".$date[1]."/".date("Y")));
-			$loads->truck_type = $items[6];
+			$loads->truck_type = $items[5];
 			$location = trim($items[4]);
 			$location = preg_replace('/\s+/',' ', $location);
 			$location = preg_replace("/[^A-Za-z0-9, ]/i", "+", $location);
@@ -69,7 +69,7 @@ class LandstarbrokerGeneratorTask extends sfBaseTask
 			}
 			$loads->origin = trim($location[0]);
 			$loads->destination = trim($destination);
-			$loads->distance = $items[5];
+			$loads->distance = $items[7];
 			$loads->contact = $items[2];
 			$loads->company = $items[0];
 			
