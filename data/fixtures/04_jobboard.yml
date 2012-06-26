@@ -19,3 +19,10 @@ Jobboard:
     address: 'http://www.gofmi.wooie.com/Loads'
     username: ''
     password: ''
+	
+  Landstarbroker:
+    name: Landstarbroker
+    generator_name: LandstarbrokerGeneratorTask
+    address: 'http://www.landstarbroker.com/Loads/LoadCriteria.asp?rt=hg'
+    username: ''
+    password: ''
