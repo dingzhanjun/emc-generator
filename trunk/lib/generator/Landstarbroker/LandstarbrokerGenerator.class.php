@@ -82,7 +82,7 @@ class LandstarbrokerGenerator
 			
 		$tag['search']['Origcity'] = $city; // City
 		$tag['search']['origstate'] = $state; //state
-		$tag['search']['origdist'] = $origin_radius; // distance
+		$tag['search']['origdist'] = (($config->origin_radius)?$origin_radius:"000"); // distance
 		$tag['search']['origcountry'] = 'US'; // Constant
 		
 		$city = "";
@@ -115,9 +115,9 @@ class LandstarbrokerGenerator
 		$tag['search']['maxweight'] = (($config->weight != 0)?$config->weight:'');
 		$tag['search']['CSA'] = ''; 
 		
-		// Config truck 1
+		// Config truck 
 		
-		// only 1 truck type is accepted for this website, we take the first one
+		// only 2 truck types is accepted for this website, we take the first one
         $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
 		$count = 0;
         foreach ($config_trucks as $config_truck) {
