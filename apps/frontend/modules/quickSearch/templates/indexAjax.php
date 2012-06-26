@@ -247,6 +247,54 @@ function sort_js(type, default_order) {
 						echo "<td class='loads_".$indexKey."'>--</td>"; // Klbs
 						$indexKey++;
 						echo "<td class='loads_".$indexKey."'>".$company."</td>"; // Company
+						
+					} else if ($jobboard_name == 'Landstarbroker') {
+						
+						$indexKey = 1;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no deadline
+				        $indexKey++;
+						$date = explode("/", strip_tags(trim($loads[3])));
+				        echo "<td class='loads_".$indexKey."'>".date('Y-m-d', strtotime($date[0]."/".$date[1]."/".date("Y"))).'</td>'; // pickup date
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[5].'</td>'; // truck type
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no loads type
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no DH(O)
+						$location = trim($loads[4]);
+						$location = preg_replace('/\s+/',' ', $location);
+						$location = preg_replace("/[^A-Za-z0-9, ]/i", "+", $location);
+						$temp = $location;
+						$location = explode("+", $location);
+						$indexLocation = 1;
+						for ($indexLocation = 1; $indexLocation < sizeof($location); $indexLocation ++)
+						{
+							if ($location[$indexLocation])
+							{
+								$destination = $location[$indexLocation];
+								break;
+							}
+						}
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$location[0].'</td>'; // origin
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[7]."</td>"; // trip
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$destination.'</td>'; // destination
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // DH(D)
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[2]."</td>"; // Contact
+				        $indexKey++; 
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // credit score
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // Ft
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[8]."</td>"; // Klbs
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[0]."</td>"; // Company
 					}
 					echo "</tr>";
 				}
