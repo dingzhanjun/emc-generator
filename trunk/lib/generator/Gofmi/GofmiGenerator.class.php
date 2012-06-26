@@ -2,12 +2,14 @@
 // class generator to send a searching request to a given website then take back the loads
 class GofmiGenerator
 {
+	protected $config_id;
 	protected $jobboard_name;
 	protected $loads= array();
 	
-	public function __construct($jobboard_name)
+	public function __construct($config_id, $jobboard_name)
 	{
 		$this->jobboard_name = $jobboard_name;
+		$this->config_id = $config_id;
 	}
 	
 
@@ -36,14 +38,12 @@ class GofmiGenerator
 		$this->initialize();
 		$client = new WebFormClient();
 		
-		// We don't need config for this generator
-		/*
+
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
 		if (!$config) {
 			echo ">>>>>Error<<<<< Config not found\n";
 			exit;
 		}
-		*/
 		
 		$jobboard = Doctrine_Core::getTable('Jobboard')->findOneByName($this->jobboard_name);
 		if (!$jobboard) {
@@ -57,6 +57,37 @@ class GofmiGenerator
 		$client->get($base_url);
 
 		// parsing reponse
+		$config_trucks = Doctrine_Query::create()
+		    ->from('ConfigTruck cf')
+		    ->addWhere('cf.config_id = ?', $config->id)
+		    ->execute();
+		$trucks = array();
+		foreach ($config_trucks as $config_truck) {
+		    switch ($config_truck->truck_id) {
+		        case 1:
+		         $trucks[] = 'Dry Bulk';
+		         break;
+		        case 2:
+		         $trucks[] = 'Container';
+		         break;
+		        case 3:
+		         $trucks[] = 'Deck';
+		         break;
+		        case 4:
+		         $trucks[] = 'Flatbed';
+		         break;
+		        case 7:
+		         $trucks[] = 'Reefer';
+		         break;
+		        case 8:
+		         $trucks[] = 'Van';
+		         break;
+		        case 9:
+		         $trucks[] = 'Tanker';
+		         break;
+		    }
+		}
+
 		$doc = new DOMDocument();
 	    @$doc->loadHTML($client->getBody());
 	    $xpath = new DOMXpath($doc);
@@ -67,7 +98,23 @@ class GofmiGenerator
 			$items = array();
 	        foreach ($tds as $td)
 	            $items[] = trim($td->nodeValue);
-			$this->addLoads($items);
+	        $in_config = true;
+	        
+	        $type_is_ok = false;
+	        foreach (explode(" ", $items[2]) as $truck) {
+	            if (in_array($truck, $trucks))
+	                $type_is_ok = true;
+	        }
+	                
+	        $loads_type_is_ok = false;
+	        if ($config->loads_type != 0) {
+	            if (($config->loads_type == 1 && $items[5] == 'Full') || ($config->loads_type == 2 && $items[5] == 'Partial'))
+	                $loads_type_is_ok = true;
+	        } else $loads_type_is_ok = true;
+	        
+	        $in_config = $type_is_ok && $loads_type_is_ok;
+	        if ($in_config)
+			    $this->addLoads($items);
 		}
 		
 	}
@@ -75,9 +122,7 @@ class GofmiGenerator
 	
 	private function addLoads($items)
 	{
-		if (!preg_match('#An expanded search found#', $items[0], $match)) {
-			$this->loads[] = $items;
-		}
+		$this->loads[] = $items;
 	}
 	
 	

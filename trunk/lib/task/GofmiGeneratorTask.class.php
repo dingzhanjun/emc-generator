@@ -11,7 +11,7 @@ class GofmiGeneratorTask extends sfBaseTask
             new sfCommandOption('exp', null, sfCommandOption::PARAMETER_OPTIONAL, 'The new expiration date', ''),
             ));
 
-    //$this->addArgument('config', sfCommandArgument::REQUIRED, 'The config id');
+    $this->addArgument('config', sfCommandArgument::REQUIRED, 'The config id');
   }
  
   
@@ -25,9 +25,9 @@ class GofmiGeneratorTask extends sfBaseTask
     $client = new WebFormClient();
 
     // getting config
-	//$config_id = $arguments['config'];
+	$config_id = $arguments['config'];
 	
-	$generator = new GofmiGenerator('Gofmi');
+	$generator = new GofmiGenerator($config_id, 'Gofmi');
 	$generator->execute();
 	
 	$loads = $generator->getLoads();
