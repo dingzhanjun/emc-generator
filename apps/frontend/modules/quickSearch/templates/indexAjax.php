@@ -30,7 +30,7 @@ function listReload(page)
 	if (sort_order) {
 		arr_data.reverse();
 	}
-
+	
 	html = $("#list_data_temp");
 	html.html("");
 	
@@ -108,46 +108,46 @@ function sort_js(type, default_order) {
             	<?php echo link_to_function('<span>Age</span>', 'sort_js(\'loads_1\', 1)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Deadline</span>', 'sort_js(\'loads_1\', 0)') ?>
+            	<?php echo link_to_function('<span>Deadline</span>', 'sort_js(\'loads_2\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Pick-up Date</span>', 'sort_js(\'loads_2\', 0)') ?>
+            	<?php echo link_to_function('<span>Pick-up Date</span>', 'sort_js(\'loads_3\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Truck Type</span>', 'sort_js(\'loads_3\', 0)') ?>
+            	<?php echo link_to_function('<span>Truck Type</span>', 'sort_js(\'loads_4\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Full/Partial</span>', 'sort_js(\'loads_4\', 0)') ?>
+            	<?php echo link_to_function('<span>Full/Partial</span>', 'sort_js(\'loads_5\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>DH(O)</span>', 'sort_js(\'loads_5\', 0)') ?>
+            	<?php echo link_to_function('<span>DH(O)</span>', 'sort_js(\'loads_6\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Origin</span>', 'sort_js(\'loads_6\', 0)') ?>
+            	<?php echo link_to_function('<span>Origin</span>', 'sort_js(\'loads_7\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Trip</span>', 'sort_js(\'loads_7\', 0)') ?>
+            	<?php echo link_to_function('<span>Trip</span>', 'sort_js(\'loads_8\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Destination</span>', 'sort_js(\'loads_8\', 0)') ?>
+            	<?php echo link_to_function('<span>Destination</span>', 'sort_js(\'loads_9\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>DH(D)</span>', 'sort_js(\'loads_9\', 0)') ?>
+            	<?php echo link_to_function('<span>DH(D)</span>', 'sort_js(\'loads_10\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Contact</span>', 'sort_js(\'loads_10\', 0)') ?>
+            	<?php echo link_to_function('<span>Contact</span>', 'sort_js(\'loads_11\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Credit Score</span>', 'sort_js(\'loads_11\', 0)') ?>
+            	<?php echo link_to_function('<span>Credit Score</span>', 'sort_js(\'loads_12\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Ft</span>', 'sort_js(\'loads_12\', 0)') ?>
+            	<?php echo link_to_function('<span>Ft</span>', 'sort_js(\'loads_13\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Klbs</span>', 'sort_js(\'loads_13\', 0)') ?>
+            	<?php echo link_to_function('<span>Klbs</span>', 'sort_js(\'loads_14\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Company</span>', 'sort_js(\'loads_14\', 0)') ?>
+            	<?php echo link_to_function('<span>Company</span>', 'sort_js(\'loads_15\', 0)') ?>
             </th>
         </tr>
 	</thead>
