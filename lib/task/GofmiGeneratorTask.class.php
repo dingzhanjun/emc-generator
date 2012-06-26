@@ -61,7 +61,16 @@ class GofmiGeneratorTask extends sfBaseTask
 			$loads->origin = $items[3];
 			$loads->destination = $items[4];
 			$loads->loads_type = $items[5];
-			$loads->contact = $items[6];
+			$contact = $items[6];
+			$company = "";
+			for ($index_contact = 0; $index_contact < strlen($contact); $index_contact++)
+				if (($contact[$index_contact] >= 'a' && $contact[$index_contact] <= 'z') || ($contact[$index_contact] >= 'A' && $contact[$index_contact] <= 'Z')) {
+					$company = trim(substr($contact, $index_contact)); 
+					$contact = trim(substr($contact, 0, $index_contact-1));
+					break;
+				}
+			$loads->contact = $contact;
+			$loads->company = $company;
 			$loads->hash = $hash;
 			$this->logSection('info', 'Found new loads with hash code '.$hash);
 			$loads->save();
