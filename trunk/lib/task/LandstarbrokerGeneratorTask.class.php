@@ -58,8 +58,17 @@ class LandstarbrokerGeneratorTask extends sfBaseTask
 			$location = preg_replace('/\s+/',' ', $location);
 			$location = preg_replace("/[^A-Za-z0-9, ]/i", "+", $location);
 			$location = explode("+", $location);
+			$indexLocation = 1;
+			for ($indexLocation = 1; $indexLocation < sizeof($location); $indexLocation ++)
+			{
+				if ($location[$indexLocation])
+				{
+					$destination = $location[$indexLocation];
+					break;
+				}
+			}
 			$loads->origin = trim($location[0]);
-			$loads->destination = trim($location[1]);
+			$loads->destination = trim($destination);
 			$loads->distance = $items[5];
 			$loads->contact = $items[2];
 			$loads->company = $items[0];
