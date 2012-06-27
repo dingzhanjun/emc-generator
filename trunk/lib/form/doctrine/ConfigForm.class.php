@@ -19,8 +19,8 @@ class ConfigForm extends BaseConfigForm
 	{
 		$module = sfContext::getInstance()->getModuleName();	
 		$this->setWidgets(array(
-			'jobboard_id'				=>		new sfWidgetFormChoice(array('choices' => $this->getJobboards(), 'multiple' => true)),
-			'truck_type'				=>		new sfWidgetFormChoice(array('choices' => $this->getTrucks(), 'multiple' => true)),
+		//	'jobboard_id'				=>		new sfWidgetFormChoice(array('choices' => $this->getJobboards(), 'multiple' => true)),
+	//		'truck_type'				=>		new sfWidgetFormChoice(array('choices' => $this->getTrucks(), 'multiple' => true)),
 			'max_age'					=>		new sfWidgetFormInput(),
 			'origin'					=>		new sfWidgetFormInput(),
 			'origin_radius'				=>		new sfWidgetFormInput(),
@@ -33,8 +33,8 @@ class ConfigForm extends BaseConfigForm
 		
 		
 		$this->setValidators(array(
-			'jobboard_id'				=>		new sfValidatorChoice(array('choices' => array_keys($this->getJobboards()), 'required' => true, 'multiple' => true)),
-			'truck_type'				=>		new sfValidatorChoice(array('choices' => array_keys($this->getTrucks()), 'required' => true, 'multiple' => true)),
+		//	'jobboard_id'				=>		new sfValidatorChoice(array('choices' => array_keys($this->getJobboards()), 'required' => true, 'multiple' => true)),
+		//	'truck_type'				=>		new sfValidatorChoice(array('choices' => array_keys($this->getTrucks()), 'required' => true, 'multiple' => true)),
 			'max_age'					=>		new sfValidatorString(array('required' => true)),
 			'origin'					=> 		new sfValidatorString(array('required' => true)),
 			'origin_radius'				=>		new sfValidatorNumber(array('required' => false)),
@@ -57,8 +57,8 @@ class ConfigForm extends BaseConfigForm
 		
 		$this->widgetSchema->setNameFormat('config[%s]');
 		$this->widgetSchema->setLabels(array(
-			'jobboard_id'				=>		'Website',
-			'truck_type'				=>		'Truck Type',
+		//	'jobboard_id'				=>		'Website',
+		//	'truck_type'				=>		'Truck Type',
 			'max_age'					=>		'Max age (hour)',
 			'origin'					=>		'Origin',
 			'origin_radius'				=>		'Origin Radius',
