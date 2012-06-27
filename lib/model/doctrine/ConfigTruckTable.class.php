@@ -16,4 +16,10 @@ class ConfigTruckTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ConfigTruck');
     }
+	public function deleteConfigId($config_id){
+		$q = $this->createQuery('c')
+            ->where('c.config_id = ?',$config_id);
+        $result = $q->execute();
+        $result->delete();
+	}
 }
