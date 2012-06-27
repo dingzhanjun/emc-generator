@@ -45,27 +45,53 @@ class configActions extends sfActions
     }
     return sfView::SUCCESS;
   }
-
-
   public function executeEdit(sfWebRequest $request)
   {
 	if ($request->hasParameter('config_id')) {
 		$config_id = $request->getParameter('config_id');
-		$config = Doctrine_Core::getTable('Config')->find($config_id);
+		$config = Doctrine_Core::getTable('Config')->find($config_id);//lay du lieu tu bang Config
+		
 	} else {
-		$config = new Config();
+		$config = new Config();//neu chưa ton tai config_id thi tao config moi
+		
 	}
+	if (isset($config_id)) $this->config_id = $config_id;
+    //lay jobboard-id  tuong ung config_id
+    $this->jobboard_configs = $config->JobboardConfigs;
+	$this->jobboards = Doctrine_Query::create()->from('Jobboard j')->execute();
+    $this->config_trucks = $config->ConfigTrucks;
+    $this->trucks = Doctrine_Query::create()->from('Truck t')->execute();
+    //
+    //do du lieu ra form
 	$this->config_form = new ConfigForm($config);
 	if ($request->hasParameter('config')) {
 		$data = $request->getParameter('config');
+        $jobboard_ids = array();
+        $truck_types = array();
+        $jobboard_ids = $request->getParameter('jobboard');
+        $truck_types = $request->getParameter('trucktype');
 		$this->config_form->bind($data);
 		if ($this->config_form->isValid()) {
-			$config = $this->updateConfig($data, $config);
-			$this->forward('config', 'index');
+			$config = $this->updateConfig($data, $config,$jobboard_ids, $truck_types );
+		//	$this->forward('config','index');
+            $this->redirect('config/index');
 		}
 	}
 	return sfView::SUCCESS;
   }
+  public function executeDelete(sfWebRequest $request)
+  {
+	//$request->checkCSRFProtection();
+	$config_id = $request->getParameter('config_id');
+    $this->forward404Unless($config = Doctrine_Core::getTable('Config')->find($config_id), sprintf('Object Config does not exist (%s).',$config_id));
+	$config_truck = Doctrine_Core::getTable('ConfigTruck')->deleteConfigId($config_id);
+	$jobboard_config = Doctrine_Core::getTable('JobboardConfig')->deleteConfigId($config_id);
+    $config->delete();
+	$this->redirect('config/index');
+	//$this->forward('config','index');
+	return sfView::SUCCESS;
+  }
+
 
 
   private function executeFilters($form_data, $q) {
@@ -87,7 +113,7 @@ class configActions extends sfActions
   }
 
 
-  private function updateConfig($form, $config)
+  private function updateConfig($form, $config,$jobboard_ids = null, $truck_types = null)
   {
 	$config->max_age = $form['max_age'];
 	$config->origin = $form['origin'];
@@ -98,20 +124,21 @@ class configActions extends sfActions
 	$config->loads_type = $form['loads_type'];
 	$config->length = $form['length'];
 	$config->weight = $form['weight'];
-	$config->save();
+	$config->save();//luu du lieu vafo
 	
-	// jobboard config
-	$jobboard_ids = $form['jobboard_id'];
+    //lay jobboard_config tuong ung config_id truyen vao
 	$jobboard_configs = $config->JobboardConfigs;
+    //neu jobboard_id khac rong thi xoa cai cu di
 	if (!empty($jobboard_configs))
 		foreach ($jobboard_configs as $jobboard_config)
 			$jobboard_config->delete();
-
-	if ($jobboard_ids[0] == 'all') {
+    
+	if ($jobboard_ids[0] == 0) {
 		$jobboards = Doctrine_Query::create()->from('Jobboard j')->execute();
 		$jobboard_ids = array();
 		foreach ($jobboards as $jobboard)
 			$jobboard_ids[] = $jobboard->id;
+            
 	}
 		
 	foreach ($jobboard_ids as $jobboard_id) {
@@ -122,7 +149,7 @@ class configActions extends sfActions
 	}
 	
 	// truck types
-	$truck_types = $form['truck_type'];
+//	$truck_types = $form['truck_type'];
 	$config_trucks = $config->ConfigTrucks;
 	if (!empty($config_trucks))
 	 	foreach ($config_trucks as $config_truck)
