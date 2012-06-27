@@ -33,10 +33,7 @@ class quickSearchActions extends sfActions
             foreach ($jobboard_configs as $jobboard_config) {
                 $jobboard = $jobboard_config->Jobboard;
                 $generator_name = $jobboard->name.'Generator';
-				if ($jobboard->name == 'Gofmi')
-					$generator = new $generator_name($jobboard->name);
-				else
-	                $generator = new $generator_name($config->id, $jobboard->name);
+                $generator = new $generator_name($config->id, $jobboard->name);
                 if ($generator) {
                     $generator->execute();
                     $this->loads[$jobboard->name] = $generator->getLoads();
