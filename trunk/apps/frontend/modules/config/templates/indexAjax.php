@@ -1,9 +1,8 @@
-<?php use_helper('Url') ?>
+﻿<?php use_helper('Url') ?>
 <?php if (isset($pager)): ?>
   <table cellspacing="0" class="root_table">
     <tbody>
-      <tr>
-		  
+      <tr>		  
         <th>
 			<span>Website</span>
         </th>
@@ -34,6 +33,10 @@
 		<th>
             <?php echo link_to_function('<span>Frequence</span>', 'sort(\'frequence\', 1)') ?>
         </th>
+        <th>
+           <span>Edit Delete</span></span>
+        </th>
+        
       </tr>
 
 	<?php foreach ($pager->getResults() as $config) :?>
@@ -48,6 +51,11 @@
 		<td style="text-align:center"><?php echo $config->length ?></td>
 		<td style="text-align:center"><?php echo $config->weight ?></td>
 		<td style="text-align:center"><?php echo $config->frequence ?></td>
+        <td style="text-align:center"><?php echo link_to('Edit', '@config_edit?config_id='.$config->id);
+		echo "<br/>";
+		echo link_to('Delete', '@config_delete?config_id='.$config->id);
+		?>
+		</td>
     </tr>
   <?php endforeach ?>
     </tbody>
