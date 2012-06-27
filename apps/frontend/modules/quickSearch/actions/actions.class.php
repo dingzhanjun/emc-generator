@@ -18,12 +18,20 @@ class quickSearchActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->search_form = new ConfigForm();
+	$this->configs = Doctrine_Query::create()->from('Config')->execute();
     if ($request->hasParameter('config')) {
         $form_data = $request->getParameter('config');
         $this->search_form->bind($form_data);
         if ($this->search_form->isValid()) {
-            $config = new Config();
+			$config_id = $request->getParameter('config_id');
+			$config_save = $request->getParameter('config_id');
+			if ($config_id != 0)
+				$config = Doctrine_Core::getTable('Config')->find($config_id);
+			else 
+            	$config = new Config();
+			
             $config->type = 1; // TODO put a constant here
+			$config->name = $request->getParameter('config_name');
             $config->save();
             $this->updateConfig($form_data, $config);
             
@@ -38,8 +46,14 @@ class quickSearchActions extends sfActions
                     $generator->execute();
                     $this->loads[$jobboard->name] = $generator->getLoads();
                 }
-            }
+            }			
 			
+			if ($config_save != 'on')
+			{
+				$deleted = Doctrine_Query::create()->delete()->from('JobboardConfig c')->andWhere('c.config_id = ?', $config->id)->execute();
+				$deleted = Doctrine_Query::create()->delete()->from('ConfigTruck c')->andWhere('c.config_id = ?', $config->id)->execute();
+				$deleted = Doctrine_Query::create()->delete()->from('Config c')->andWhere('c.id = ?', $config->id)->execute();
+			}
             //$this->setlayout(false);
             //$this->getResponse()->setHttpHeader('Content-Type', 'text/csv');
             //$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=quick_search ' . date("Y-m-d_Hi") . '.csv');
@@ -48,6 +62,40 @@ class quickSearchActions extends sfActions
         }   
     }
     return sfView::SUCCESS;
+  }
+
+  public function executeReload(sfWebRequest $request) {
+	  
+	  $config_id = $request->getParameter("config_id");
+	  $config = Doctrine_Core::getTable('Config')->find($config_id);
+ 	  $jobboard_configs = $config->JobboardConfigs;
+	  $config_trucks = $config->ConfigTrucks;
+	  $config_form = array();
+	  
+	  $jobboard_ids = ""; 
+	  foreach ($jobboard_configs as $jobboard_config) {
+		  $jobboard_ids .= $jobboard_config->jobboard_id.";";
+	  }
+	 
+	  $truck_ids = "";
+	  foreach ($config_trucks as $config_truck) {
+		  $truck_ids .= $config_truck->truck_id.";";
+	  }
+	   
+	  $config_form["config[jobboard_id][]"] = $jobboard_ids;
+	  $config_form["config[truck_type][]"] = $truck_ids;
+	  $config_form["config[max_age]"] = $config->max_age;
+	  $config_form["config[origin]"] = $config->origin;
+	  $config_form["config[origin_radius]"] = $config->origin_radius;
+	  $config_form["config[destination]"] = $config->destination;
+	  $config_form["config[destination_radius]"] = $config->destination_radius;
+	  $config_form["config[loads_type]"] = $config->loads_type;
+	  $config_form["config[length]"] = $config->length;
+	  $config_form["config[weight]"] = $config->weight;
+	  $config_form["config[from_date]"] = $config->from_date;
+	  $config_form["config[to_date]"] = $config->to_date;
+	  $this->config_form_new = json_encode($config_form);
+	  return SfView::SUCCESS;
   }
 
 
