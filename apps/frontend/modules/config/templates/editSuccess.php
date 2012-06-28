@@ -17,7 +17,6 @@ function check_config_form()
     if (jobboard == null)
     {
         $("#config_jobboard_error").html("<ul><li>Require</li></ul>");
-        //return false;
         kt = false;
     }
      
@@ -36,8 +35,10 @@ function check_config_form()
 <h1>Create Config</h1>
 <?php } ?>
 <div id="CreateForm" class='backend_form'>
-  <form id="createForm" action="<?php if(isset($config_id)) echo url_for('@config_edit?config_id='.$config_id);
-                                       else url_for('@config_create'); ?> " method="post" onsubmit="return check_config_form()">
+  <form id="createForm" action="<?php if(isset($config_id))
+                                          echo url_for('@config_edit?config_id='.$config_id);
+                                       else 
+                                         echo  url_for('@config_create'); ?> " method="post" onsubmit="return check_config_form()">
     <table>
             <th>
                 <label for="config_jobboard_id">Website</label>
@@ -50,9 +51,11 @@ function check_config_form()
                     foreach($jobboards as $jobboard) {
                     ?>
                         <option value="<?php echo $jobboard->id?>" 
-                        <?php foreach($jobboard_configs as $jobboard_config){
-                            if($jobboard->id == $jobboard_config->jobboard_id) echo 'selected="selected"';
-                        } 
+                        <?php foreach($jobboard_configs as $jobboard_config)
+                            {
+                                if($jobboard->id == $jobboard_config->jobboard_id) 
+                                  echo 'selected="selected"';
+                            } 
                         ?>><?php echo $jobboard->name ?></option>
                     <?php              
                     }
@@ -69,10 +72,12 @@ function check_config_form()
                 <select name="trucktype[]" multiple="multiple" id="config_truck_type">     
                 
                     <?php
-                    foreach($trucks as $truck) {
+                    foreach($trucks as $truck)
+                     {
                     ?>
                         <option value="<?php echo $truck->id?>" 
-                        <?php foreach($config_trucks as $config_truck){
+                        <?php foreach($config_trucks as $config_truck)
+                        {
                             if($truck->id == $config_truck->truck_id) echo 'selected="selected"';
                         } 
                         ?>><?php echo $truck->name ?></option>
@@ -85,8 +90,14 @@ function check_config_form()
         <tr>
       <?php echo $config_form ?>
       <tr><th>
-      <?php if(isset($config_id)){ ?> <input  id="fs" type="submit" value="<?php echo "Save" ?>"/>
-      <?php }else{ ?> <input  id="fs" type="submit" value="<?php echo "Create" ?>"/>
+      <?php 
+      if(isset($config_id))
+      {
+      ?> <input  id="fs" type="submit" value="<?php echo "Save" ?>"/>
+      <?php 
+         }
+      else{ 
+      ?> <input  id="fs" type="submit" value="<?php echo "Create" ?>"/>
       <?php }?>  
       </th></tr>
     </table>
