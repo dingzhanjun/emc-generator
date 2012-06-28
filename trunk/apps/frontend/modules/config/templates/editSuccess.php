@@ -1,14 +1,15 @@
 <script>
 $(function() {
-		$( "#config_from_date" ).datepicker({
-			showOn: "button",
-			dateFormat: "yy-mm-dd"
-		});
-		$( "#config_to_date" ).datepicker({
-			showOn: "button",
-			dateFormat: "yy-mm-dd"
-		});
+    $( "#config_from_date" ).datepicker({
+		showOn: "button",
+		dateFormat: "yy-mm-dd"
 	});
+	$( "#config_to_date" ).datepicker({
+		showOn: "button",
+		dateFormat: "yy-mm-dd"
+	});
+});
+
 function check_config_form()
 {
     var jobboard = $("#config_jobboard_id").val();
@@ -29,9 +30,9 @@ function check_config_form()
     return kt;
 }
 </script>
-<?php if(isset($config_id)){?>
+<?php if (isset($config_id)) { ?>
 <h1>Edit Config</h1>
-<?php }else{ ?>
+<?php } else { ?>
 <h1>Create Config</h1>
 <?php } ?>
 <div id="CreateForm" class='backend_form'>
@@ -91,14 +92,19 @@ function check_config_form()
       <?php echo $config_form ?>
       <tr><th>
       <?php 
-      if(isset($config_id))
+      if (isset($config_id))
       {
-      ?> <input  id="fs" type="submit" value="<?php echo "Save" ?>"/>
+      ?> 
+        <input  id="fs" type="submit" value="<?php echo "Save" ?>"/>
       <?php 
-         }
-      else{ 
-      ?> <input  id="fs" type="submit" value="<?php echo "Create" ?>"/>
-      <?php }?>  
+      }
+      else
+      { 
+      ?> 
+        <input  id="fs" type="submit" value="<?php echo "Create" ?>"/>
+      <?php 
+      }
+      ?>  
       </th></tr>
     </table>
   </form>
