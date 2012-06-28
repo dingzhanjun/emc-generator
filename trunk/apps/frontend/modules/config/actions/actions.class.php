@@ -125,7 +125,8 @@ class configActions extends sfActions
 		foreach ($jobboards as $jobboard)
 			$jobboard_ids[] = $jobboard->id;
             
-	}	
+	}
+     	
 	foreach ($jobboard_ids as $jobboard_id) {
 		$jobboard_config = new JobboardConfig();
 		$jobboard_config->jobboard_id = $jobboard_id;
