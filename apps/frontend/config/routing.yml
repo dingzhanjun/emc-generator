@@ -50,6 +50,9 @@ config_create:
 config_edit:
   url:   /config/edit/:config_id
   param: { module: config, action: edit }
+config_delete:
+  url:   /config/delete/:config_id
+  param: { module: config, action: delete }
   
 quick_search:
   url: /quick_search
