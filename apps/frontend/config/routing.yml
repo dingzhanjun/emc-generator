@@ -57,3 +57,7 @@ config_delete:
 quick_search:
   url: /quick_search
   param: { module: quickSearch, action: index }
+
+quick_search_reload:
+  url: /quick_search_reload
+  param: { module: quickSearch, action: reload }
