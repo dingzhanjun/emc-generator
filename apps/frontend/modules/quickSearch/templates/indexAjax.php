@@ -9,8 +9,6 @@ var sort_order = 0;
 var current_view = '';
 var page = 1;
 
-
-
 function listReload(page)
 {
 	var arr_data = new Array();
@@ -316,6 +314,9 @@ function sort_js(type, default_order) {
 	.tr_show {
 	}
 	.tr_hide {
+		display: none;
+	}
+	.tr_filter_hide {
 		display: none;
 	}
 	.page_main {

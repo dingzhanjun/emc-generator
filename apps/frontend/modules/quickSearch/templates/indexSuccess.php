@@ -81,7 +81,7 @@ function reload_config_form(config_id)
                         <option value='0'>Choose Config</option>
                     <?
                         foreach ($configs as $config) {
-                            echo "<option value='".$config->id."'>".$config->name."</option>";
+                            echo "<option value='".$config->id."' ".((isset($config_id)&&($config_id==$config->id))?"selected='selected'":"").">".$config->name."</option>";
                         }
                     ?>
                     </select>
@@ -97,7 +97,7 @@ function reload_config_form(config_id)
               <tr>
                 <th>Save</th>
                 <td>
-                    <input type="checkbox" name='config_save' id='config_save' />
+                    <input type="checkbox" name='config_save' id='config_save' <?=(isset($config_save) && $config_save == 'on')?"checked='checked'":""?> />
                 </td>
               </tr>
               <tr><th>
@@ -107,30 +107,9 @@ function reload_config_form(config_id)
           </form>
         </div>
     </td>
-    <td>
+    <td style="vertical-align:top">
         <div id='FilterForm'>
-        	<form action="#" method="post" onsubmit="return quick_search_filter()">
-            <table>
-              <tr>
-                <th>Config</th>
-                <td>
-                    <select name='config_id' id='config_id' onchange="reload_config_form(this.value)">
-                        <option value='0'>Choose Config</option>
-                    <?
-                        foreach ($configs as $config) {
-                            echo "<option value='".$config->id."'>".$config->name."</option>";
-                        }
-                    ?>
-                    </select>
-                </td>
-              </tr>
-              <tr>
-              	<th>
-                	<input  id="fs" type="submit" value="<?php echo "Filter" ?>"/>
-              	</th>
-              </tr>
-            </table>
-            </form>
+        	<? include('indexFilter.php'); ?>
         </div>
     </td>
 </tr>
