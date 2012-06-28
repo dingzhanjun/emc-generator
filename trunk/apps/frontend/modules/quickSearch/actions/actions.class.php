@@ -17,8 +17,8 @@ class quickSearchActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->search_form = new ConfigForm();
-	$this->configs = Doctrine_Query::create()->from('Config')->execute();
+    $this->search_form = new SearchForm();
+	
     if ($request->hasParameter('config')) {
         $form_data = $request->getParameter('config');
         $this->search_form->bind($form_data);
@@ -27,9 +27,9 @@ class quickSearchActions extends sfActions
 			$config_save = $request->getParameter('config_id');
 			if ($config_id != 0)
 				$config = Doctrine_Core::getTable('Config')->find($config_id);
-			else 
+			if ((!isset($config)) || !$config)
             	$config = new Config();
-			
+
             $config->type = 1; // TODO put a constant here
 			$config->name = $request->getParameter('config_name');
             $config->save();
@@ -53,14 +53,18 @@ class quickSearchActions extends sfActions
 				$deleted = Doctrine_Query::create()->delete()->from('JobboardConfig c')->andWhere('c.config_id = ?', $config->id)->execute();
 				$deleted = Doctrine_Query::create()->delete()->from('ConfigTruck c')->andWhere('c.config_id = ?', $config->id)->execute();
 				$deleted = Doctrine_Query::create()->delete()->from('Config c')->andWhere('c.id = ?', $config->id)->execute();
-			}
+			} else
+				$this->config_id = $config->id;
             //$this->setlayout(false);
             //$this->getResponse()->setHttpHeader('Content-Type', 'text/csv');
             //$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=quick_search ' . date("Y-m-d_Hi") . '.csv');
             //return 'CSV';
+			$this->configs = Doctrine_Query::create()->from('Config')->execute();
+			$this->config_save = $config_save;
 			return sfView::SUCCESS;
         }   
     }
+	$this->configs = Doctrine_Query::create()->from('Config')->execute();
     return sfView::SUCCESS;
   }
 
