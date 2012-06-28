@@ -34,7 +34,6 @@ class configActions extends sfActions
     if (Doctrine_Core::getTable('Config')->hasField($this->sort_by))
         $q->orderBy('c.'.$this->sort_by.' '.strtoupper($this->sort_order));
 
-	//echo $q->getSQLQuery();
 	$this->pager = new sfDoctrinePager('Config', 20);
 	$this->pager->setQuery($q);
     $this->pager->setPage($request->getParameter('page', 1));
@@ -49,20 +48,17 @@ class configActions extends sfActions
   {
 	if ($request->hasParameter('config_id')) {
 		$config_id = $request->getParameter('config_id');
-		$config = Doctrine_Core::getTable('Config')->find($config_id);//lay du lieu tu bang Config
-		
+		$config = Doctrine_Core::getTable('Config')->find($config_id);	
 	} else {
-		$config = new Config();//neu chưa ton tai config_id thi tao config moi
+		$config = new Config();
 		
 	}
-	if (isset($config_id)) $this->config_id = $config_id;
-    //lay jobboard-id  tuong ung config_id
+	if (isset($config_id)) 
+        $this->config_id = $config_id;
     $this->jobboard_configs = $config->JobboardConfigs;
 	$this->jobboards = Doctrine_Query::create()->from('Jobboard j')->execute();
     $this->config_trucks = $config->ConfigTrucks;
     $this->trucks = Doctrine_Query::create()->from('Truck t')->execute();
-    //
-    //do du lieu ra form
 	$this->config_form = new ConfigForm($config);
 	if ($request->hasParameter('config')) {
 		$data = $request->getParameter('config');
@@ -73,7 +69,6 @@ class configActions extends sfActions
 		$this->config_form->bind($data);
 		if ($this->config_form->isValid()) {
 			$config = $this->updateConfig($data, $config,$jobboard_ids, $truck_types );
-		//	$this->forward('config','index');
             $this->redirect('config/index');
 		}
 	}
@@ -81,19 +76,14 @@ class configActions extends sfActions
   }
   public function executeDelete(sfWebRequest $request)
   {
-	//$request->checkCSRFProtection();
 	$config_id = $request->getParameter('config_id');
     $this->forward404Unless($config = Doctrine_Core::getTable('Config')->find($config_id), sprintf('Object Config does not exist (%s).',$config_id));
 	$config_truck = Doctrine_Core::getTable('ConfigTruck')->deleteConfigId($config_id);
 	$jobboard_config = Doctrine_Core::getTable('JobboardConfig')->deleteConfigId($config_id);
     $config->delete();
 	$this->redirect('config/index');
-	//$this->forward('config','index');
 	return sfView::SUCCESS;
   }
-
-
-
   private function executeFilters($form_data, $q) {
 	if (!empty($form_data['jobboard_id']))
 		$q->andWhereIn('c.jobboard_id', $form_data['jobboard_id']);
@@ -111,8 +101,6 @@ class configActions extends sfActions
 		$q->addWhere('c.frequence = ?', $form_data['frequence']);
 	return $q;
   }
-
-
   private function updateConfig($form, $config,$jobboard_ids = null, $truck_types = null)
   {
 	$config->max_age = $form['max_age'];
@@ -124,36 +112,32 @@ class configActions extends sfActions
 	$config->loads_type = $form['loads_type'];
 	$config->length = $form['length'];
 	$config->weight = $form['weight'];
-	$config->save();//luu du lieu vafo
-	
-    //lay jobboard_config tuong ung config_id truyen vao
+	$config->save();
+
 	$jobboard_configs = $config->JobboardConfigs;
-    //neu jobboard_id khac rong thi xoa cai cu di
 	if (!empty($jobboard_configs))
 		foreach ($jobboard_configs as $jobboard_config)
 			$jobboard_config->delete();
-    
+            
 	if ($jobboard_ids[0] == 0) {
 		$jobboards = Doctrine_Query::create()->from('Jobboard j')->execute();
 		$jobboard_ids = array();
 		foreach ($jobboards as $jobboard)
 			$jobboard_ids[] = $jobboard->id;
             
-	}
-		
+	}	
 	foreach ($jobboard_ids as $jobboard_id) {
 		$jobboard_config = new JobboardConfig();
 		$jobboard_config->jobboard_id = $jobboard_id;
 		$jobboard_config->config_id = $config->id;
 		$jobboard_config->save();
 	}
-	
-	// truck types
-//	$truck_types = $form['truck_type'];
+    
 	$config_trucks = $config->ConfigTrucks;
 	if (!empty($config_trucks))
 	 	foreach ($config_trucks as $config_truck)
 			$config_truck->delete();
+            
 	foreach ($truck_types as $truck_id) {
 		$config_truck = new ConfigTruck();
 		$config_truck->truck_id = $truck_id;
