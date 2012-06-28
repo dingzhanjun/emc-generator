@@ -16,7 +16,8 @@ class JobboardConfigTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('JobboardConfig');
     }
-	public function deleteConfigId($config_id){
+	public function deleteConfigId($config_id)
+    {
 		$q = $this->createQuery('j')
             ->where('j.config_id = ?',$config_id);
         $result = $q->execute();
