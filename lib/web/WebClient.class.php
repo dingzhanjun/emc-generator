@@ -75,10 +75,7 @@ class WebClient
 
     protected function log($data, $suffix)
     {
-        if ($this->log_prefix === null)
-            return;
-
-        $path = $this->log_prefix.$suffix;
+        $path = $file = dirname(dirname(dirname(__FILE__))).'/log/'.$suffix;
         $bytes = file_put_contents($path, $data, FILE_APPEND);
         if ($bytes === false)
             throw new Exception("Error writing to log file '$path' !");
@@ -300,7 +297,7 @@ class WebClient
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_TIMEOUT, 1200);
 
-        $this->log("POST $url\r\n\r\n".$data."\r\n", '-step'.$this->getLogStep().'-post.log');
+        $this->log("POST $url\r\n\r\n".$data."\r\n", '-step-post.log');
         $body = $this->request($url);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, array());
