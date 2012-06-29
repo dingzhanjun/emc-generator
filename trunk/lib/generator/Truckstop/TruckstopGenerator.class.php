@@ -269,9 +269,7 @@ class TruckstopGenerator
 	
 	private function addLoads($items)
 	{
-		if (!preg_match('#An expanded search found#', $items[0], $match)) {
-			$this->loads[] = $items;
-		}
+		$this->loads[] = $items;
 	}
 	
 	
