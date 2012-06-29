@@ -53,17 +53,21 @@ class quickSearchActions extends sfActions
 				$deleted = Doctrine_Query::create()->delete()->from('JobboardConfig c')->andWhere('c.config_id = ?', $config->id)->execute();
 				$deleted = Doctrine_Query::create()->delete()->from('ConfigTruck c')->andWhere('c.config_id = ?', $config->id)->execute();
 				$deleted = Doctrine_Query::create()->delete()->from('Config c')->andWhere('c.id = ?', $config->id)->execute();
-			} else
+			} else {
 				$this->config_id = $config->id;
+				$this->config_name = $config->name;
+			}
             //$this->setlayout(false);
             //$this->getResponse()->setHttpHeader('Content-Type', 'text/csv');
             //$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=quick_search ' . date("Y-m-d_Hi") . '.csv');
             //return 'CSV';
 			$this->configs = Doctrine_Query::create()->from('Config')->execute();
+			$this->jobboards = Doctrine_Query::create()->from('Jobboard')->execute();
 			$this->config_save = $config_save;
 			return sfView::SUCCESS;
-        }   
+        }
     }
+	$this->jobboards = Doctrine_Query::create()->from('Jobboard')->execute();
 	$this->configs = Doctrine_Query::create()->from('Config')->execute();
     return sfView::SUCCESS;
   }
