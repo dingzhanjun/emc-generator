@@ -39,6 +39,7 @@ class TruckstopGenerator
 		$this->initialize();
 		$client = new WebFormClient();
 		
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
 		if (!$config) {
 			echo ">>>>>Error<<<<< Config not found\n";
@@ -81,7 +82,7 @@ class TruckstopGenerator
 	    $tag['login']['ctl00$ContentPlaceHolder$login$textPassword'] = $jobboard->password;
 		$client->fill($tag['login']);
 	    $client->post('http://truckstop.com/lite/');
-	    $this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
+	    //$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
 	    
 	    // authenticate by handle
 	    if (preg_match("#This login is already in use by someone#", $client->getBody(), $match)) {
@@ -106,8 +107,8 @@ class TruckstopGenerator
             $tag['handle'] = $client->getData();
             $tag['ctl00$ContentPlaceHolder$checkSaveCredentials'] = 'on';
             $client->post('http://truckstop.com/AuthenticateByHandle.aspx?redirect=/Lite/FindFreight.aspx');
-            $this->create_log($jobboard->name.'-authenHandle-'.date(DATE_ISO8601).'.html', $client->getBody());
-	    } elseif (!preg_match('#Once you accept the Terms and Conditions, you will be taken to the application page#', $client->getBody(), $match)) {
+            //$this->create_log($jobboard->name.'-authenHandle-'.date(DATE_ISO8601).'.html', $client->getBody());
+	    } elseif (preg_match('#Once you accept the Terms and Conditions, you will be taken to the application page#', $client->getBody(), $match)) {
 	        $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
             $client->validate(array(
                     '__EVENTTARGET'                         => 'input-hidden',
@@ -123,8 +124,8 @@ class TruckstopGenerator
             $tag['term']['ctl00$ContentPlaceHolder$buttonAccept'] = 'OK';
             $client->fill($tag['term']);
             $client->post('http://truckstop.com/AUP.aspx?redirect=/Lite/FindFreight.aspx');
-            $this->create_log($jobboard->name.'-term-'.date(DATE_ISO8601).'.html', $client->getBody());
-	    } else {
+            //$this->create_log($jobboard->name.'-term-'.date(DATE_ISO8601).'.html', $client->getBody());
+	    } elseif (!preg_match('#Find Freight#', $client->getBody(), $match)) {
 	        echo "Login Fail\n";
 	        exit();
 	    }
@@ -137,7 +138,7 @@ class TruckstopGenerator
 	        exit();
 	    }
 	    
-		$this->create_log($jobboard->name.'-searching-'.date(DATE_ISO8601).'.html', $client->getBody());
+		//$this->create_log($jobboard->name.'-searching-'.date(DATE_ISO8601).'.html', $client->getBody());
 		$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
         $client->validate(array(
                 '__EVENTTARGET'                                                                                       => 'input-hidden',
@@ -209,9 +210,9 @@ class TruckstopGenerator
         $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_comboCountry_ClientState'] = '{"logEntries":[],"value":"USA","text":"USA","enabled":true,"checkedIndices":[]}';
         $origin = explode(",", $config->origin);
         if (sizeof($origin) <= 2){ // simple state
-            $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = $origin[0];
-            $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'] = $origin[1];
-        } else { // multiple state
+            $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = trim($origin[0]);
+            $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'] = trim($origin[1]);
+        } else { // multiple states
             
         }
         $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_text'] = ($config->origin_radius ?: 100);
@@ -227,9 +228,9 @@ class TruckstopGenerator
         if ($config->destination) {
             $destination = explode(",", $config->destination);
             if (sizeof($destination) <= 2) {
-                $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textCity'] = $destination[0];
-                    $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textState'] = $destination[1];
-            } else {
+                $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textCity'] = trim($destination[0]);
+                    $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textState'] = trim($destination[1]);
+            } else { // TODO multiple states
             
             }
         }
@@ -243,18 +244,18 @@ class TruckstopGenerator
         
         $tag['search']['ctl00_ContentPlaceHolder_ucCriteria_radComboSize_ClientState'] = '{"logEntries":[],"value":"'.($config->loads_type == 0 ? 'A' : ($config->loads_type == 1 ? 'F' : 'P')).'","text":"'.($config->loads_type == 0 ? 'All' : ($config->loads_type == 1 ? 'Full' : 'Part')).'","enabled":true,"checkedIndices":[]}';
             
-        $tag['search']['ctl00$ContentPlaceHolder$ucCriteria$radComboSize'] = $tag['search']['ctl00_ContentPlaceHolder_ucCriteria_radComboSize_Input'];  
+        $tag['search']['ctl00$ContentPlaceHolder$ucCriteria$radComboSize'] = ($config->loads_type == 0 ? 'All' : ($config->loads_type == 1 ? 'Full' : 'Part'));
         $tag['search']['ctl00$ContentPlaceHolder$ucLiteEquipmentTypes$listboxEquipment'] = array(12); // Flatbed by default, it's quiet hard to process mapping now, TODO mapping with our trucks list
         $client->fill($tag['search']);
         $client->post('http://truckstop.com/Lite/Searches/SuperSearch.aspx');
-		$this->create_log($jobboard->name.'-loads-'.date(DATE_ISO8601).'.html', $client->getBody());
-		die();
+		//$this->create_log($jobboard->name.'-loads-'.date(DATE_ISO8601).'.html', $client->getBody());
+
 		// parsing reponse
 		$doc = new DOMDocument();
 	    @$doc->loadHTML($client->getBody());
 	    $xpath = new DOMXpath($doc);
 
-	    $nodes = $xpath->query('//*[@id="resultSet"]/tbody/tr');
+	    $nodes = $xpath->query('//*[@id="ctl00_ContentPlaceHolder_ucLoadsGrid_GridSearchResults_ctl00"]/tbody/tr');
 		foreach ($nodes as $node) {
 			$tds = $xpath->query('td', $node);
 			$items = array();
