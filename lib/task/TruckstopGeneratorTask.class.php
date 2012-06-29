@@ -29,41 +29,36 @@ class TruckstopGeneratorTask extends sfBaseTask
 	$generator = new TruckstopGenerator($config_id, 'Truckstop');
 	$generator->execute();
 	$loads = $generator->getLoads();
-	//foreach ($loads as $item)
-		//$this->addLoads($item);
+	foreach ($loads as $item)
+		$this->addLoads($item);
   }
 
 
   private function addLoads($items)
   {
-	if (!preg_match('#An expanded search found#', $items[0], $match)) {
-		$loads_values = $items;
-		unset($loads_values[0]);
-		$hash = md5(json_encode($loads_values));
-		$loads = Doctrine_Core::getTable('Loads')->findOneByHash($hash);
-		if ($loads) {
+      $loads_values = $items;
+	  unset($loads_values[4]);
+	  $hash = md5(json_encode($loads_values));
+	  $loads = Doctrine_Core::getTable('Loads')->findOneByHash($hash);
+      if ($loads) {
 			$this->logSection('info', 'Loads found but exists !');
-		} else {
-			$loads = new Loads();
-			$loads->jobboard_id = Doctrine_Core::getTable('Jobboard')->findOneByName('Truckersedge')->id;
-			$age = preg_split('/:/', $items[0]);
-			$loads->created_at = date(DATE_ISO8601, strtotime('-'.$age[0].' hour -'.$age[1].' minutes'));
-			$date = date('Y').'-'.$items[1];
-			$date = str_replace('/', '-', $date);
-			$loads->date = date('Y-m-d', strtotime($date));
-			$loads->truck_type = $items[2];
-			$loads->loads_type = $items[3];
-			$loads->origin_radius = $items[4];
-			$loads->origin = $items[5];
-			$loads->distance = $items[6];
-			$loads->destination = $items[7];
-			$loads->contact = $items[9];
-			$loads->company = $items[13];
-			$loads->hash = $hash;
-			$this->logSection('info', 'Found new loads with hash code '.$hash);
-			$loads->save();
-		}
-	}
+	  } else {
+	      $loads = new Loads();
+		  $loads->jobboard_id = Doctrine_Core::getTable('Jobboard')->findOneByName('Truckstop')->id;
+		  $loads->created_at = date(DATE_ISO8601, strtotime('-'.$items[4].' hour'));
+		  $loads->date = date('Y-m-d', strtotime($items[6]));
+		  $loads->truck_type = 'Flatbed'; // by default
+		  $loads->loads_type = $items[5];
+		  $loads->origin_radius = $items[9];
+		  $loads->origin = $items[7].' ,'.$items[8];
+		  $loads->distance = ($items[20] != "0" ? $items[20] : $items[21]);
+		  $loads->destination = $items[10].' ,'.$items[11];
+		  $loads->contact = $items[2];
+		  $loads->company = $items[18];
+		  $loads->hash = $hash;
+		  $this->logSection('info', 'Found new loads with hash code '.$hash);
+		  $loads->save();
+	  }
   }
 }
 ?>
