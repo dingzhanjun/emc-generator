@@ -59,6 +59,19 @@ function reload_config_form(config_id)
 		});
 	}
 }
+
+function check_config_name()
+{
+	if ($("#config_save").is(':checked'))
+	{
+		if ($.trim($("#config_name").val()) == '')
+		{
+			$("#config_name_error").html("<ul><li>Require</li></ul>");
+			return false;
+		}
+	}
+	return true;
+}
 </script>
 <table cellpadding="5" width="100%" border="0">
 <tr>
@@ -72,7 +85,7 @@ function reload_config_form(config_id)
 <tr>
     <td>
         <div id="SearchForm" class='backend_form'>
-          <form id="SearchForm" action="<?php echo url_for('@quick_search') ?>" method="post">
+          <form id="SearchForm" action="<?php echo url_for('@quick_search') ?>" method="post" onsubmit="return check_config_name()">
             <table>
               <tr>
                 <th>Config</th>
@@ -91,7 +104,8 @@ function reload_config_form(config_id)
               <tr>
                 <th>Config name</th>
                 <td>
-                    <input type='text' name='config_name' id='config_name' value='' />
+                	<div id='config_name_error'></div>
+                    <input type='text' name='config_name' id='config_name' value='<?=(isset($config_name))?$config_name:""?>' />
                 </td>
               </tr>
               <tr>
