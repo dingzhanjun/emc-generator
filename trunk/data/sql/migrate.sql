@@ -1,0 +1,2 @@
+/* One time you execute this scripts on working server pls put the codes to comment lines so we can follow the database's changes */
+INSERT INTO jobboard VALUES (null, 'Truckstop', 'TruckstopGeneratorTask', 'http://truckstop.com/lite', 't193269rzps', 'wat2re5you', now(), now());
