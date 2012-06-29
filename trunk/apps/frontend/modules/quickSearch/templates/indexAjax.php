@@ -72,7 +72,6 @@ function listReload(page)
 	$(window).scrollTop($(".filter_form").offset().top, 2000);
 	html.html("");
 	
-	alert(numberOfPage);
 	$(".pagination").find('a.page_main').removeClass("page_main");
 	$(".pagination a").each(function(index, element) {
 		var pag = $(this).html();
