@@ -3,7 +3,6 @@ if (isset($loads) && $loads)
 {
 ?>
 <script>
-
 var sort_by = 'loads_1';
 var sort_order = 0;
 var current_view = '';
@@ -16,10 +15,14 @@ function listReload(page)
 	var cnt = 0;	
 	$("."+sort_by+"").each(function()
 	{
-		arr_data[cnt] = $(this).text();
-		arr_index[cnt] = $(this).parent().attr('numero');
-		cnt ++;
+		if (!$(this).parent().hasClass('tr_filter_hide'))
+		{
+			arr_data[cnt] = $(this).text();
+			arr_index[cnt] = $(this).parent().attr('numero');
+			cnt ++;
+		}
 	});
+	var numberOfPage = Math.ceil(cnt / 30);
 	arr_temp = new Array();
 	for (i = 0; i < arr_data.length; i++)
 		arr_temp[i] = arr_data[i];
@@ -63,15 +66,22 @@ function listReload(page)
 			}
 		}
 	}
+	html.append($(".filter_form tbody:first").html());
 	$(".filter_form").find('tbody').html(html.html());
 	$(".filter_form").css("opacity","1");
 	$(window).scrollTop($(".filter_form").offset().top, 2000);
 	html.html("");
+	
+	alert(numberOfPage);
 	$(".pagination").find('a.page_main').removeClass("page_main");
 	$(".pagination a").each(function(index, element) {
 		var pag = $(this).html();
         if (parseInt(pag) == parseInt(page))
 			$(this).addClass("page_main");
+		if (parseInt(pag) > numberOfPage)
+			$(this).hide();
+		else
+			$(this).show();
     });
 }
 
