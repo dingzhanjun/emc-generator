@@ -24,7 +24,7 @@ class quickSearchActions extends sfActions
         $this->search_form->bind($form_data);
         if ($this->search_form->isValid()) {
 			$config_id = $request->getParameter('config_id');
-			$config_save = $request->getParameter('config_id');
+			$config_save = $request->getParameter('config_save');
 			if ($config_id != 0)
 				$config = Doctrine_Core::getTable('Config')->find($config_id);
 			if ((!isset($config)) || !$config)
