@@ -26,3 +26,10 @@ Jobboard:
     address: 'http://www.landstarbroker.com/Loads/LoadCriteria.asp?rt=hg'
     username: ''
     password: ''
+    
+  Truckstop:
+    name: Truckstop
+    generator_name: TruckstopGeneratorTask
+    address: 'http://truckstop.com/lite'
+    username: 't193269rzps'
+    password: 'wat2re5you'
