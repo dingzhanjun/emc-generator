@@ -12,6 +12,8 @@ $(document).ready(function()
 	
 	$(".main_content").css('min-height',viewPortHeight);
 	$(".bg_main_content").css('min-height', viewPortHeight - 100);
+	
+	/*
 	// Effect for below tabs
 	$("#below_tabs .below_tab_icon").hover(function()
 	{
@@ -64,14 +66,14 @@ $(document).ready(function()
 		},1500);
 		
 	});
-	
+	*/
 	
 	// SET POSITION FOR LEFT - RIGHT TABS
-	var height = $("#left_tabs").outerHeight();
-	var top = parseInt((viewPortHeight - height) / 2);
+	// var height = $("#left_tabs").outerHeight();
+	// var top = parseInt((viewPortHeight - height) / 2);
 	
-	$("#left_tabs").css('top',top);
-	$("#right_tabs").css('top',top);
+	// $("#left_tabs").css('top',top);
+	// $("#right_tabs").css('top',top);
 	
 });
 
