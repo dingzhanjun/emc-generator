@@ -18,8 +18,13 @@
         	<td width = '136'></td>
             <td width = ''>
             	<div class='main_content'>
-                	<div style='padding:0 20px'>
+                	<div style='padding:10px 20px; position:relative;'>
                         <div id='logo'><img src='/images/logo.png' /></div>
+						<?php
+							if ($sf_context->getModuleName() != 'default' && $sf_context->getUser()->isAuthenticated()) {
+								echo get_partial('default/tabs');
+							}
+						?>
                     </div>
                     <div class='bg_main_content'>
                     	<div style='padding:0 20px;'>
@@ -27,7 +32,7 @@
                             <div style='display:block;width:100%;height:116px'>
                             <?php
                                 if ($sf_context->getModuleName() != 'default' && $sf_context->getUser()->isAuthenticated()) {
-                                    echo get_partial('default/tabs');
+									echo get_partial('default/signout');
                                 }
                             ?>
                             </div>
