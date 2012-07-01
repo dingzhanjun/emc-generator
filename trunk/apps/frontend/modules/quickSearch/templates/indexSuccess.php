@@ -35,14 +35,14 @@ function reload_config_form(config_id)
 			var trucks = json["config[truck_type][]"];
 			var jobboard_arr = jobboards.split(";");
 			var truck_arr = trucks.split(";");
-			for (jobboard in jobboard_arr)
+			for (index_jobboard in jobboard_arr)
 			{
-				$("#config_jobboard_id option[value="+jobboard+"]").attr('selected','selected');
+				$("#config_jobboard_id option[value="+jobboard_arr[index_jobboard]+"]").attr('selected','selected');
 			}
 			
-			for (truck in truck_arr)
+			for (index_truck in truck_arr)
 			{
-				$("#config_truck_type option[value="+truck+"]").attr('selected','selected');
+				$("#config_truck_type option[value="+truck_arr[index_truck]+"]").attr('selected','selected');
 			}
 			
 			$("#config_max_age").val(json["config[max_age]"]);
