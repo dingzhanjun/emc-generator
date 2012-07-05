@@ -65,7 +65,6 @@ Loads:
     distance:                     { type: integer, notnull: false }
     company:                      { type: string(255), notnull: false }
     deadline:                     { type: string(255), notnull: false }
-    rate:						  { type: string(255), notnull: false }
     #--- and more colums will be updated -- #
 
 Truck:
