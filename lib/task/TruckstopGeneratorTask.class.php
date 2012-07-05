@@ -55,7 +55,6 @@ class TruckstopGeneratorTask extends sfBaseTask
 		  $loads->destination = $items[10].' ,'.$items[11];
 		  $loads->contact = $items[2];
 		  $loads->company = $items[18];
-		  $loads->rate = $items[13];
 		  $loads->hash = $hash;
 		  $this->logSection('info', 'Found new loads with hash code '.$hash);
 		  $loads->save();

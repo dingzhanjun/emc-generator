@@ -59,7 +59,6 @@ class TruckersedgeGeneratorTask extends sfBaseTask
 			$loads->destination = $items[7];
 			$loads->contact = $items[9];
 			$loads->company = $items[13];
-			$loads->rate = $items['rate'];
 			$loads->hash = $hash;
 			$this->logSection('info', 'Found new loads with hash code '.$hash);
 			$loads->save();
