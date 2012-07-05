@@ -189,11 +189,7 @@ function sort_js(type, default_order) {
 						$indexKey ++;
 						echo "<td class='loads_".$indexKey."'>".$loads[9].'</td>';
 						$indexKey ++;
-						echo "<td class='loads_".$indexKey."'>".$loads[10].'</td>';
-						$indexKey ++;
-						echo "<td class='loads_".$indexKey."'>".$loads[11].'</td>';
-						$indexKey ++;
-						echo "<td class='loads_".$indexKey."'>".$loads[15].'</td>';
+						echo "<td class='loads_".$indexKey."'>".$loads[13].'</td>';
 						$indexKey++;
 						echo "<td class='loads_".$indexKey."'>".$loads['rate']."</td>";
 				    } elseif ($jobboard_name == 'Freightview') {
