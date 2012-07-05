@@ -145,19 +145,10 @@ function sort_js(type, default_order) {
             	<?php echo link_to_function('<span>Contact</span>', 'sort_js(\'loads_11\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Credit Score</span>', 'sort_js(\'loads_12\', 0)') ?>
+            	<?php echo link_to_function('<span>Company</span>', 'sort_js(\'loads_12\', 0)') ?>
             </th>
             <th>
-            	<?php echo link_to_function('<span>Ft</span>', 'sort_js(\'loads_13\', 0)') ?>
-            </th>
-            <th>
-            	<?php echo link_to_function('<span>Klbs</span>', 'sort_js(\'loads_14\', 0)') ?>
-            </th>
-            <th>
-            	<?php echo link_to_function('<span>Company</span>', 'sort_js(\'loads_15\', 0)') ?>
-            </th>
-            <th>
-            	<?php echo link_to_function('<span>Rate</span>', 'sort_js(\'loads_16\', 0)') ?>
+            	<?php echo link_to_function('<span>Rate</span>', 'sort_js(\'loads_13\', 0)') ?>
             </th>
         </tr>
 	</thead>
@@ -175,17 +166,34 @@ function sort_js(type, default_order) {
 					$indexKey = 0;
 					echo "<td class='loads_".$indexKey."'>".$jobboard_name.'</td>';
 					if ($jobboard_name == 'Truckersedge') {
-					    foreach ($loads as $key => $value) {
-						    if ($indexKey < 15 && $key != 'rate') {
-							    $indexKey ++;
-							    echo "<td class='loads_".$indexKey."'>".$value.'</td>';
-							    if ($indexKey == 1) {
-							        $indexKey++;
-							        echo "<td class='loads_".$indexKey."'>--</td>";
-							    }
-							        
-						    }
-					    }
+					    $indexKey = 1;
+						echo "<td class='loads_".$indexKey."'>".$loads[0].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[1].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>--</td>";
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[2].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[3].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[4].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[5].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[6].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[7].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[8].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[9].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[10].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[11].'</td>';
+						$indexKey ++;
+						echo "<td class='loads_".$indexKey."'>".$loads[15].'</td>';
 						$indexKey++;
 						echo "<td class='loads_".$indexKey."'>".$loads['rate']."</td>";
 				    } elseif ($jobboard_name == 'Freightview') {
@@ -207,12 +215,6 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>".$loads[8].'</td>';
 				        $indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[4].' '.$loads[5].'</td>';
-				        $indexKey++;
-				        echo "<td class='loads_".$indexKey."'>--</td>";
-				        $indexKey++;
-				        echo "<td class='loads_".$indexKey."'>--</td>";
-				        $indexKey++;
-				        echo "<td class='loads_".$indexKey."'>--</td>";
 				        $indexKey++;
 				        echo "<td class='loads_".$indexKey."'>--</td>";
 				        $indexKey++;
@@ -252,12 +254,6 @@ function sort_js(type, default_order) {
 								break;
 							}
 						echo "<td class='loads_".$indexKey."'>".$contact."</td>"; // contact
-						$indexKey++;
-						echo "<td class='loads_".$indexKey."'>--</td>"; // credit score
-						$indexKey++;
-						echo "<td class='loads_".$indexKey."'>--</td>"; // ft
-						$indexKey++;
-						echo "<td class='loads_".$indexKey."'>--</td>"; // Klbs
 						$indexKey++;
 						echo "<td class='loads_".$indexKey."'>".$company."</td>"; // Company
 						$indexKey++;
@@ -300,12 +296,6 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>--</td>"; // DH(D)
 				        $indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[2]."</td>"; // Contact
-				        $indexKey++; 
-				        echo "<td class='loads_".$indexKey."'>--</td>"; // credit score
-				        $indexKey++;
-				        echo "<td class='loads_".$indexKey."'>--</td>"; // Ft
-				        $indexKey++;
-				        echo "<td class='loads_".$indexKey."'>".$loads[8]."</td>"; // Klbs
 				        $indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[0]."</td>"; // Company
 						$indexKey++;
@@ -327,7 +317,7 @@ function sort_js(type, default_order) {
 					    echo "<td class='loads_".$indexKey."'>".$loads[5]."</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>--</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads[9]."</td>";
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>".$loads[7].' '.$loads[8]."</td>"; 
@@ -339,25 +329,16 @@ function sort_js(type, default_order) {
 					    echo "<td class='loads_".$indexKey."'>".$loads[10].' '.$loads[11]."</td>";
 					    
                         $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>--</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads[12]."</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[2]." Cost: ".$loads[13]."</td>";
-					    
-					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>--</td>";
-					    
-					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>--</td>";
-					    
-					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>--</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads[2]."</td>";
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>".$loads[18]."</td>";
 						
 						$indexKey++;
-				        echo "<td class='loads_".$indexKey."'>--</td>";
+				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>";
 					}
 					echo "</tr>";
 				}
