@@ -155,6 +155,8 @@ class TruckersedgeGenerator
 		foreach ($nodes as $node) {
 			$tds = $xpath->query('td', $node);
 			$items = array();
+			$rate = $node->getAttribute("rate");
+			$items['rate'] = $rate;
 	        foreach ($tds as $td)
 	            $items[] = trim($td->nodeValue);
 			$this->addLoads($items);
