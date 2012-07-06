@@ -228,8 +228,8 @@ class TruckstopGenerator
         if ($config->destination) {
             $destination = explode(",", $config->destination);
             if (sizeof($destination) <= 2) {
-                $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textCity'] = trim($destination[0]);
-                    $tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_textState'] = trim($destination[1]);
+                $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'] = trim($destination[0]);
+                $tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'] = trim($destination[1]);
             } else { // TODO multiple states
             
             }
