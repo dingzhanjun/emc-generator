@@ -26,6 +26,7 @@ Jobboard:
   connection:                     doctrine
   columns:
     id:                           { type: integer, primary: true, autoincrement: true }
+    alias:                        { type: string(255), notnull: true }
     name:                         { type: string(255), notnull: true }
     generator_name:               { type: string(255), notnull: true }
     address:                      { type: string(255), notnull: true }
