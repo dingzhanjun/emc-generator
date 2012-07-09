@@ -44,7 +44,7 @@ class quickSearchActions extends sfActions
                 $generator = new $generator_name($config->id, $jobboard->name);
                 if ($generator) {
                     $generator->execute();
-                    $this->loads[$jobboard->name] = $generator->getLoads();
+                    $this->loads[$jobboard->alias] = $generator->getLoads();
                 }
             }			
 			

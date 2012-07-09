@@ -9,7 +9,7 @@
 			foreach ($jobboards as $jobboard)
 			{
 			?>
-            <option value="<?=$jobboard->name?>"><?=$jobboard->name?></option>
+            <option value="<?=$jobboard->alias?>"><?=$jobboard->alias?></option>
             <?
 			}
 			?>
