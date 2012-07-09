@@ -57,7 +57,7 @@ function check_config_form()
                                 if($jobboard->id == $jobboard_config->jobboard_id) 
                                   echo 'selected="selected"';
                             } 
-                        ?>><?php echo $jobboard->name ?></option>
+                        ?>><?php echo $jobboard->alias ?></option>
                     <?php              
                     }
                 ?>
