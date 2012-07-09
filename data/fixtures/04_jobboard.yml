@@ -1,5 +1,6 @@
 Jobboard:
   Truckersedge:
+    alias: TE
     name: Truckersedge
     generator_name: TruckersedgeGeneratorTask
     address: 'https://www.truckersedge.net/a/secure/Login.aspx?app=truckersedge&'
@@ -7,6 +8,7 @@ Jobboard:
     password: 'S4lt4you'
     
   Freightview:
+    alias: FV
     name: Freightview
     generator_name: FreightviewGeneratorTask
     address: 'https://freightview.com/Home.aspx'
@@ -14,6 +16,7 @@ Jobboard:
     password: 'S4lt5you'
 
   Gofmi:
+    alias: GF
     name: Gofmi
     generator_name: GofmiGeneratorTask
     address: 'http://www.gofmi.wooie.com/Loads'
@@ -21,6 +24,7 @@ Jobboard:
     password: ''
 
   Landstarbroker:
+    alias: LS
     name: Landstarbroker
     generator_name: LandstarbrokerGeneratorTask
     address: 'http://www.landstarbroker.com/Loads/LoadCriteria.asp?rt=hg'
@@ -28,6 +32,7 @@ Jobboard:
     password: ''
     
   Truckstop:
+    alias: TS
     name: Truckstop
     generator_name: TruckstopGeneratorTask
     address: 'http://truckstop.com/lite'
