@@ -81,7 +81,7 @@ class SearchForm extends BaseConfigForm
 			->from('Jobboard j');
 		$res = $q->execute();
 		foreach ($res as $j)
-			$jobboards[$j->id] = $j->name;
+			$jobboards[$j->id] = $j->alias;
 		return $jobboards;
 	}
 	
