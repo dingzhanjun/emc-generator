@@ -47,7 +47,7 @@
 
 	<?php foreach ($pager->getResults() as $loads) :?>
     <tr>
-        <td style="text-align:center"><?php echo Doctrine_Core::getTable('Jobboard')->find($loads->jobboard_id)->name	?></td>
+        <td style="text-align:center"><?php echo Doctrine_Core::getTable('Jobboard')->find($loads->jobboard_id)->alias	?></td>
 		<td style="text-align:center"><?php echo $loads->origin ?></td>
 		<td style="text-align:center"><?php echo $loads->origin_radius ?></td>
 		<td style="text-align:center"><?php echo $loads->destination ?></td>

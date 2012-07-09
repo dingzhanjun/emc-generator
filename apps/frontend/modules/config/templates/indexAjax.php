@@ -41,7 +41,7 @@
 
 	<?php foreach ($pager->getResults() as $config) :?>
     <tr>
-        <td style="text-align:center"><?php $jobboard_configs = $config->JobboardConfigs; foreach ($jobboard_configs as $jobboard_config) echo $jobboard_config->Jobboard->name.'; ' ?></td>
+        <td style="text-align:center"><?php $jobboard_configs = $config->JobboardConfigs; foreach ($jobboard_configs as $jobboard_config) echo $jobboard_config->Jobboard->alias.'; ' ?></td>
 		<td style="text-align:center"><?php $truck_types = $config->ConfigTrucks; foreach ($truck_types as $truck_type) echo $truck_type->Truck->name.'; ' ?></td>
 		<td style="text-align:center"><?php echo $config->max_age ?></td>
 		<td style="text-align:center"><?php echo $config->origin ?></td>

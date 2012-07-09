@@ -158,14 +158,14 @@ function sort_js(type, default_order) {
 			if (!isset($per_page)) $per_page = 30;
 			$indexKey = 0;
 			$count = 0;
-			foreach ($loads as $jobboard_name => $data) {
+			foreach ($loads as $jobboard_alias => $data) {
 				foreach ($data as $index => $loads) {	
 					$count ++;
 					$check = ($count > ($page - 1) * 30 && $count <= ($page * 30));				
 					echo "<tr class='tr_loads ".(($check)?"":"tr_hide")."' numero='".$count."'>";
 					$indexKey = 0;
-					echo "<td class='loads_".$indexKey."'>".$jobboard_name.'</td>';
-					if ($jobboard_name == 'Truckersedge') {
+					echo "<td class='loads_".$indexKey."'>".$jobboard_alias.'</td>';
+					if ($jobboard_alias == 'TE') {
 					    $indexKey = 1;
 						echo "<td class='loads_".$indexKey."'>".$loads[0].'</td>';
 						$indexKey ++;
@@ -192,7 +192,7 @@ function sort_js(type, default_order) {
 						echo "<td class='loads_".$indexKey."'>".$loads[13].'</td>';
 						$indexKey++;
 						echo "<td class='loads_".$indexKey."'>".$loads['rate']."</td>";
-				    } elseif ($jobboard_name == 'Freightview') {
+				    } elseif ($jobboard_alias == 'FV') {
 				        $indexKey = 1;
 				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
 				        $indexKey++;
@@ -219,7 +219,7 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>".$loads[7].' Ref:'.$loads[0].'</td>';
 				    	$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>--</td>";
-					} elseif ($jobboard_name == 'Gofmi') {
+					} elseif ($jobboard_alias == 'GF') {
 						$indexKey = 1;
 						echo "<td class='loads_".$indexKey."'>--</td>"; // no age
 						$indexKey++;
@@ -254,7 +254,7 @@ function sort_js(type, default_order) {
 						echo "<td class='loads_".$indexKey."'>".$company."</td>"; // Company
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>--</td>";
-					} else if ($jobboard_name == 'Landstarbroker') {
+					} else if ($jobboard_alias == 'LS') {
 						$indexKey = 1;
 				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
 				        $indexKey++;
@@ -296,7 +296,7 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>".$loads[0]."</td>"; // Company
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>--</td>";
-					} elseif ($jobboard_name == 'Truckstop') {
+					} elseif ($jobboard_alias == 'TS') {
 					    $indexKey = 1;
 					    echo "<td class='loads_".$indexKey."'>".$loads[4]."</td>"; // age
 					    
