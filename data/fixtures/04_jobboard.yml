@@ -38,3 +38,10 @@ Jobboard:
     address: 'http://truckstop.com/lite'
     username: 't193269rzps'
     password: 'wat2re5you'
+    
+  Getloaded:
+    name: Getloaded
+    generator_name: GetloadedGeneratorTask
+    address: 'http://www.getloaded.com'
+    username: 'qtrucking1'
+    password: 'cuchi2eden3'
