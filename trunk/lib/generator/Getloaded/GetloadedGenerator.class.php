@@ -15,7 +15,8 @@ class GetloadedGenerator
 
 	private function create_log($filename, $content) {
 	    // no longer create log
-		$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+		//$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+		$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/log.html';
 		file_put_contents($file, $content);
 	}
 	
@@ -39,7 +40,10 @@ class GetloadedGenerator
 		$this->initialize();
 		$client = new WebFormClient();
 		
-		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
+		//$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
+		
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/log.html');
+		
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
 		if (!$config) {
 			echo ">>>>>Error<<<<< Config not found\n";
@@ -80,32 +84,83 @@ class GetloadedGenerator
         
 
         $client->setHeaders($headers);
-        $client->get('http://member.getloaded.com/dashboard.php');
+        $client->get('http://member.getloaded.com/search/load_search.php');
         $client->load(array('id' => 'load_search_form'));
         $client->validate(array(
-                        'search'              => 'input-hidden',
-                        'sc'                  => 'input-hidden',
-                        'ss'                  => 'input-hidden',
-                        'dc'                  => 'input-hidden',
-                        'ds'                  => 'input-hidden',
-                        'smask'               => 'input-hidden',
-                        'dmask'               => 'input-hidden',
-                        'search_type'         => 'input-hidden',
-                        'unknown_start'       => 'input-hidden',
-                        'unknown_dest'        => 'input-hidden',
-                        'langDayNames'        => 'input-hidden',
-                        'langDayNamesMin'     => 'input-hidden',
-                        'langMonthNames'      => 'input-hidden',
-                        'langMonthNamesShort' => 'input-hidden',
-                        'prevTxt'             => 'input-hidden',
-                        'nextTxt'             => 'input-hidden',
-                        'curTxt'              => 'input-hidden',
-                        'bttmTxt1'            => 'input-hidden',
-                        'bttmTxt2'            => 'input-hidden',
-                        'starting_point'      => 'input-text',
-                        'destination_point'   => 'input-text',
-                        'pickup_start_date'   => 'input',
-                        'ttype'               => 'select',
+						'search_id'                             => 'input-hidden',
+						'search_id_type'                        => 'input-hidden',
+						'search'                                => 'input-hidden',
+						'pickup_start_date'                     => 'input-hidden',
+						'sc'                                    => 'input-hidden',
+						'ss'                                    => 'input-hidden',
+						'dc'                                    => 'input-hidden',
+						'ds'                                    => 'input-hidden',
+						'smask'                                 => 'input-hidden',
+						'dmask'                                 => 'input-hidden',
+						'search_type'                           => 'input-hidden',
+						'ttype'                                 => 'input-hidden',
+						'amask'                                 => 'input-hidden',
+						'unknown_start'                         => 'input-hidden',
+						'unknown_dest'                          => 'input-hidden',
+						'saved_search_count'                    => 'input-hidden',
+						'search_status'                         => 'input-hidden',
+						'prevTxt'                               => 'input-hidden',
+						'starting_point'                        => 'input-text',
+						'destination_point'                     => 'input-text',
+						'radius_strict'                         => 'input-radio',
+						's_radius'                              => 'input-text',
+						'd_radius'                              => 'input-text',
+						'posted_within'                         => 'select',
+						'ttype_select[64]'                      => 'input-checkbox',
+						'ttype_select[16384]'                   => 'input-checkbox',
+						'ttype_select[2048]'                    => 'input-checkbox',
+						'ttype_select[1024]'                    => 'input-checkbox',
+						'ttype_select[1]'                       => 'input-checkbox',
+						'ttype_select[2]'                       => 'input-checkbox',
+						'ttype_select[1048576]'                 => 'input-checkbox',
+						'ttype_select[8]'                       => 'input-checkbox',
+						'ttype_select[4]'                       => 'input-checkbox',
+						'ttype_select[32]'                      => 'input-checkbox',
+						'ttype_select[256]'                     => 'input-checkbox',
+						'ttype_select[524288]'                  => 'input-checkbox',
+						'ttype_select[512]'                     => 'input-checkbox',
+						'ttype_select[128]'                     => 'input-checkbox',
+						'ttype_select[262144]'                  => 'input-checkbox',
+						'ttype_select[16]'                      => 'input-checkbox',
+						'ttype_select[32768]'                   => 'input-checkbox',
+						'ttype_select[4096]'                    => 'input-checkbox',
+						'ttype_select[8192]'                    => 'input-checkbox',
+						'ttype_select[131072]'                  => 'input-checkbox',
+						'ttype_select[65536]'                   => 'input-checkbox',
+						'use_attributes'                        => 'input-radio',
+						'selected_equipment_attributes[1024]'   => 'input-checkbox',
+						'selected_equipment_attributes[128]'    => 'input-checkbox',
+						'selected_equipment_attributes[131072]' => 'input-checkbox',
+						'selected_equipment_attributes[16]'     => 'input-checkbox',
+						'selected_equipment_attributes[32768]'  => 'input-checkbox',
+						'selected_equipment_attributes[512]'    => 'input-checkbox',
+						'selected_equipment_attributes[8]'      => 'input-checkbox',
+						'selected_equipment_attributes[256]'    => 'input-checkbox',
+						'selected_equipment_attributes[2]'      => 'input-checkbox',
+						'selected_equipment_attributes[65536]'  => 'input-checkbox',
+						'selected_equipment_attributes[262144]' => 'input-checkbox',
+						'selected_equipment_attributes[4]'      => 'input-checkbox',
+						'selected_equipment_attributes[1]'      => 'input-checkbox',
+						'selected_equipment_attributes[64]'     => 'input-checkbox',
+						'selected_equipment_attributes[4096]'   => 'input-checkbox',
+						'selected_equipment_attributes[8192]'   => 'input-checkbox',
+						'selected_equipment_attributes[16384]'  => 'input-checkbox',
+						'selected_equipment_attributes[32]'     => 'input-checkbox',
+						'selected_equipment_attributes[2048]'   => 'input-checkbox',
+						'team'                                  => 'input-checkbox',
+						'pay_amt'                               => 'input-checkbox',
+						'favorites_only'                        => 'input-checkbox',
+						'overweight'                            => 'input-checkbox',
+						'fp'                                    => 'select',
+						'weight'                                => 'input-text',
+						'save_search_new'                       => 'input-checkbox',
+						'new_search_name'                       => 'input-text',
+						'save'                                  => 'input-button',
                         ));
         
         $tag['search'] = $client->getData();
@@ -115,31 +170,35 @@ class GetloadedGenerator
         $full_origin = preg_split('#,#', $full_origin);
         $tag['search']['sc'] = strtoupper($full_origin[0]);
         $tag['search']['ss'] = strtoupper($full_origin[1]);
-        
         $full_destination = str_replace(' ', '', $config->destination);
         $full_destination = preg_split('#,#', $full_destination);
         $tag['search']['dc'] = strtoupper($full_destination[0]);
         $tag['search']['ds'] = strtoupper($full_destination[1]);
         $tag['search']['smask'] = 0;
         $tag['search']['dmask'] = 0;
-        $tag['search']['langDayNames'] = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday';
-        $tag['search']['langDayNamesMin'] = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat';
-        $tag['search']['langMonthNames'] = 'January,February,March,April,May,June,July,August,September,October,November,December';
-        $tag['search']['langMonthNamesShort'] = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec';
+		$tag['search']['search_type'] = "radius_radius";
+		$tag['search']['ttype'] = 64;
+		$tag['search']['amask'] = 0;
+		$tag['search']['unknown_start'] = '';
+		$tag['search']['unknown_dest'] = '';
+		$tag['search']['saved_search_count'] = '';
+		$tag['search']['search_status'] = 'search';
         $tag['search']['prevTxt'] = 'Prev';
         $tag['search']['nextTxt'] = 'Next';
         $tag['search']['curTxt'] = 'Today';
-        $tag['search']['bttmTxt1'] = 'Clear';
-        $tag['search']['bttmTxt2'] = 'Close';
+		$tag['search']['radius_strict'] = 0;
+		$tag['search']['s_radius'] = (($config->origin_radius != 0)?($config->origin_radius):"150");
+		$tag['search']['d_radius'] = (($config->destination_radius != 0)?($config->destination_radius):"150");;
         $tag['search']['starting_point'] = $config->origin;
         $tag['search']['destination_point'] = $config->destination;
         $tag['search']['pickup_start_date'] = date('m/d/Y');
-        $tag['search']['ttype'] = 64;
+		$tag['search']['posted_within'] = 0;
+		$tag['search']['ttype_select[64]'] = 64;
+		$tag['search']['use_attributes'] = 'any';
         
         $client->fill($tag['search']);
         $client->setHeaders($headers);
         $client->post('http://member.getloaded.com/search/load_search.php');
-
 		// parsing reponse
 		$doc = new DOMDocument();
 	    @$doc->loadHTML($client->getBody());
@@ -151,10 +210,8 @@ class GetloadedGenerator
 			$items = array();
 	        foreach ($tds as $td)
 	            $items[] = trim($td->nodeValue);
-	        var_dump($items);
-			//$this->addLoads($items);
+			$this->addLoads($items);
 		}
-		
 	}
 	
 	
