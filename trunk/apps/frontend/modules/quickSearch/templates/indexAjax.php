@@ -335,6 +335,36 @@ function sort_js(type, default_order) {
 						
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>";
+					} elseif ($jobboard_alias == 'GL') {
+						$indexKey = 1;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no deadline
+				        $indexKey++;
+						$date = date('Y').'/'.$loads[7];
+						$date = str_replace('/', '-', $date);
+				        echo "<td class='loads_".$indexKey."'>".$date.'</td>'; // pickup date
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[25].'</td>'; // truck type
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>"; // no loads type
+						$cities = preg_split("/\sto\s/", $loads[1]);
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[9]."</td>"; // no DH(O)
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$cities[0].'</td>'; // origin
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // trip
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$cities[1].'</td>'; // destination
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // DH(D)
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[19]."</td>"; // Contact
+				        $indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[17]."</td>"; // Company
+						$indexKey++;
+				        echo "<td class='loads_".$indexKey."'>".$loads[5]."</td>";
 					}
 					echo "</tr>";
 				}
