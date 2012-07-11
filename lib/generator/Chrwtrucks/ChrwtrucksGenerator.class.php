@@ -14,8 +14,7 @@ class ChrwtrucksGenerator
     public function create_log($filename, $content)
     {
         // no longer create log
-        //	$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
-        $file = dirname(dirname(dirname(dirname(__file__)))) . '/log/log.html';
+       	$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
         file_put_contents($file, $content);
     }
 	
