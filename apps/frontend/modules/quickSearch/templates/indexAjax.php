@@ -87,7 +87,7 @@ function listReload(page)
 function in_array(value, array){  
     for (im = 0; im < array.length / 2 ; im++)
        if(array[2*im] === value || ( im > 0 && array[2*im - 1] === value )) 
-          return true;  
+			return true;  
     return false;  
 }  
 
@@ -109,7 +109,7 @@ function sort_js(type, default_order) {
 	<thead>
     	<tr>
         	<th>
-            	<?php echo link_to_function('<span>Website</span>', 'sort_js(\'loads_0\', 0)') ?>
+				<?php echo link_to_function('<span>Website</span>', 'sort_js(\'loads_0\', 0)') ?>
             </th>
             <th>
             	<?php echo link_to_function('<span>Age</span>', 'sort_js(\'loads_1\', 1)') ?>
@@ -335,6 +335,58 @@ function sort_js(type, default_order) {
 						
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>";
+                    }elseif ($jobboard_alias == 'CT') {
+					    $indexKey = 1;
+					    echo "<td class='loads_".$indexKey."'>--</td>"; // age
+					    
+                        $indexKey++;
+                        $deadline = $loads[2];              
+                        $deadline1 = substr($deadline, 0,9);
+                        $deadline2 = substr($deadline,9,strlen($deadline));
+            			$deadline1 = explode("/", strip_tags($deadline1));
+                        $deadline1[2] = trim(substr($deadline1[2], 0, 4));
+            			$deadline1 = date("Y-m-d", strtotime(trim($deadline1[2]) . "-" . trim($deadline1[0]) . "-" . trim($deadline1[1])));
+					    echo "<td class='loads_".$indexKey."'>".$deadline1."<br/>".$deadline2."</td>"; // pick up
+					    
+					    $indexKey++;
+                        $date = $loads[2];              
+                        $date1 = substr($date, 0,9);
+                        $date2 = substr($date,9,strlen($date));
+            			$date1 = explode("/", strip_tags($date1));
+                        $date1[2] = trim(substr($date1[2], 0, 4));
+            			$date1 = date("Y-m-d", strtotime(trim($date1[2]) . "-" . trim($date1[0]) . "-" . trim($date1[1])));
+					    echo "<td class='loads_".$indexKey."'>".$date1."<br/>".$date2."</td>"; // pick up
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>".$loads[8]."</td>"; // truck type
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; // no Full/partial
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; // no DH(O)
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>".$loads[1]."</td>"; // origin
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; // no trip
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>".$loads[4]."</td>"; // destination
+					    
+                        $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; // no DH(D)
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; //no Contact
+					    
+					    $indexKey++;
+					    echo "<td class='loads_".$indexKey."'>---</td>"; // no Company
+						
+						$indexKey++;
+				        echo "<td class='loads_".$indexKey."'>---</td>"; // no Rate
+                                             
 					} elseif ($jobboard_alias == 'GL') {
 						$indexKey = 1;
 				        echo "<td class='loads_".$indexKey."'>--</td>"; // no age
