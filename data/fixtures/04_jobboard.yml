@@ -40,6 +40,7 @@ Jobboard:
     password: 'wat2re5you'
     
   Getloaded:
+    alias: GL
     name: Getloaded
     generator_name: GetloadedGeneratorTask
     address: 'http://www.getloaded.com'
