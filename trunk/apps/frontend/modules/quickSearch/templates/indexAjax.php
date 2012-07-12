@@ -391,16 +391,16 @@ function sort_js(type, default_order) {
                         if(strlen($destination_radius) != 0) 
 							echo "<td class='loads_".$indexKey."'>".(int)$destination_radius." mi</td>"; // DH(D)
                         else 
-                            echo "<td class='loads_".$indexKey."'>----</td>"; // DH(D)
+                            echo "<td class='loads_".$indexKey."'>--</td>"; // DH(D)
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[11]."</td>"; // Contact
-					    
+					    echo "<td class='loads_".$indexKey."'>".((isset($loads[11]) && $loads[11])?$loads[11]:"--")."</td>"; // Contact
+                        
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[9]." - ".$loads[10]."</td>"; // Company
+					    echo "<td class='loads_".$indexKey."'>".((isset($loads[9]) && isset($loads[10]) && $loads[9] && $loads[9])?($loads[9]." - ".$loads[10]):(html_entity_decode($loads[0])))."</td>"; // Company
 						
 						$indexKey++;
-				        echo "<td class='loads_".$indexKey."'>---</td>"; // no Rate
+				        echo "<td class='loads_".$indexKey."'>--</td>"; // no Rate
                                              
 					} elseif ($jobboard_alias == 'GL') {
 						$indexKey = 1;
