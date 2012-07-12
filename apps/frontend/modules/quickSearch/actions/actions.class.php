@@ -79,16 +79,19 @@ class quickSearchActions extends sfActions
 
   private function updateNotifies()
   {
-	  /* Doctrine_Query::create()
+	  Doctrine_Query::create()
 		  ->update('Notify n')
 		  ->set('n.status', '?', 1)
 		  ->where('n.status = ?', 0)
 		  ->execute();
-	  */
+	
   }
 
   public function executeReload(sfWebRequest $request) {
-	  
+	  $q = Doctrine_Query::create()
+		->from('Notify c')
+		->addWhere('c.status = ?', 0);
+	  $this->notifies = $q->fetchArray();
 	  $config_id = $request->getParameter("config_id");
 	  $config = Doctrine_Core::getTable('Config')->find($config_id);
  	  $jobboard_configs = $config->JobboardConfigs;
@@ -118,7 +121,7 @@ class quickSearchActions extends sfActions
 	  $config_form["config[from_date]"] = $config->from_date;
 	  $config_form["config[to_date]"] = $config->to_date;
 	  $this->config_form_new = json_encode($config_form);
-	  updateNotifies();
+	  $this->updateNotifies();
 	  return SfView::SUCCESS;
   }
 
@@ -133,8 +136,8 @@ class quickSearchActions extends sfActions
     $config->loads_type = $form['loads_type'];
     $config->length = $form['length'];
     $config->weight = $form['weight'];
-    $config->from_date = date('d/m/y', strtotime($form['from_date']));
-    $config->to_date = date('d/m/y', strtotime($form['to_date']));
+    $config->from_date = date('Y/m/d', strtotime($form['from_date']));
+    $config->to_date = date('Y/m/d', strtotime($form['to_date']));
     $config->save();
 
     // jobboard config
