@@ -13,6 +13,7 @@ abstract class BaseJobboardFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'alias'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'name'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'generator_name' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'address'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -23,6 +24,7 @@ abstract class BaseJobboardFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'alias'          => new sfValidatorPass(array('required' => false)),
       'name'           => new sfValidatorPass(array('required' => false)),
       'generator_name' => new sfValidatorPass(array('required' => false)),
       'address'        => new sfValidatorPass(array('required' => false)),
@@ -50,6 +52,7 @@ abstract class BaseJobboardFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'             => 'Number',
+      'alias'          => 'Text',
       'name'           => 'Text',
       'generator_name' => 'Text',
       'address'        => 'Text',
