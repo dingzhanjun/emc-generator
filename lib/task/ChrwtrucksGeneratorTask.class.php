@@ -10,7 +10,6 @@ class ChrwtrucksGeneratorTask extends sfBaseTask
 			new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
 			new sfCommandOption('exp', null, sfCommandOption::PARAMETER_OPTIONAL, 'The new expiration date', ''),
 		));
-
 		$this->addArgument('config', sfCommandArgument::REQUIRED, 'The config id');
    }
  
@@ -31,13 +30,12 @@ class ChrwtrucksGeneratorTask extends sfBaseTask
 		
 		$loads = $generator->getLoads();
         foreach ($loads as $item)
-			$this->addLoads($item);
+       	    $this->addLoads($item);
   }
   
   private function addLoads($items)
    {	
-		$loads_values = $items;
-		$hash = md5(json_encode($loads_values));
+		$hash = md5(json_encode($items));
 		$loads = Doctrine_Core::getTable('Loads')->findOneByHash($hash);
 		if ($loads) {
 			$this->logSection('info', 'Loads found but exists !');
@@ -53,26 +51,36 @@ class ChrwtrucksGeneratorTask extends sfBaseTask
             $date[2] = trim(substr($date[2], 0, 4));
 			$loads->date = date("Y-m-d", strtotime(trim($date[2]) . "-" . trim($date[0]) . "-" . trim($date[1])));
  
-            $deadline = $loads_values[5];
+            $deadline = $items[5];
             $deadline = trim($deadline);
             $deadline = substr($deadline, 0, 12);
 			$deadline = explode("/", strip_tags($deadline));
             $deadline[2] = trim(substr($deadline[2], 0, 4));        
             $loads->deadline = date("Y-m-d", strtotime(trim($deadline[2]) . "-" . trim($deadline[0]) . "-" . trim($deadline[1])));
             
-			$loads->truck_type = $loads_values[8];
-			$loads->origin = $loads_values[1];
-			$loads->destination = $loads_values[4];
+			$loads->truck_type = $items[8];
+			$loads->origin = $items[1];
+			$loads->destination = $items[4];
+			$loads->contact = $items[11];
+            $loads->company = $items[9]." - ".$items[10];
+			
+			$distance = $items[12];
+            $replace = array(".", ",");
+            $distance = str_replace($replace,"",$distance);
+            $loads->distance = $distance;
+
             
-            $origin_radius = $loads_values[3]; 
+            $origin_radius = $items[3]; 
             $origin_radius = strtolower($origin_radius);
             $origin_radius = trim(substr($origin_radius, 0, strrpos($origin_radius, "miles"))) ;
-            $loads->origin_radius = (int)$origin_radius ;
+            if(strlen($origin_radius) != 0) 
+                $loads->origin_radius = (int)$origin_radius ;
             
-            $destination_radius = $loads_values[6]; 
+            $destination_radius = $items[6]; 
             $destination_radius = strtolower($destination_radius);
             $destination_radius = trim(substr($destination_radius, 0, strrpos($destination_radius, "miles"))) ;
-			$loads->destination_radius = (int)$destination_radius ;
+            if(strlen($destination_radius) != 0)
+                $loads->destination_radius = (int)$destination_radius ;
             
             $loads->hash = $hash;
 			$this->logSection('info', 'Found new loads with hash code '.$hash);
