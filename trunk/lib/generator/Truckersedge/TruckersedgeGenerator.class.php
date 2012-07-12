@@ -85,8 +85,10 @@ class TruckersedgeGenerator
 			$client->get('http://www.truckersedge.net/a/app/default.aspx');
 			$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
 			if (!preg_match('#TruckersEdge.net - My Overview#', $client->getBody(), $match)) {
+				$notify_error = new NotifyError("Truckeredge - Login fail\n");
+				$notify_error->execute();
 				$this->logSection('info', "Login fail");
-				exit;
+				return;
 			}
 			
 			// second step, searching loads
