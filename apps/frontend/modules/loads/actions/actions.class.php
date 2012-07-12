@@ -17,6 +17,10 @@ class loadsActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    $q = Doctrine_Query::create()
+		->from('Notify c')
+		->addWhere('c.status = ?', 0);
+	$this->notifies = $q->fetchArray();
 	$this->loads_form = new SearchingLoadsForm();
 	$q = Doctrine_Query::create()
 		->from('Loads l');

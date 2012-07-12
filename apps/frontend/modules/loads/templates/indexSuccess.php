@@ -36,6 +36,19 @@ function sort(type, default_order) {
 	});*/
 -->
 </script>
+<div style='font-weight:bold; color:#f00; padding:5px 0; font-size:13px;'>
+<?php
+	if (sizeof($notifies) > 0)
+	{
+		echo "<ul>";
+		foreach ($notifies as $notify)
+		{
+			echo "<li>".$notify['content']." - ".$notify['created_at']."</li>";
+		}
+		echo "</ul>";
+	}
+?>
+</div>
 <h1>Loads list</h1>
 <div id="SearchForm" class='backend_form'>
   <form id="filterSearch" action="<?php echo url_for('@loads') ?>" method="post">
