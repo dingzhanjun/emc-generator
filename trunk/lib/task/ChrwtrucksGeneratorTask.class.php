@@ -61,6 +61,7 @@ class ChrwtrucksGeneratorTask extends sfBaseTask
 			$loads->truck_type = $items[8];
 			$loads->origin = $items[1];
 			$loads->destination = $items[4];
+            /*
 			$loads->contact = $items[11];
             $loads->company = $items[9]." - ".$items[10];
 			
@@ -68,7 +69,7 @@ class ChrwtrucksGeneratorTask extends sfBaseTask
             $replace = array(".", ",");
             $distance = str_replace($replace,"",$distance);
             $loads->distance = $distance;
-
+            */
             
             $origin_radius = $items[3]; 
             $origin_radius = strtolower($origin_radius);
