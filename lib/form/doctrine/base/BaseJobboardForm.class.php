@@ -16,6 +16,7 @@ abstract class BaseJobboardForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
+      'alias'          => new sfWidgetFormInputText(),
       'name'           => new sfWidgetFormInputText(),
       'generator_name' => new sfWidgetFormInputText(),
       'address'        => new sfWidgetFormInputText(),
@@ -27,6 +28,7 @@ abstract class BaseJobboardForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'alias'          => new sfValidatorString(array('max_length' => 255)),
       'name'           => new sfValidatorString(array('max_length' => 255)),
       'generator_name' => new sfValidatorString(array('max_length' => 255)),
       'address'        => new sfValidatorString(array('max_length' => 255)),
