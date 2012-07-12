@@ -17,8 +17,11 @@ class quickSearchActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    $q = Doctrine_Query::create()
+		->from('Notify c')
+		->addWhere('c.status = ?', 0);
+	$this->notifies = $q->fetchArray();
     $this->search_form = new SearchForm();
-	
     if ($request->hasParameter('config')) {
         $form_data = $request->getParameter('config');
         $this->search_form->bind($form_data);
@@ -46,7 +49,7 @@ class quickSearchActions extends sfActions
                     $generator->execute();
                     $this->loads[$jobboard->alias] = $generator->getLoads();
                 }
-            }			
+            }
 			
 			if ($config_save != 'on')
 			{
@@ -64,12 +67,24 @@ class quickSearchActions extends sfActions
 			$this->configs = Doctrine_Query::create()->from('Config')->addWhere('type = 1')->execute();
 			$this->jobboards = Doctrine_Query::create()->from('Jobboard')->execute();
 			$this->config_save = $config_save;
+			$this->updateNotifies();
 			return sfView::SUCCESS;
         }
     }
 	$this->jobboards = Doctrine_Query::create()->from('Jobboard')->execute();
 	$this->configs = Doctrine_Query::create()->from('Config')->addWhere('type = 1')->execute();
+	$this->updateNotifies();
     return sfView::SUCCESS;
+  }
+
+  private function updateNotifies()
+  {
+	  /* Doctrine_Query::create()
+		  ->update('Notify n')
+		  ->set('n.status', '?', 1)
+		  ->where('n.status = ?', 0)
+		  ->execute();
+	  */
   }
 
   public function executeReload(sfWebRequest $request) {
@@ -103,6 +118,7 @@ class quickSearchActions extends sfActions
 	  $config_form["config[from_date]"] = $config->from_date;
 	  $config_form["config[to_date]"] = $config->to_date;
 	  $this->config_form_new = json_encode($config_form);
+	  updateNotifies();
 	  return SfView::SUCCESS;
   }
 
