@@ -38,8 +38,9 @@ Jobboard:
     address: 'http://truckstop.com/lite'
     username: 't193269rzps'
     password: 'wat2re5you'
+    
   Chrwtrucks:
-    alias: CT
+    alias: CH
     name: Chrwtrucks
     generator_name: ChrwtrucksGeneratorTask
     address: 'https://www.chrwtrucks.com'
