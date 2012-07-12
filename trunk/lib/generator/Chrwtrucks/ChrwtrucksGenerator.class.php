@@ -335,7 +335,8 @@ class ChrwtrucksGenerator
         		    }                    
                     $items = $tmp; 
                 }    
-            
+                
+				/*
                 $client->get('https://www.chrwtrucks.com/Applications/FindLoad/FindLoadDetails.aspx?Caller=Radius&LoadNumber='.$items[0]);
                 $html = new DOMDocument();
                 @$html->loadHTML($client->getBody());
@@ -356,7 +357,9 @@ class ChrwtrucksGenerator
                 foreach($nodes_detail as $n ) {
 					$items[] = $n->nodeValue;
                 }
-            $this->addLoads($items);
+				*/
+				$items[0] = "<a href=https://www.chrwtrucks.com/Applications/FindLoad/FindLoadDetails.aspx?Caller=Radius&LoadNumber=$items[0] target=_blank >$items[0]</a>";
+				$this->addLoads($items);
             }
             
 		}   
