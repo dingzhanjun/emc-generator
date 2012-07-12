@@ -80,7 +80,7 @@ function check_config_name()
 		echo "<ul>";
 		foreach ($notifies as $notify)
 		{
-			echo "<li>".$notify['content']." - ".$notify['created_at']."</li>";
+			echo "<li>".$notify['content']."  ".$notify['created_at']."</li>";
 		}
 		echo "</ul>";
 	}
