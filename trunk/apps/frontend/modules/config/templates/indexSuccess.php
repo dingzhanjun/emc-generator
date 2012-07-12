@@ -36,7 +36,7 @@ function sort(type, default_order) {
 		echo "<ul>";
 		foreach ($notifies as $notify)
 		{
-			echo "<li>".$notify['content']." - ".$notify['created_at']."</li>";
+			echo "<li>".$notify['content']."  ".$notify['created_at']."</li>";
 		}
 		echo "</ul>";
 	}
