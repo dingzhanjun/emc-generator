@@ -17,6 +17,10 @@ class configActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+	$q = Doctrine_Query::create()
+		->from('Notify c')
+		->addWhere('c.status = ?', 0);
+	$this->notifies = $q->fetchArray();
 	$this->config_form = new SearchingConfigForm();
 	$q = Doctrine_Query::create()
 		->from('Config c')
