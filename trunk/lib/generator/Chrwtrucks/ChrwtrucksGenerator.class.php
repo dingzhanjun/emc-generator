@@ -14,10 +14,10 @@ class ChrwtrucksGenerator
     public function create_log($filename, $content)
     {
         // no longer create log
-       	$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+        $file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
         file_put_contents($file, $content);
     }
-	
+
     private function initialize()
     {
         // TOTO make it to a sfconfig get
@@ -26,11 +26,10 @@ class ChrwtrucksGenerator
     private function mapping($value, $mapping)
     {
         if (array_key_exists($value, $mapping))
-			return $mapping[$value];
+            return $mapping[$value];
         else
             return null;
     }
-
 
     public function execute()
     {
@@ -38,7 +37,7 @@ class ChrwtrucksGenerator
         $client = new WebFormClient();
 
         $client->setLogPrefix(dirname(dirname(dirname(dirname(__file__)))) . '/log/' . $this->
-			jobboard_name . ' ' . date(DATE_ISO8601));
+            jobboard_name . ' ' . date(DATE_ISO8601));
         $config = Doctrine_Core::getTable('Config')->find($this->config_id);
         if (!$config) {
 			echo ">>>>>Error<<<<< Config not found\n";
@@ -59,13 +58,13 @@ class ChrwtrucksGenerator
         // $this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
         $client->load(array('id' => 'form1', 'name' => 'form1'));
         $client->validate(array(
-            '__VIEWSTATE' => 'input-hidden',
-            '__EVENTVALIDATION' => 'input-hidden',
-            'Login_External1:txtLogin' => 'input-text',
-            'Login_External1:txtPassword' => 'input-password',
+            '__VIEWSTATE' 					=> 'input-hidden',
+            '__EVENTVALIDATION'				=> 'input-hidden',
+            'Login_External1:txtLogin' 		=> 'input-text',
+            'Login_External1:txtPassword' 	=> 'input-password',
             'Login_External1:chkRetainUser' => 'input-checkbox',
-            'Login_External1:ibnLogin' => 'input-image',
-            'javascript' => 'input-hidden',
+            'Login_External1:ibnLogin' 		=> 'input-image',
+            'javascript' 					=> 'input-hidden',
         ));
         $client->removeField('Login_External1:chkRetainUser');
         $tag['login'] = $client->getData();
@@ -117,12 +116,11 @@ class ChrwtrucksGenerator
                 $client->removeField('_ctl0:cphMain:btnReset');
                 $client->removeField('_ctl0:cphMain:btnRetrieve');
                 $client->removeField('_ctl0:cphMain:ddlSpecialized');
-                
                 $tag['search'][''] = $client->getData();
-                $tag['search']['_ctl0:cphMain:ddlOState'] = substr($origin,strrpos($origin,",") + 1,strlen($origin));  
-                $tag['search']['_ctl0:cphMain:txtOCity'] =  substr($origin,0,strrpos($origin, ","));
-                $tag['search']['_ctl0:cphMain:ddlDState'] = substr($destination,strrpos($destination,",") + 1,strlen($destination));  
-                $tag['search']['_ctl0:cphMain:txtDCity'] =  substr($destination,0,strrpos($destination, ","));
+                $tag['search']['_ctl0:cphMain:ddlOState'] = trim(strtoupper(substr($origin, strrpos($origin, ",") + 1, strlen($origin))));  
+                $tag['search']['_ctl0:cphMain:txtOCity'] =  trim(substr($origin, 0, strrpos($origin, ",")));
+                $tag['search']['_ctl0:cphMain:ddlDState'] = trim(strtoupper(substr($destination, strrpos($destination, ",") + 1, strlen($destination))));  
+                $tag['search']['_ctl0:cphMain:txtDCity'] =  trim(substr($destination, 0, strrpos($destination, ",")));
                 $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
                 foreach ($config_trucks as $config_truck) {
                     $truck_id = $config_truck->Truck->id;
@@ -144,7 +142,16 @@ class ChrwtrucksGenerator
                     break;
                  }
                 $tag['search']['_ctl0_cphMain_oRadius'] = $config->origin_radius;
+                $tag['search']['_ctl0_cphMain_oRadius_clientState'] = "|0|01" . $config->origin_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->origin_radius . '"' . "]";
                 $tag['search']['_ctl0_cphMain_dradius'] = $config->destination_radius;
+                $tag['search']['_ctl0_cphMain_dradius_clientState'] = "|0|01" . $config->destination_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->destination_radius . '"' . "]";
+                $tag['search']['_ctl0:cphMain:hdnStartDate'] = date("m/d/Y",strtotime($config->from_date));
+                $start_date = date("Y-m-d", strtotime($config->from_date));
+                $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01". $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
+                $tag['search']['_ctl0:cphMain:hdnEndDate'] = date("m/d/Y", strtotime($config->to_date));
+                $end_date = date("Y-m-d", strtotime($config->to_date));
+                $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01". $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
+                $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
                 $client->fill($tag['search']);
                 $client->post('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearchOD.aspx');
             }                
@@ -185,8 +192,8 @@ class ChrwtrucksGenerator
                 $client->removeField('_ctl0:cphMain:ddlSpecialized');
                 
                 $tag['search'][''] = $client->getData();
-                $tag['search']['_ctl0:cphMain:ddlState'] = substr($origin,strrpos($origin,",") + 1,strlen($origin));  
-                $tag['search']['_ctl0:cphMain:txtCity'] =  substr($origin,0,strrpos($origin, ","));
+                $tag['search']['_ctl0:cphMain:ddlState'] = trim(strtoupper(substr($origin, strrpos($origin, ",") + 1, strlen($origin))));  
+                $tag['search']['_ctl0:cphMain:txtCity'] =  trim(substr($origin, 0, strrpos($origin, ",")));
                 $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
                 foreach ($config_trucks as $config_truck) {
                     $truck_id = $config_truck->Truck->id;
@@ -208,10 +215,17 @@ class ChrwtrucksGenerator
                     break;
                 }
                 $tag['search']['_ctl0_cphMain_intMiles'] = $config->origin_radius;
+                $tag['search']['_ctl0_cphMain_intMiles_clientState'] = "|0|01" . $config->origin_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->origin_radius.'"' . "]";
+                $start_date = date("Y-m-d",strtotime($config->from_date));
+                $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01" . $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
+                $end_date = date("Y-m-d",strtotime($config->to_date));
+                $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01" . $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
+                $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
+                $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
                 $client->fill($tag['search']);
                 $client->post('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearch.aspx?InOut=1');
             }
-          elseif ($destination != "") {
+			elseif ($destination != "") {
                 $status_search = "destination";
                 $client->get('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearch.aspx?InOut=0');
                 $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
@@ -248,8 +262,8 @@ class ChrwtrucksGenerator
                 $client->removeField('_ctl0:cphMain:ddlSpecialized');
                 
                 $tag['search'][''] = $client->getData();
-                $tag['search']['_ctl0:cphMain:ddlState'] = substr($destination,strrpos($destination,",") + 1,strlen($destination));  
-                $tag['search']['_ctl0:cphMain:txtCity'] =  substr($destination,0,strrpos($destination, ","));
+                $tag['search']['_ctl0:cphMain:ddlState'] = trim(strtoupper(substr($destination, strrpos($destination,  ",") + 1, strlen($destination))));  
+                $tag['search']['_ctl0:cphMain:txtCity'] =  trim(substr($destination, 0, strrpos($destination, ",")));
                 $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
                 foreach ($config_trucks as $config_truck) {
                     $truck_id = $config_truck->Truck->id;
@@ -271,6 +285,12 @@ class ChrwtrucksGenerator
                     break;
                  }
                 $tag['search']['_ctl0_cphMain_intMiles'] = $config->destination_radius;
+                $tag['search']['_ctl0_cphMain_intMiles_clientState'] = "|0|01" . $config->destination_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->destination_radius . '"' . "]";
+                $start_date = date("Y-m-d",strtotime($config->from_date));
+                $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01" . $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
+                $end_date = date("Y-m-d",strtotime($config->to_date));
+                $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01" . $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
+                $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
                 $client->fill($tag['search']);
                 $client->post('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearch.aspx?InOut=0');
             }          
@@ -288,38 +308,58 @@ class ChrwtrucksGenerator
 			$items = array(); 
 	        foreach ($tds as $td) {
 	            $td = $td->nodeValue;
-	            $td = preg_replace("/[^A-Za-z0-9, \/:]/i", " ", $td);
+	            $td = preg_replace("/[^A-Za-z0-9, \/:-]/i", " ", $td);
                 $td = preg_replace('/\s+/', ' ', $td);
 	            $items[] = trim($td);
 	        }
-            if($items[0] >= 1) {
+            if($items[0] >= 1)
+			{
                 if($status_search == "origin") {
-                $tmp = array();
-    			for($i = 0; $i <= 5; $i++) {
-    			    $tmp[$i] = $items[$i];
-    			}
-    			$tmp[6] = " ";
-    			$tmp[7] = $items[6];
-    			$tmp[8] = $items[7];
-    			$this->addLoads($tmp);
-            }
-            elseif($status_search == "destination") {
-                $tmp = array();
-    			for($i = 0; $i <= 2; $i++) {
-					$tmp[$i] = $items[$i];
-    			}
-    		    for($i = 4; $i <= 8 ; $i++) {
-					$tmp[$i] = $items[$i - 1];
-    		    }
-                $tmp[3] = " ";
-                $this->addLoads($tmp); 
-            }    
-            else 
-                $this->addLoads($items);
+                    $tmp = array();
+        			for($i = 0; $i <= 5; $i++) {
+						$tmp[$i] = $items[$i];
+        			}
+        			$tmp[6] = " ";
+        			$tmp[7] = $items[6];
+        			$tmp[8] = $items[7];
+                    $items = $tmp;
+                }
+                elseif($status_search == "destination") {
+                    $tmp = array();
+        			for($i = 0; $i <= 2; $i++) {
+						$tmp[$i] = $items[$i];
+        			}
+                    $tmp[3] = " ";
+        		    for($i = 4; $i <= 8 ; $i++) {
+						$tmp[$i] = $items[$i - 1];
+        		    }                    
+                    $items = $tmp; 
+                }    
+            
+                $client->get('https://www.chrwtrucks.com/Applications/FindLoad/FindLoadDetails.aspx?Caller=Radius&LoadNumber='.$items[0]);
+                $html = new DOMDocument();
+                @$html->loadHTML($client->getBody());
+                $xpath_detail = new DOMXpath($html);
+                $nodes_detail = $xpath_detail->query("//a[@id='hypContact']");     
+	            foreach($nodes_detail as $n ) {
+					$items[] = $n->nodeValue;
+                }
+                $nodes_detail = $xpath_detail->query("//span[@id='lblBranchName']");
+                foreach($nodes_detail as $n ) {
+	               	$items[] = $n->nodeValue;
+                }
+                $nodes_detail = $xpath_detail->query("//span[@id='lblBranchPhone']");
+                foreach($nodes_detail as $n ) {
+	               	$items[] = $n->nodeValue;
+                }
+                $nodes_detail = $xpath_detail->query("//span[@id='lblDistance']");
+                foreach($nodes_detail as $n ) {
+					$items[] = $n->nodeValue;
+                }
+            $this->addLoads($items);
             }
             
-		}
-        
+		}   
     }
     private function addLoads($items)
     {
@@ -329,6 +369,6 @@ class ChrwtrucksGenerator
 
     public function getLoads()
     {
-		return $this->loads;
+        return $this->loads;
     }
 }
