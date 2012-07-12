@@ -346,7 +346,7 @@ function sort_js(type, default_order) {
             			$deadline1 = explode("/", strip_tags($deadline1));
                         $deadline1[2] = trim(substr($deadline1[2], 0, 4));
             			$deadline1 = date("Y-m-d", strtotime(trim($deadline1[2]) . "-" . trim($deadline1[0]) . "-" . trim($deadline1[1])));
-					    echo "<td class='loads_".$indexKey."'>".$deadline1."<br/>".$deadline2."</td>"; // pick up
+					    echo "<td class='loads_".$indexKey."'>".$deadline1."<br/>".$deadline2."</td>"; // deadline
 					    
 					    $indexKey++;
                         $date = $loads[2];              
@@ -364,25 +364,40 @@ function sort_js(type, default_order) {
 					    echo "<td class='loads_".$indexKey."'>---</td>"; // no Full/partial
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>---</td>"; // no DH(O)
+                        $origin_radius = $loads[3]; 
+                        $origin_radius = strtolower($origin_radius);
+                        $origin_radius = trim(substr($origin_radius, 0, strrpos($origin_radius, "mi"))) ;
+                        if(strlen($origin_radius) != 0) 
+							echo "<td class='loads_".$indexKey."'>".(int)$origin_radius." mi</td>"; // DH(O)
+                        else 
+							echo "<td class='loads_".$indexKey."'>---</td>"; // DH(O)
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>".$loads[1]."</td>"; // origin
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>---</td>"; // no trip
-					    
+                        if(isset($loads[12]) && $loads[12] != null)
+							echo "<td class='loads_".$indexKey."'>".$loads[12]." mi</td>"; // trip/distance
+                        else 					    
+                            echo "<td class='loads_".$indexKey."'>---</td>"; // trip/distance
+							
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>".$loads[4]."</td>"; // destination
 					    
                         $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>---</td>"; // no DH(D)
+                        $destination_radius = $loads[6]; 
+                        $destination_radius = strtolower($destination_radius);
+                        $destination_radius = trim(substr($destination_radius, 0, strrpos($destination_radius, "mi"))) ;
+                        if(strlen($destination_radius) != 0) 
+							echo "<td class='loads_".$indexKey."'>".(int)$destination_radius." mi</td>"; // DH(D)
+                        else 
+                            echo "<td class='loads_".$indexKey."'>----</td>"; // DH(D)
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>---</td>"; //no Contact
+					    echo "<td class='loads_".$indexKey."'>".$loads[11]."</td>"; // Contact
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>---</td>"; // no Company
+					    echo "<td class='loads_".$indexKey."'>".$loads[9]." - ".$loads[10]."</td>"; // Company
 						
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>---</td>"; // no Rate
