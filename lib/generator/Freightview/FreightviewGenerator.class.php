@@ -81,8 +81,9 @@ class FreightviewGenerator
 			$client->post($base_url);
 			$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
 			if (!preg_match('#Welcome to Freightview#', $client->getBody(), $match)) {
-				echo "Login fail";
-				exit;
+				$notify_error = new NotifyError("Freightview - Login fail\n");
+				$notify_error->execute();
+				return;
 			}
 	
 			// second step, searching loads
