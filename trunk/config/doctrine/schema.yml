@@ -114,4 +114,13 @@ City:
   columns:
     state_code:                  { type: string(255), primary: true }
     name:                        { type: string(255), primary: true }
+
+Notify:
+  actAs:
+    Timestampable:                 ~
+  connection:                    doctrine
+  columns:
+    notify_id:                   { type: integer, primary: true, autoincrement: true }
+    content:                     { type: string(255) }
+    status:                      { type: boolean, notnull: true, default: 0 }
 #-------}}}}
