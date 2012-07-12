@@ -73,6 +73,19 @@ function check_config_name()
 	return true;
 }
 </script>
+<div style='font-weight:bold; color:#f00; padding:5px 0; font-size:13px;'>
+<?php
+	if (sizeof($notifies) > 0)
+	{
+		echo "<ul>";
+		foreach ($notifies as $notify)
+		{
+			echo "<li>".$notify['content']." - ".$notify['created_at']."</li>";
+		}
+		echo "</ul>";
+	}
+?>
+</div>
 <table cellpadding="5" width="100%" border="0">
 <tr>
     <td width="50%">

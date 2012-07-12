@@ -335,7 +335,7 @@ function sort_js(type, default_order) {
 						
 						$indexKey++;
 				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>";
-                    }elseif ($jobboard_alias == 'CT') {
+                    }elseif ($jobboard_alias == 'CH') {
 					    $indexKey = 1;
 					    echo "<td class='loads_".$indexKey."'>--</td>"; // age
 					    
