@@ -129,16 +129,18 @@ class TruckstopGenerator
 				$client->post('http://truckstop.com/AUP.aspx?redirect=/Lite/FindFreight.aspx');
 				//$this->create_log($jobboard->name.'-term-'.date(DATE_ISO8601).'.html', $client->getBody());
 			} elseif (!preg_match('#Find Freight#', $client->getBody(), $match)) {
-				echo "Login Fail\n";
-				exit();
+				$notify_error = new NotifyError("Truckstop - Login Fail\n");
+				$notify_error->execute();
+				return;
 			}
 	
 			// second step, searching loads
 			$client->get('http://truckstop.com/Lite/FindFreight.aspx');
 			$client->get('http://truckstop.com/Lite/Searches/SuperSearch.aspx');
 			if (!preg_match("#Supersearch for Freight#", $client->getBody(), $match)) {
-				echo "Can't get to searching page\n";
-				exit();
+				$notify_error = new NotifyError("Truckstop - Can't get to searching page\n");
+				$notify_error->execute();
+				return;
 			}
 			
 			//$this->create_log($jobboard->name.'-searching-'.date(DATE_ISO8601).'.html', $client->getBody());
