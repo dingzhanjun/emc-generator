@@ -18,17 +18,17 @@ class CleanUpLoadsTask extends sfBaseTask
 	    $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
 	    date_default_timezone_set('America/Phoenix');
+        $count = 0;
 	    $q = Doctrine_Query::create()
-	        ->from('Loads l')
-	        ->addWhere('DATEDIFF(now(), l.created_at) > ?', 1);
-	    $loads_list = $q->execute();
-	    $count = 0;
-	    foreach ($loads_list as $loads) {
-	        $this->logSection('info', 'Deleting loads with hash code: '.$loads->hash.' and created_date: '.$loads->created_at);
-	        $loads->delete();
-	        $count++;
-	    }
-	    $this->logSection('info', 'Deleted total: '.$count.' loads');
+    	    ->from('Loads l')
+    	    ->addWhere('DATEDIFF(now(), l.created_at) > ?', 1);
+    	$loads_list = $q->execute();
+    	foreach ($loads_list as $loads) {
+    	    $this->logSection('info', 'Deleting loads with hash code: '.$loads->hash.' and created_date: '.$loads->created_at);
+    	    $loads->delete();
+    	    $count++;
+    	}
+    	$this->logSection('info', 'Deleted total: '.$count.' loads');
 	}
 }
 ?>

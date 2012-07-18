@@ -124,14 +124,14 @@ class FreightviewGenerator
 			$tag['search']['__EVENTTARGET'] = 'ctl00$ProviderContentPlaceHolder$rbnAllLanes';
 			$full_origin = str_replace(' ', '', $config->origin);
 			$full_origin = preg_split('#,#', $full_origin);
-			$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityOrigin'] = $full_origin[0];
-			$tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateOrigin'] = $full_origin[1];
+			$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityOrigin'] = strtoupper($full_origin[0]);
+			$tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateOrigin'] = strtoupper($full_origin[1]);
 			$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityOriginRadius'] = $config->origin_radius;
 			if (!empty($config->destination)) {
 				$full_destination = str_replace(' ', '', $config->destination);
 				$full_destination = preg_split('#,#', $full_destination);
-				$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDest'] = $full_destination[0];
-				$tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateDest'] = $full_destination[1];
+				$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDest'] = strtoupper($full_destination[0]);
+				$tag['search']['ctl00$ProviderContentPlaceHolder$ddlSearchStateDest'] = strtoupper($full_destination[1]);
 				$tag['search']['ctl00$ProviderContentPlaceHolder$txbSearchCityDestRadius'] = $config->destination_radius;
 			}
 			$tag['search']['ctl00$ProviderContentPlaceHolder$rbnAllLanes'] = 'rbnAllLanes';

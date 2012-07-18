@@ -40,9 +40,9 @@ class GetloadedGenerator
 		$this->initialize();
 		$client = new WebFormClient();
 		
-		//$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
 		
-		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/log.html');
+		//$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/log.html');
 		
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
 		if (!$config) {
@@ -81,7 +81,6 @@ class GetloadedGenerator
 			// This server allows only 1 access at the same time, we need to confirm our login
 			if (preg_match('#gkey=[^"]*#', $client->getBody(), $match)) {
 				$confirm_url ='http://app.getloaded.com/auth/multiplelogin.gl?action=login&'.$match[0];
-				echo "Confirm_url: ".$confirm_url."\n";
 				$client->setHeaders($headers);
 				$client->get($confirm_url);
 			}
@@ -169,14 +168,14 @@ class GetloadedGenerator
 			$tag['search'] = $client->getData();
 			$tag['search']['search'] = 'Find Loads';
 			// now we havent supported multistates jet
-			$full_origin = str_replace(' ', '', $config->origin);
+			$full_origin = trim($config->origin);
 			$full_origin = preg_split('#,#', $full_origin);
-			$tag['search']['sc'] = strtoupper($full_origin[0]);
-			$tag['search']['ss'] = strtoupper($full_origin[1]);
-			$full_destination = str_replace(' ', '', $config->destination);
+			$tag['search']['sc'] = trim(strtoupper($full_origin[0]));
+			$tag['search']['ss'] = trim(strtoupper($full_origin[1]));
+			$full_destination = trim($config->destination);
 			$full_destination = preg_split('#,#', $full_destination);
-			$tag['search']['dc'] = strtoupper($full_destination[0]);
-			$tag['search']['ds'] = strtoupper($full_destination[1]);
+			$tag['search']['dc'] = trim(strtoupper($full_destination[0]));
+			$tag['search']['ds'] = trim(strtoupper($full_destination[1]));
 			$tag['search']['smask'] = 0;
 			$tag['search']['dmask'] = 0;
 			$tag['search']['search_type'] = "radius_radius";
@@ -189,12 +188,12 @@ class GetloadedGenerator
 			$tag['search']['prevTxt'] = 'Prev';
 			$tag['search']['nextTxt'] = 'Next';
 			$tag['search']['curTxt'] = 'Today';
-			$tag['search']['radius_strict'] = 0;
+			$tag['search']['radius_strict'] = 1;
 			$tag['search']['s_radius'] = (($config->origin_radius != 0)?($config->origin_radius):"150");
 			$tag['search']['d_radius'] = (($config->destination_radius != 0)?($config->destination_radius):"150");;
 			$tag['search']['starting_point'] = $config->origin;
 			$tag['search']['destination_point'] = $config->destination;
-			$tag['search']['pickup_start_date'] = date('m/d/Y');
+			$tag['search']['pickup_start_date'] = date("n/j/Y",strtotime($config->from_date));
 			$tag['search']['posted_within'] = 0;
 			$tag['search']['ttype_select[64]'] = 64;
 			$tag['search']['use_attributes'] = 'any';

@@ -40,6 +40,7 @@ class TruckersedgeGenerator
 		$client = new WebFormClient();
 		
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
 		if (!$config) {
 			$notify_error = new NotifyError("Truckeredge - Config not found\n");
 			$notify_error->execute();
@@ -136,11 +137,11 @@ class TruckersedgeGenerator
 			$tag['search']['ctl00$cphMain$locDestination$txtLocationEntry'] = $config->destination;
 			$tag['search']['ctl00$cphMain$txtDestinationRadius'] = $config->destination_radius;
 			if ($config->type == 0) { // native run
-				$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y');
-				$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y');
+				$tag['search']['ctl00$cphMain$txtDateFrom'] = date('m/d/y');
+				$tag['search']['ctl00$cphMain$txtDateTo'] = date('m/d/y');
 			} elseif ($config->type == 1) {
-				$tag['search']['ctl00$cphMain$txtDateFrom'] = date('y/m/d', strtotime($config->from_date));
-				$tag['search']['ctl00$cphMain$txtDateTo'] = date('y/m/d', strtotime($config->to_date));
+				$tag['search']['ctl00$cphMain$txtDateFrom'] = date('d/m/y', strtotime($config->from_date));
+				$tag['search']['ctl00$cphMain$txtDateTo'] = date('d/m/y', strtotime($config->to_date));
 			}
 		
 			$tag['search']['ctl00$cphMain$locOrigin$hdnNGL'] = '';
