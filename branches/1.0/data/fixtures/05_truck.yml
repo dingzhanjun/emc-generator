@@ -1,0 +1,44 @@
+Truck:
+  DryBulk:
+    id: '1'
+    name: 'Dry Bulk'
+
+  Containers:
+    id: '2'
+    name: 'Containers'
+
+  Decks_Standard:
+    id: '3'
+    name: 'Decks, Standard'
+  
+  Flatbeds:
+    id: '4'
+    name: 'Flatbeds'
+
+  Decks_Specialized:
+    id: '5'
+    name: 'Decks, Specialized'
+    
+  OtherEquipment:
+    id: '6'
+    name: 'Other Equipment'
+
+  Reefers:
+    id: '7'
+    name: 'Reefers'
+    
+  Vans_Specialized:
+    id: '8'
+    name: 'Vans, Specialized'
+    
+  Tankers:
+    id: '9'
+    name: 'Tankers'
+    
+  Vans_Standard:
+    id: '10'
+    name: 'Vans, Standard'
+    
+  Hazardous_Materials:
+    id: '11'
+    name: 'Hazardous Materials'

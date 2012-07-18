@@ -1,0 +1,126 @@
+#------ {{{{Generator, JobboardConfig, Jobboard
+Config:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string, notnull: false }
+    max_age:                      { type: integer, notnull: false }
+    origin:                       { type: string(255), notnull: true }
+    origin_radius:                { type: integer, notnull: false }
+    destination:                  { type: string(255), notnull: false }
+    destination_radius:           { type: integer, notnull: false }
+    loads_type:                   { type: integer, notnull: true }
+    length:                       { type: double, notnull: false }
+    weight:                       { type: double, notnull: false }
+    from_date:                    { type: date, notnull: true }
+    to_date:                      { type: date, notnull: true }
+    frequence:                    { type: integer, notnull: true }
+    type:                         { type: integer, notnull: true, default: 0 }
+    last_executed_at:             { type: datetime, notnull: false }
+
+Jobboard:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true, autoincrement: true }
+    alias:                        { type: string(255), notnull: true }
+    name:                         { type: string(255), notnull: true }
+    generator_name:               { type: string(255), notnull: true }
+    address:                      { type: string(255), notnull: true }
+    username:                     { type: string(255), notnull: false }
+    password:                     { type: string(255), notnull: false }
+
+JobboardConfig:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    jobboard_id:                  { type: integer, primary: true }
+    config_id:                    { type: integer, primary: true }
+  relations:
+    Jobboard:                     { class: Jobboard, local: jobboard_id, foreign: id, foreignAlias: Configs }
+    Config:                       { class: Config, local: config_id, foreign: id, foreignAlias: JobboardConfigs }
+  
+
+#-------}}}}}
+#-------{{{{ Loads
+Loads:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    hash:                         { type: string(255), primary: true }
+    web_reference:                { type: string(255), notnull: false }
+    jobboard_id:                  { type: integer, notnull: true }
+    date:                         { type: date, notnull: true }
+    truck_type:                   { type: string(20), notnull: true }
+    loads_type:                   { type: string(20), notnull: false }
+    origin:                       { type: string(255) }
+    origin_radius:                { type: integer, notnull: false }
+    destination:                  { type: string(255) }
+    destination_radius:           { type: integer, notnull: false }
+    contact:                      { type: string(255), notnull: true }
+    distance:                     { type: integer, notnull: false }
+    company:                      { type: string(255), notnull: false }
+    deadline:                     { type: string(255), notnull: false }
+    #--- and more colums will be updated -- #
+
+Truck:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    id:                           { type: integer, primary: true, autoincrement: true }
+    name:                         { type: string, notnull: trye }
+
+ConfigTruck:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    config_id:                    { type: integer, primary: true }
+    truck_id:                     { type: integer, primary: true }
+  relations:
+    Config:                       { class: Config, local: config_id, foreign: id, foreignAlias: ConfigTrucks }
+    Truck:                        { class: Truck, local: truck_id, foreign: id, foreignAlias: ConfigTrucks }  
+#-------}}}}
+#-------{{{{ country, state, city
+Country:
+  actAs:
+    Timestampable:                  ~
+  connection:                     doctrine
+  columns:
+    code:                         { type: string(255), primary: true }
+    name:                         { type: string(255), notnull: true }
+
+State:
+  actAs:
+    Timestampable:                 ~
+  connection:                     doctrine
+  columns:
+    code:                         { type: string(255), primary: true }
+    country_code:                 { type: string(255), primary: true }
+    name:                         { type: string(255), notnull: true }
+  relations:
+    Country:                      { onDelete: CASCADE, local: country_code, foreign: code, foreignAlias: States }
+
+City:
+  actAs:
+    Timestampable:                 ~
+  connection:                    doctrine
+  columns:
+    state_code:                  { type: string(255), primary: true }
+    name:                        { type: string(255), primary: true }
+
+Notify:
+  actAs:
+    Timestampable:                 ~
+  connection:                    doctrine
+  columns:
+    notify_id:                   { type: integer, primary: true, autoincrement: true }
+    content:                     { type: string(255) }
+    status:                      { type: boolean, notnull: true, default: 0 }
+#-------}}}}
