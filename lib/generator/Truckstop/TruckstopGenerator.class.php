@@ -59,8 +59,10 @@ class TruckstopGenerator
 			$tag = array();
 			$base_url = $jobboard->address;
 			$client->get($base_url);
+			
 			//$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
 			$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
+			
 			$client->validate(array(
 					'__EVENTTARGET'                                       => 'input-hidden',
 					'__EVENTARGUMENT'                                     => 'input-hidden',
@@ -68,21 +70,22 @@ class TruckstopGenerator
 					'__EVENTVALIDATION'                                   => 'input-hidden',
 					'ctl00_RadWindowManager_ClientState'                  => 'input-hidden',
 					'ctl00$Navigation$LogoutButton'                       => 'input-button',
-					'ctl00$ContentPlaceHolder$login$textUserName'         => 'input-text',
-					'ctl00$ContentPlaceHolder$login$textCompanyAccount'   => 'input-text',
-					'ctl00$ContentPlaceHolder$login$textPassword'         => 'input-password',
-					'ctl00$ContentPlaceHolder$login$hiddenPassword'       => 'input-hidden',
-					'ctl00$ContentPlaceHolder$login$checkSaveCredentials' => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$login$buttonLogin'          => 'input-submit',
 					));
-			$client->removeField('ctl00$ContentPlaceHolder$login$checkSaveCredentials');
+			
 			$client->removeField('ctl00$Navigation$LogoutButton');
+			$client->appendField('ctl00$ContentPlaceHolder$login$textUserName', 'input');
+			$client->appendField('ctl00$ContentPlaceHolder$login$textCompanyAccount', 'input');
+			$client->appendField('ctl00$ContentPlaceHolder$login$textPassword', 'input');
+			$client->appendField('ctl00$ContentPlaceHolder$login$hiddenPassword', 'input');
+			$client->appendField('ctl00$ContentPlaceHolder$login$buttonLogin', 'input');
+			
 			$tag['login'] = $client->getData();
-	
+			
 			// login step
 			$tag['login']['ctl00$ContentPlaceHolder$login$textUserName'] = 'Howard DO';
 			$tag['login']['ctl00$ContentPlaceHolder$login$textCompanyAccount'] = $jobboard->username;
 			$tag['login']['ctl00$ContentPlaceHolder$login$textPassword'] = $jobboard->password;
+			$tag['login']['ctl00$ContentPlaceHolder$login$buttonLogin'] = "Login";
 			$client->fill($tag['login']);
 			$client->post('http://truckstop.com/lite/');
 			//$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
@@ -146,58 +149,55 @@ class TruckstopGenerator
 			//$this->create_log($jobboard->name.'-searching-'.date(DATE_ISO8601).'.html', $client->getBody());
 			$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
 			$client->validate(array(
-					'__EVENTTARGET'                                                                                       => 'input-hidden',
-					'__EVENTARGUMENT'                                                                                     => 'input-hidden',
-					'__LASTFOCUS'                                                                                         => 'input-hidden',
-					'__VIEWSTATE'                                                                                         => 'input-hidden',
-					'__EVENTVALIDATION'                                                                                   => 'input-hidden',
-					'ctl00_RadWindowManager_ClientState'                                                                  => 'input-hidden',
-					'ctl00$Navigation$LogoutButton'                                                                       => 'input-button',
-					'ctl00$ContentPlaceHolder$originDestinationControl$checkOriginMultiState'                             => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$comboCountry'                      => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_comboCountry_ClientState'          => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'                          => 'input-text',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'                         => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_tooltipSpellings_ClientState'      => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$hiddenOriginMultiStateCountry'                     => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$textOriginMultiState'                              => 'textarea',
-					'ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_text'                              => 'input-text',
-					'ctl00$ContentPlaceHolder$originDestinationControl$textOriginRange'                                   => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_ClientState'                       => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$checkDestinationMultiState'                        => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$comboCountry'                 => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_comboCountry_ClientState'     => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'                     => 'input-text',
-					'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'                    => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_tooltipSpellings_ClientState' => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$hiddenDestinationMultiStateCountry'                => 'input-hidden',
-					'ctl00$ContentPlaceHolder$originDestinationControl$textDestinationMultiState'                         => 'textarea',
-					'ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_text'                         => 'input-text',
-					'ctl00$ContentPlaceHolder$originDestinationControl$textDestinationRange'                              => 'input-text',
-					'ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_ClientState'                  => 'input-hidden',
-					'ctl00$ContentPlaceHolder$ucCriteria$dateInput$textDate'                                              => 'input-text',
-					'ctl00_ContentPlaceHolder_ucCriteria_dateInput_calendarDate_SD'                                       => 'input-hidden',
-					'ctl00_ContentPlaceHolder_ucCriteria_dateInput_calendarDate_AD'                                       => 'input-hidden',
-					'ctl00_ContentPlaceHolder_ucCriteria_dateInput_tooltipCalendar_ClientState'                           => 'input-hidden',
-					'ctl00$ContentPlaceHolder$ucCriteria$radComboWhenPosted'                                              => 'input-text',
-					'ctl00_ContentPlaceHolder_ucCriteria_radComboWhenPosted_ClientState'                                  => 'input-hidden',
-					'ctl00$ContentPlaceHolder$ucCriteria$radComboSize'                                                    => 'input-text',
-					'ctl00_ContentPlaceHolder_ucCriteria_radComboSize_ClientState'                                        => 'input-hidden',
-					'ctl00$ContentPlaceHolder$ucLiteEquipmentTypes$listboxEquipment'                                      => 'select-multiple',
-					'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkTarp'                                               => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkHazmat'                                             => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkPalletExchange'                                     => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkTeam'                                               => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkExpedited'                                          => 'input-checkbox',
-					'ctl00$ContentPlaceHolder$buttonSearch'                                                               => 'input-submit',
-					'ctl00$ContentPlaceHolder$buttonVisiload'                                                             => 'input-submit',
-					'ctl00_ContentPlaceHolder_ucLoadsGrid_radMenuLoadsCallList_ClientState'                               => 'input-hidden',
-					'loadsContextCompanyID'                                                                               => 'input-text',
-					'ctl00_ContentPlaceHolder_ucLoadsGrid_ErrorsControl_radToolDisplayErrors_ClientState'                 => 'input-hidden',
-					'ctl00_ContentPlaceHolder_ucTrucksGrid_radMenuTruckCallList_ClientState'                              => 'input-hidden',
-					'trucksContextCompanyID'                                                                              => 'input-text',
-					'ctl00_ContentPlaceHolder_ucTrucksGrid_ErrorsControl_radToolDisplayErrors_ClientState'                => 'input-hidden',
-					));
+                            '__EVENTTARGET'                                                                                       => 'input-hidden',
+                            '__EVENTARGUMENT'                                                                                     => 'input-hidden',
+                            '__LASTFOCUS'                                                                                         => 'input-hidden',
+                            '__VIEWSTATE'                                                                                         => 'input-hidden',
+                            '__EVENTVALIDATION'                                                                                   => 'input-hidden',
+                            'ctl00_RadWindowManager_ClientState'                                                                  => 'input-hidden',
+                            'ctl00$Navigation$LogoutButton'                                                                       => 'input-button',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$checkOriginMultiState'                             => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$comboCountry'                      => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_comboCountry_ClientState'          => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'                          => 'input-text',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'                         => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_tooltipSpellings_ClientState'      => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$hiddenOriginMultiStateCountry'                     => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$textOriginMultiState'                              => 'textarea',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_text'                              => 'input-text',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$textOriginRange'                                   => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_ClientState'                       => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$checkDestinationMultiState'                        => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$comboCountry'                 => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_comboCountry_ClientState'     => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'                     => 'input-text',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'                    => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_cityStateDestination_tooltipSpellings_ClientState' => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$hiddenDestinationMultiStateCountry'                => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$textDestinationMultiState'                         => 'textarea',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_text'                         => 'input-text',
+                            'ctl00$ContentPlaceHolder$originDestinationControl$textDestinationRange'                              => 'input-text',
+                            'ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_ClientState'                  => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$ucCriteria$dateInput$textDate'                                              => 'input-text',
+                            'ctl00_ContentPlaceHolder_ucCriteria_dateInput_calendarDate_SD'                                       => 'input-hidden',
+                            'ctl00_ContentPlaceHolder_ucCriteria_dateInput_calendarDate_AD'                                       => 'input-hidden',
+                            'ctl00_ContentPlaceHolder_ucCriteria_dateInput_tooltipCalendar_ClientState'                           => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$ucCriteria$radComboWhenPosted'                                              => 'input-text',
+                            'ctl00_ContentPlaceHolder_ucCriteria_radComboWhenPosted_ClientState'                                  => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$ucCriteria$radComboSize'                                                    => 'input-text',
+                            'ctl00_ContentPlaceHolder_ucCriteria_radComboSize_ClientState'                                        => 'input-hidden',
+                            'ctl00$ContentPlaceHolder$ucLiteEquipmentTypes$listboxEquipment'                                      => 'select-multiple',
+                            'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkTarp'                                               => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkHazmat'                                             => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkPalletExchange'                                     => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkTeam'                                               => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$ucEquipmentOptions$checkExpedited'                                          => 'input-checkbox',
+                            'ctl00$ContentPlaceHolder$buttonSearch'                                                               => 'input-submit',
+                            'ctl00$ContentPlaceHolder$buttonVisiload'                                                             => 'input-submit',
+                            'ctl00_ContentPlaceHolder_ucLoadsGrid_radMenuLoadsCallList_ClientState'                               => 'input-hidden',
+                            'loadsContextCompanyID'                                                                               => 'input-text',
+                            'ctl00_ContentPlaceHolder_ucLoadsGrid_ErrorsControl_radToolDisplayErrors_ClientState'                 => 'input-hidden',
+                            ));
 			$client->removeField('ctl00$Navigation$LogoutButton');
 			$client->removeField('ctl00$ContentPlaceHolder$originDestinationControl$checkOriginMultiState');
 			$client->removeField('ctl00$ContentPlaceHolder$originDestinationControl$checkDestinationMultiState');
@@ -215,16 +215,16 @@ class TruckstopGenerator
 			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_comboCountry_ClientState'] = '{"logEntries":[],"value":"USA","text":"USA","enabled":true,"checkedIndices":[]}';
 			$origin = explode(",", $config->origin);
 			if (sizeof($origin) <= 2){ // simple state
-				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = trim($origin[0]);
-				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'] = trim($origin[1]);
+				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = strtoupper(trim($origin[0]));
+				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'] = strtoupper(trim($origin[1]));
 			} else { // multiple states
 				
 			}
-			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_text'] = ($config->origin_radius ?: 100);
-			$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$textOriginRange'] = ($config->origin_radius ?:100);
+			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_text'] = ($config->origin_radius ? $config->origin_radius : 100);
+			$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$textOriginRange'] = ($config->origin_radius ? $config->origin_radius :100);
 			
-			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_text'] = ($config->destination_radius ?:100);
-			$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$textDestinationRange'] = ($config->destination_radius ?:100);
+			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_text'] = ($config->destination_radius ? $config->destination_radius :100);
+			$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$textDestinationRange'] = ($config->destination_radius ? $config->destination_radius : 100);
 			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textOriginRange_ClientState'] =  '{"enabled":true,"emptyMessage":"","minValue":25,"maxValue":1000}';
 			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_textDestinationRange_ClientState'] = '{"enabled":true,"emptyMessage":"","minValue":25,"maxValue":1000}';
 			
@@ -233,8 +233,8 @@ class TruckstopGenerator
 			if ($config->destination) {
 				$destination = explode(",", $config->destination);
 				if (sizeof($destination) <= 2) {
-					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'] = trim($destination[0]);
-					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'] = trim($destination[1]);
+					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'] = strtoupper(trim($destination[0]));
+					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'] = strtoupper(trim($destination[1]));
 				} else { // TODO multiple states
 				
 				}
