@@ -15,8 +15,10 @@ function reload_config_form(config_id)
 	{
 		$("#config_max_age").val("");
 		$("#config_origin").val("");
+        $("#config_origin_is_multistates").val("");
 		$("#config_origin_radius").val("");
 		$("#config_destination").val("");
+        $("#config_destination_is_multistates").val("");
 		$("#config_destination_radius").val("");
 		$("#config_loads_type").val("");
 		$("#config_length").val("");
@@ -47,8 +49,10 @@ function reload_config_form(config_id)
 			
 			$("#config_max_age").val(json["config[max_age]"]);
 			$("#config_origin").val(json["config[origin]"]);
+            $("#config_origin_is_multistates").val(json["config[origin_is_multistates]"]);
 			$("#config_origin_radius").val(json["config[origin_radius]"]);
 			$("#config_destination").val(json["config[destination]"]);
+            $("#config_destination_is_multistates").val(json["config[destination_is_multistates]"]);
 			$("#config_destination_radius").val(json["config[destination_radius]"]);
 			$("#config_loads_type").val(json["config[loads_type]"]);
 			$("#config_length").val(json["config[length]"]);
