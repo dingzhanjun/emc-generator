@@ -9,8 +9,10 @@ Config:
     max_age:                      { type: integer, notnull: false }
     origin:                       { type: string(255), notnull: true }
     origin_radius:                { type: integer, notnull: false }
+    origin_is_multistates:        { type: boolean, notnull: false, default: false }
     destination:                  { type: string(255), notnull: false }
     destination_radius:           { type: integer, notnull: false }
+    destination_is_multistates:   { type: boolean, notnull: false, default: false }
     loads_type:                   { type: integer, notnull: true }
     length:                       { type: double, notnull: false }
     weight:                       { type: double, notnull: false }
@@ -32,7 +34,8 @@ Jobboard:
     address:                      { type: string(255), notnull: true }
     username:                     { type: string(255), notnull: false }
     password:                     { type: string(255), notnull: false }
-
+    multistates_supported:        { type: boolean, notnull: false, default: false }
+    
 JobboardConfig:
   actAs:
     Timestampable:                  ~
