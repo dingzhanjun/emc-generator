@@ -14,7 +14,8 @@ class ChrwtrucksGenerator
     public function create_log($filename, $content)
     {
         // no longer create log
-        $file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+        //$file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$filename;
+        $file = dirname(dirname(dirname(dirname(__FILE__)))).'/log/log.html';
         file_put_contents($file, $content);
     }
 
@@ -36,8 +37,7 @@ class ChrwtrucksGenerator
         $this->initialize();
         $client = new WebFormClient();
 
-        $client->setLogPrefix(dirname(dirname(dirname(dirname(__file__)))) . '/log/' . $this->
-            jobboard_name . ' ' . date(DATE_ISO8601));
+        $client->setLogPrefix(dirname(dirname(dirname(dirname(__file__)))) . '/log/' . $this->jobboard_name . ' ' . date(DATE_ISO8601));
         $config = Doctrine_Core::getTable('Config')->find($this->config_id);
         if (!$config) {
 			echo ">>>>>Error<<<<< Config not found\n";
@@ -78,82 +78,147 @@ class ChrwtrucksGenerator
             $destination = $config->destination;
             if ($origin != "" && $destination != "") {
                 $status_search = "origin and destination";
-                $client->get('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearchOD.aspx');
-                $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
-                $client->validate(array(
-					'__EVENTTARGET'                          => 'input-hidden',
-					'__EVENTARGUMENT'                        => 'input-hidden',
-					'__LASTFOCUS'                            => 'input-hidden',
-					'__VIEWSTATEFIELDCOUNT'                  => 'input-hidden',
-					'__VIEWSTATE'                            => 'input-hidden',
-					'__VIEWSTATE1'                           => 'input-hidden',
-					'_ctl0:cphMain:searchParmsChanged'       => 'input-hidden',
-					'_ctl0:cphMain:ddlOCountry'              => 'select',
-					'_ctl0:cphMain:ddlOState'                => 'select',
-					'_ctl0:cphMain:txtOCity'                 => 'input-text',
-					'_ctl0:cphMain:ddlDCountry'              => 'select',
-					'_ctl0:cphMain:ddlDState'                => 'select',
-					'_ctl0:cphMain:txtDCity'                 => 'input-text',
-					'_ctl0:cphMain:DateOptions'              => 'input-radio',
-					'_ctl0_cphMain_txtStartDate_clientState' => 'input-hidden',
-					'_ctl0_cphMain_txtEndDate_clientState'   => 'input-hidden',
-					'_ctl0:cphMain:ddlEquipment'             => 'select',
-					'_ctl0:cphMain:ddlSpecialized'           => 'select',
-					'_ctl0_cphMain_oRadius_clientState'      => 'input-hidden',
-					'_ctl0_cphMain_oRadius'                  => 'input-text',
-					'_ctl0_cphMain_dradius_clientState'      => 'input-hidden',
-					'_ctl0_cphMain_dradius'                  => 'input-text',
-					'_ctl0:cphMain:cbSaveSearch'             => 'input-checkbox',
-					'_ctl0:cphMain:btnSubmit'                => 'input-submit',
-					'_ctl0:cphMain:btnReset'                 => 'input-submit',
-					'_ctl0:cphMain:btnRetrieve'              => 'input-submit',
-					'_ctl0:cphMain:hdnStartDate'             => 'input-hidden',
-					'_ctl0:cphMain:hdnEndDate'               => 'input-hidden',
-					'_ctl0__ig_def_dp_cal_clientState'       => 'input-hidden',
-					'_ctl0:_IG_CSS_LINKS_'                   => 'input-hidden',
-                ));
-                $client->removeField('_ctl0:cphMain:cbSaveSearch');
-                $client->removeField('_ctl0:cphMain:btnReset');
-                $client->removeField('_ctl0:cphMain:btnRetrieve');
-                $client->removeField('_ctl0:cphMain:ddlSpecialized');
-                $tag['search'][''] = $client->getData();
-                $tag['search']['_ctl0:cphMain:ddlOState'] = trim(strtoupper(substr($origin, strrpos($origin, ",") + 1, strlen($origin))));  
-                $tag['search']['_ctl0:cphMain:txtOCity'] =  trim(substr($origin, 0, strrpos($origin, ",")));
-                $tag['search']['_ctl0:cphMain:ddlDState'] = trim(strtoupper(substr($destination, strrpos($destination, ",") + 1, strlen($destination))));  
-                $tag['search']['_ctl0:cphMain:txtDCity'] =  trim(substr($destination, 0, strrpos($destination, ",")));
-                $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
-                foreach ($config_trucks as $config_truck) {
-                    $truck_id = $config_truck->Truck->id;
-                    // will be remapping later
-                    $tag['search']['_ctl0:cphMain:ddlEquipment'] = $this->mapping($truck_id, array(
-                        '0' =>  'A', // all
-                        '1' =>  'A', // Dry Bulk
-                        '2' =>  'A', // containers missing
-                        '3' =>  'A', // Deck Standard
-                        '4' =>  'F', // Flatbed
-                        '5' =>  'A', // Decks, Specialized
-                        '6' =>  'Z', // other Equipment
-                        '7' =>  'R', // Reefers
-                        '8' =>  'V', // Vans, Specialized
-                        '9' =>  'A', // Tankers
-                        '10' => 'V', // Vans, Standard
-                        '11' => 'A', // Hazardous Materials
+                if($config->origin_is_multistates = true || $config->destination_is_multistates = true) {
+                    $status_search = "multi_state";
+                    $client->get('https://www.chrwtrucks.com/Applications/FindLoad/FindLoadMultiple.aspx');
+                    $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
+                    $client->validate(array(
+                        '__EVENTTARGET'                          => 'input-hidden',
+                        '__EVENTARGUMENT'                        => 'input-hidden',
+                        '__LASTFOCUS'                            => 'input-hidden',
+                        '__VIEWSTATE'                            => 'input-hidden',
+                        '_ctl0:cphMain:DateOptions'              => 'input-radio',
+                        'Source'                                 => 'input-radio',
+                        '_ctl0_cphMain_txtStartDate_clientState' => 'input-hidden',
+                        '_ctl0_cphMain_txtEndDate_clientState'   => 'input-hidden',
+                        '_ctl0:cphMain:Origin'                   => 'select-multiple',
+                        '_ctl0:cphMain:Destination'              => 'select-multiple',
+                        '_ctl0:cphMain:dpdEquipment'             => 'select',
+                        '_ctl0:cphMain:ddlSpecialized'           => 'select',
+                        '_ctl0:cphMain:cbSaveSearch'             => 'input-checkbox',
+                        '_ctl0:cphMain:btnSubmit'                => 'input-submit',
+                        '_ctl0:cphMain:btnReset'                 => 'input-submit',
+                        '_ctl0:cphMain:btnRetrieve'              => 'input-submit',
+                        '_ctl0:cphMain:originNames'              => 'input-hidden',
+                        '_ctl0:cphMain:destNames'                => 'input-hidden',
+                        '_ctl0__ig_def_dp_cal_clientState'       => 'input-hidden',
+                        '_ctl0:_IG_CSS_LINKS_'                   => 'input-hidden',
                     ));
-                    break;
-                 }
-                $tag['search']['_ctl0_cphMain_oRadius'] = $config->origin_radius;
-                $tag['search']['_ctl0_cphMain_oRadius_clientState'] = "|0|01" . $config->origin_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->origin_radius . '"' . "]";
-                $tag['search']['_ctl0_cphMain_dradius'] = $config->destination_radius;
-                $tag['search']['_ctl0_cphMain_dradius_clientState'] = "|0|01" . $config->destination_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->destination_radius . '"' . "]";
-                $tag['search']['_ctl0:cphMain:hdnStartDate'] = date("m/d/Y",strtotime($config->from_date));
-                $start_date = date("Y-m-d", strtotime($config->from_date));
-                $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01". $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
-                $tag['search']['_ctl0:cphMain:hdnEndDate'] = date("m/d/Y", strtotime($config->to_date));
-                $end_date = date("Y-m-d", strtotime($config->to_date));
-                $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01". $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
-                $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
-                $client->fill($tag['search']);
-                $client->post('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearchOD.aspx');
+                    $client->removeField('_ctl0:cphMain:cbSaveSearch');
+                    $client->removeField('_ctl0:cphMain:btnReset');
+                    $client->removeField('_ctl0:cphMain:btnRetrieve');
+                    $client->removeField('_ctl0:cphMain:ddlSpecialized');
+                    $tag['search'][''] = $client->getData();
+                    
+                    $start_date = date("Y-m-d", strtotime($config->from_date));
+                    $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01". $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
+                    $end_date = date("Y-m-d", strtotime($config->to_date));
+                    $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01". $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
+                    $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
+                    foreach ($config_trucks as $config_truck) {
+                        $truck_id = $config_truck->Truck->id;
+                        // will be remapping later
+                        $tag['search']['_ctl0:cphMain:dpdEquipment'] = $this->mapping($truck_id, array(
+                            '0' =>  'ALL', // all
+                            '1' =>  'ALL', // Dry Bulk
+                            '2' =>  'ALL', // containers missing
+                            '3' =>  'ALL', // Deck Standard
+                            '4' =>  'F', // Flatbed
+                            '5' =>  'ALL', // Decks, Specialized
+                            '6' =>  'Z', // other Equipment
+                            '7' =>  'R', // Reefers
+                            '8' =>  'V', // Vans, Specialized
+                            '9' =>  'ALL', // Tankers
+                            '10' => 'V', // Vans, Standard
+                            '11' => 'ALL', // Hazardous Materials
+                        ));
+                        break;
+                     }
+                     $tag['search']['_ctl0:cphMain:originNames'] = trim(strtoupper($config->origin)); 
+                     $tag['search']['_ctl0:cphMain:destNames'] = trim(strtoupper($config->destination));
+                     $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
+                     $client->fill($tag['search']);
+                     $client->post('https://www.chrwtrucks.com/Applications/FindLoad/FindLoadMultiple.aspx');
+                     $this->create_log('',$client->getBody());
+                }
+                else {
+                    $client->get('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearchOD.aspx');
+                    $client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
+                    $client->validate(array(
+    					'__EVENTTARGET'                          => 'input-hidden',
+    					'__EVENTARGUMENT'                        => 'input-hidden',
+    					'__LASTFOCUS'                            => 'input-hidden',
+    					'__VIEWSTATEFIELDCOUNT'                  => 'input-hidden',
+    					'__VIEWSTATE'                            => 'input-hidden',
+    					'__VIEWSTATE1'                           => 'input-hidden',
+    					'_ctl0:cphMain:searchParmsChanged'       => 'input-hidden',
+    					'_ctl0:cphMain:ddlOCountry'              => 'select',
+    					'_ctl0:cphMain:ddlOState'                => 'select',
+    					'_ctl0:cphMain:txtOCity'                 => 'input-text',
+    					'_ctl0:cphMain:ddlDCountry'              => 'select',
+    					'_ctl0:cphMain:ddlDState'                => 'select',
+    					'_ctl0:cphMain:txtDCity'                 => 'input-text',
+    					'_ctl0:cphMain:DateOptions'              => 'input-radio',
+    					'_ctl0_cphMain_txtStartDate_clientState' => 'input-hidden',
+    					'_ctl0_cphMain_txtEndDate_clientState'   => 'input-hidden',
+    					'_ctl0:cphMain:ddlEquipment'             => 'select',
+    					'_ctl0:cphMain:ddlSpecialized'           => 'select',
+    					'_ctl0_cphMain_oRadius_clientState'      => 'input-hidden',
+    					'_ctl0_cphMain_oRadius'                  => 'input-text',
+    					'_ctl0_cphMain_dradius_clientState'      => 'input-hidden',
+    					'_ctl0_cphMain_dradius'                  => 'input-text',
+    					'_ctl0:cphMain:cbSaveSearch'             => 'input-checkbox',
+    					'_ctl0:cphMain:btnSubmit'                => 'input-submit',
+    					'_ctl0:cphMain:btnReset'                 => 'input-submit',
+    					'_ctl0:cphMain:btnRetrieve'              => 'input-submit',
+    					'_ctl0:cphMain:hdnStartDate'             => 'input-hidden',
+    					'_ctl0:cphMain:hdnEndDate'               => 'input-hidden',
+    					'_ctl0__ig_def_dp_cal_clientState'       => 'input-hidden',
+    					'_ctl0:_IG_CSS_LINKS_'                   => 'input-hidden',
+                    ));
+                    $client->removeField('_ctl0:cphMain:cbSaveSearch');
+                    $client->removeField('_ctl0:cphMain:btnReset');
+                    $client->removeField('_ctl0:cphMain:btnRetrieve');
+                    $client->removeField('_ctl0:cphMain:ddlSpecialized');
+                    $tag['search'][''] = $client->getData();
+                    $tag['search']['_ctl0:cphMain:ddlOState'] = trim(strtoupper(substr($origin, strrpos($origin, ",") + 1, strlen($origin))));  
+                    $tag['search']['_ctl0:cphMain:txtOCity'] =  trim(substr($origin, 0, strrpos($origin, ",")));
+                    $tag['search']['_ctl0:cphMain:ddlDState'] = trim(strtoupper(substr($destination, strrpos($destination, ",") + 1, strlen($destination))));  
+                    $tag['search']['_ctl0:cphMain:txtDCity'] =  trim(substr($destination, 0, strrpos($destination, ",")));
+                    $config_trucks = Doctrine_Query::create()->from('ConfigTruck cf')->addWhere('cf.config_id = ?', $config->id)->execute();
+                    foreach ($config_trucks as $config_truck) {
+                        $truck_id = $config_truck->Truck->id;
+                        // will be remapping later
+                        $tag['search']['_ctl0:cphMain:ddlEquipment'] = $this->mapping($truck_id, array(
+                            '0' =>  'A', // all
+                            '1' =>  'A', // Dry Bulk
+                            '2' =>  'A', // containers missing
+                            '3' =>  'A', // Deck Standard
+                            '4' =>  'F', // Flatbed
+                            '5' =>  'A', // Decks, Specialized
+                            '6' =>  'Z', // other Equipment
+                            '7' =>  'R', // Reefers
+                            '8' =>  'V', // Vans, Specialized
+                            '9' =>  'A', // Tankers
+                            '10' => 'V', // Vans, Standard
+                            '11' => 'A', // Hazardous Materials
+                        ));
+                        break;
+                     }
+                    $tag['search']['_ctl0_cphMain_oRadius'] = $config->origin_radius;
+                    $tag['search']['_ctl0_cphMain_oRadius_clientState'] = "|0|01" . $config->origin_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->origin_radius . '"' . "]";
+                    $tag['search']['_ctl0_cphMain_dradius'] = $config->destination_radius;
+                    $tag['search']['_ctl0_cphMain_dradius_clientState'] = "|0|01" . $config->destination_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->destination_radius . '"' . "]";
+                    $tag['search']['_ctl0:cphMain:hdnStartDate'] = date("m/d/Y",strtotime($config->from_date));
+                    $start_date = date("Y-m-d", strtotime($config->from_date));
+                    $tag['search']['_ctl0_cphMain_txtStartDate_clientState'] = "|0|01". $start_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $start_date . '-0-0-0-0"' . "]";
+                    $tag['search']['_ctl0:cphMain:hdnEndDate'] = date("m/d/Y", strtotime($config->to_date));
+                    $end_date = date("Y-m-d", strtotime($config->to_date));
+                    $tag['search']['_ctl0_cphMain_txtEndDate_clientState'] = "|0|01". $end_date . "-0-0-0-0||[[[[]],[],[]],[{},[]]," . '"01' . $end_date . '-0-0-0-0"' . "]";
+                    $tag['search']['_ctl0:cphMain:btnSubmit'] = "Submit";
+                    $client->fill($tag['search']);
+                    $client->post('https://www.chrwtrucks.com/Applications/FindLoad/RadiusSearchOD.aspx');
+                }
             }                
             elseif ($origin != "") {
                 $status_search = "origin";
@@ -302,12 +367,15 @@ class ChrwtrucksGenerator
         $doc = new DOMDocument();
         @$doc->loadHTML($client->getBody());
         $xpath = new DOMXpath($doc);
-        $nodes = $xpath->query("//div[@id='_ctl0_cphMain_pnlSearchResult']//table//table//tr");        
+        if($status_search = "multi_search")
+            $nodes = $xpath->query("//div[@id = '_ctl0_cphMain_pnlLoadlist']//table//tr");
+        else
+            $nodes = $xpath->query("//div[@id ='_ctl0_cphMain_pnlSearchResult']//table//table//tr");        
         foreach ($nodes as $node) {
 			$tds = $xpath->query('td', $node);
 			$items = array(); 
 	        foreach ($tds as $td) {
-	            $td = $td->nodeValue;
+                $td = $td->nodeValue;
 	            $td = preg_replace("/[^A-Za-z0-9, \/:-]/i", " ", $td);
                 $td = preg_replace('/\s+/', ' ', $td);
 	            $items[] = trim($td);
@@ -334,6 +402,19 @@ class ChrwtrucksGenerator
 						$tmp[$i] = $items[$i - 1];
         		    }                    
                     $items = $tmp; 
+                }
+                elseif ($status_search == "multi_search") {
+                    $tmp = array();
+        			for($i = 0; $i <= 2; $i++) {
+						$tmp[$i] = $items[$i];
+        			}
+                    $tmp[3] = " ";
+                    $tmp[4] = $items[3];
+                    $tmp[5] = $items[4]; 
+        			$tmp[6] = " ";
+        			$tmp[7] = $items[5];
+        			$tmp[8] = $items[6];
+                    $items = $tmp;
                 }    
                 
 				/*
