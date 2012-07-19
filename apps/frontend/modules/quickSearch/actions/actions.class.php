@@ -127,6 +127,10 @@ class quickSearchActions extends sfActions
 	  $config_form["config[weight]"] = $config->weight;
 	  $config_form["config[from_date]"] = $config->from_date;
 	  $config_form["config[to_date]"] = $config->to_date;
+	  if ($config->origin_is_multistates)
+		  $config_form['origin_is_multistates'] = 'on';
+	  if ($config->destination_is_multistates)
+		  $config_form['destination_is_multistates'] = 'on';
 	  $this->config_form_new = json_encode($config_form);
 	  $this->updateNotifies();
 	  return SfView::SUCCESS;
@@ -145,6 +149,8 @@ class quickSearchActions extends sfActions
     $config->weight = $form['weight'];
     $config->from_date = date('Y/m/d', strtotime($form['from_date']));
     $config->to_date = date('Y/m/d', strtotime($form['to_date']));
+	$config->origin_is_multistates = ($form['origin_is_multistates'] == 'on');
+	$config->destination_is_multistates = ($form['destination_is_multistates'] == 'on');
     $config->save();
 
     // jobboard config
