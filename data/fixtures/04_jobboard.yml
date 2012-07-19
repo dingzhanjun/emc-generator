@@ -38,6 +38,7 @@ Jobboard:
     address: 'http://truckstop.com/lite'
     username: 't193269rzps'
     password: 'wat2re5you'
+    multistates_supported: true
     
   Chrwtrucks:
     alias: CH
@@ -46,6 +47,7 @@ Jobboard:
     address: 'https://www.chrwtrucks.com'
     username: 'quinguyen'
     password: 'cuchi2eden3'
+    multistates_supported: true
     
   Getloaded:
     alias: GL
@@ -54,3 +56,4 @@ Jobboard:
     address: 'http://www.getloaded.com'
     username: 'qtrucking1'
     password: 'cuchi2eden3'
+    multistates_supported: true
