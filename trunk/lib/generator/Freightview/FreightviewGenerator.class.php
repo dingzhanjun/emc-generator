@@ -38,7 +38,7 @@ class FreightviewGenerator
     {
         $this->initialize();
         $client = new WebFormClient();
-        
+        $client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date("Y-m-d H-i-s O", time()));
         $config = Doctrine_Core::getTable('Config')->find($this->config_id);
         if (!$config) {
 			$notify_error = new NotifyError("Freightview - Config not found\n");
