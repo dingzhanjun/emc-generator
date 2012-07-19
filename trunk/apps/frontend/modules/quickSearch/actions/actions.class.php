@@ -45,7 +45,14 @@ class quickSearchActions extends sfActions
                 $jobboard = $jobboard_config->Jobboard;
                 $generator_name = $jobboard->name.'Generator';
                 $generator = new $generator_name($config->id, $jobboard->name);
-                if ($generator) {
+				
+				// generator will run only when origin or destination isn't multistates or origin/destination is multistates and jobboard support multistates
+				$check_multistates = true;
+				if ($form_data['origin_is_multistates'] == 'on' || $form_data['destination_is_multistates'] == 'on')
+					if (!$jobboard->multistates_supported)
+						$check_multistates = false;
+				
+                if ($generator && $check_multistates) {
                     $generator->execute();
                     $this->loads[$jobboard->alias] = $generator->getLoads();
                 }
