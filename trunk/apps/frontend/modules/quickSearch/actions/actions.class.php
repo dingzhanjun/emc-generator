@@ -48,7 +48,7 @@ class quickSearchActions extends sfActions
 				
 				// generator will run only when origin or destination isn't multistates or origin/destination is multistates and jobboard support multistates
 				$check_multistates = true;
-				if ($form_data['origin_is_multistates'] == 'on' || $form_data['destination_is_multistates'] == 'on')
+				if (isset($form_data['origin_is_multistates']) == 'on' || isset($form_data['destination_is_multistates']) == 'on')
 					if (!$jobboard->multistates_supported)
 						$check_multistates = false;
 				
@@ -149,8 +149,10 @@ class quickSearchActions extends sfActions
     $config->weight = $form['weight'];
     $config->from_date = date('Y/m/d', strtotime($form['from_date']));
     $config->to_date = date('Y/m/d', strtotime($form['to_date']));
-	$config->origin_is_multistates = ($form['origin_is_multistates'] == 'on');
-	$config->destination_is_multistates = ($form['destination_is_multistates'] == 'on');
+    if(isset($form['origin_is_multistates']))
+	   $config->origin_is_multistates = ($form['origin_is_multistates'] == 'on');
+    if(isset($form['destination_is_multistates']))
+	   $config->destination_is_multistates = ($form['destination_is_multistates'] == 'on');
     $config->save();
 
     // jobboard config
