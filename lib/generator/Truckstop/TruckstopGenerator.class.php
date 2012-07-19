@@ -39,7 +39,7 @@ class TruckstopGenerator
 		$this->initialize();
 		$client = new WebFormClient();
 		
-		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date("Y-m-d H-i-s O", time()));
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
 		if (!$config) {
 			$notify_error = new NotifyError("Truckstop - Config not found\n");
@@ -60,7 +60,6 @@ class TruckstopGenerator
 			$base_url = $jobboard->address;
 			$client->get($base_url);
 			
-			//$this->create_log($jobboard->name.'-login-'.date(DATE_ISO8601).'.html', $client->getBody());
 			$client->load(array('id' => 'aspnetForm', 'name' => 'aspnetForm'));
 			
 			$client->validate(array(
@@ -73,12 +72,15 @@ class TruckstopGenerator
 					));
 			
 			$client->removeField('ctl00$Navigation$LogoutButton');
-			$client->appendField('ctl00$ContentPlaceHolder$login$textUserName', 'input');
-			$client->appendField('ctl00$ContentPlaceHolder$login$textCompanyAccount', 'input');
-			$client->appendField('ctl00$ContentPlaceHolder$login$textPassword', 'input');
-			$client->appendField('ctl00$ContentPlaceHolder$login$hiddenPassword', 'input');
-			$client->appendField('ctl00$ContentPlaceHolder$login$buttonLogin', 'input');
+			try {
+				$client->appendField('ctl00$ContentPlaceHolder$login$textUserName', 'input');
+				$client->appendField('ctl00$ContentPlaceHolder$login$textCompanyAccount', 'input');
+				$client->appendField('ctl00$ContentPlaceHolder$login$textPassword', 'input');
+				$client->appendField('ctl00$ContentPlaceHolder$login$hiddenPassword', 'input');
+				$client->appendField('ctl00$ContentPlaceHolder$login$buttonLogin', 'input');
+			} catch (Exception $ex) {
 			
+			}
 			$tag['login'] = $client->getData();
 			
 			// login step
