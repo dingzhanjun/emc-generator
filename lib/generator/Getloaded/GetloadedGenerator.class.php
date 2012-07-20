@@ -162,43 +162,89 @@ class GetloadedGenerator
 							'new_search_name'                       => 'input-text',
 							'save'                                  => 'input-button',
 							));
+			if($config->origin_is_multistates == true || $config->destination_is_multistates == true) {
+			     $tag['search'][' '] = $client->getData();
+                 //$client->removeField('selected_equipment_attributes[1024]');
+                 $tag['search']['search_id'] = "";
+                 $tag['search']['search_id_type'] = "";
+                 $tag['search']['search'] = 'Find Loads';
+                 $date = "";
+                 if(isset($config->from_date))
+                    $date .= date("m/d/Y", strtotime($config->from_date));
+                 if(isset($config->to_date))
+                    $date .= ",".date("m/d/Y", strtotime($config->to_date));
+       	         $tag['search']['pickup_start_date'] = $date;
+                 $tag['search']['sc'] = '';
+    			 $tag['search']['ss'] = '';
+                 $tag['search']['dc'] = '';
+    			 $tag['search']['ds'] = '';
+       	         $tag['search']['search_type'] = 'any_any';
+                 $tag['search']['ttype'] = '64';
+                 $tag['search']['amask'] = '0';
+    			 $tag['search']['unknown_start'] = '';
+    			 $tag['search']['unknown_dest'] = '';
+                 $tag['search']['saved_search_count'] = 0;
+                 $tag['search']['search_status'] = "search";
+                 $tag['search']['prevTxt'] = "Prev";
+		         $tag['search']['nextTxt'] = "Next";
+    			 $tag['search']['curTxt'] = "Today";
+       	         $tag['search']['starting_point'] = $config->origin;
+    			 $tag['search']['destination_point'] = $config->destination;
+                 $tag['search']['radius_strict'] = 0;
+       	         $tag['search']['s_radius'] = (($config->origin_radius != 0)?($config->origin_radius):"150");
+    			 $tag['search']['d_radius'] = (($config->destination_radius != 0)?($config->destination_radius):"150");;
+                 $tag['search']['posted_within'] = 0;
+    			 $tag['search']['ttype_select[64]'] = 64;
+                 $tag['search']['fp'] = '';
+                 $tag['search']['weight'] = '';
+                 $tag['search']['post_truck'] = 'yes';
+       	         $client->fill($tag['search']);
+    			 $client->setHeaders($headers);
+                 var_dump($tag['search']);
+    			 $client->post('http://member.getloaded.com/search/load_search.php');
+                 $this->create_log('',$client->getBody());
+                 exit();
+			 }
+             else  {
+                $tag['search'] = $client->getData();
+    			$tag['search']['search'] = 'Find Loads';
+    			// now we havent supported multistates jet
+    			$full_origin = trim($config->origin);
+    			$full_origin = preg_split('#,#', $full_origin);
+    			$tag['search']['sc'] = trim(strtoupper($full_origin[0]));
+    			$tag['search']['ss'] = trim(strtoupper($full_origin[1]));
+    			$full_destination = trim($config->destination);
+    			$full_destination = preg_split('#,#', $full_destination);
+    			$tag['search']['dc'] = trim(strtoupper($full_destination[0]));
+    			$tag['search']['ds'] = trim(strtoupper($full_destination[1]));
+    			$tag['search']['smask'] = 0;
+    			$tag['search']['dmask'] = 0;
+    			$tag['search']['search_type'] = "radius_radius";
+    			$tag['search']['ttype'] = 64;
+    			$tag['search']['amask'] = 0;
+    			$tag['search']['unknown_start'] = '';
+    			$tag['search']['unknown_dest'] = '';
+    			$tag['search']['saved_search_count'] = '';
+    			$tag['search']['search_status'] = 'search';
+    			$tag['search']['prevTxt'] = 'Prev';
+    			$tag['search']['nextTxt'] = 'Next';
+    			$tag['search']['curTxt'] = 'Today';
+    			$tag['search']['radius_strict'] = 1;
+    			$tag['search']['s_radius'] = (($config->origin_radius != 0)?($config->origin_radius):"150");
+    			$tag['search']['d_radius'] = (($config->destination_radius != 0)?($config->destination_radius):"150");;
+    			$tag['search']['starting_point'] = $config->origin;
+    			$tag['search']['destination_point'] = $config->destination;
+    			$tag['search']['pickup_start_date'] = date("n/j/Y",strtotime($config->from_date));
+    			$tag['search']['posted_within'] = 0;
+    			$tag['search']['ttype_select[64]'] = 64;
+    			$tag['search']['use_attributes'] = 'any';
+    			
+    			$client->fill($tag['search']);
+    			$client->setHeaders($headers);
+    			$client->post('http://member.getloaded.com/search/load_search.php');
+                $this->create_log('',$client->getBody());
+            }
 			
-			$tag['search'] = $client->getData();
-			$tag['search']['search'] = 'Find Loads';
-			// now we havent supported multistates jet
-			$full_origin = trim($config->origin);
-			$full_origin = preg_split('#,#', $full_origin);
-			$tag['search']['sc'] = trim(strtoupper($full_origin[0]));
-			$tag['search']['ss'] = trim(strtoupper($full_origin[1]));
-			$full_destination = trim($config->destination);
-			$full_destination = preg_split('#,#', $full_destination);
-			$tag['search']['dc'] = trim(strtoupper($full_destination[0]));
-			$tag['search']['ds'] = trim(strtoupper($full_destination[1]));
-			$tag['search']['smask'] = 0;
-			$tag['search']['dmask'] = 0;
-			$tag['search']['search_type'] = "radius_radius";
-			$tag['search']['ttype'] = 64;
-			$tag['search']['amask'] = 0;
-			$tag['search']['unknown_start'] = '';
-			$tag['search']['unknown_dest'] = '';
-			$tag['search']['saved_search_count'] = '';
-			$tag['search']['search_status'] = 'search';
-			$tag['search']['prevTxt'] = 'Prev';
-			$tag['search']['nextTxt'] = 'Next';
-			$tag['search']['curTxt'] = 'Today';
-			$tag['search']['radius_strict'] = 1;
-			$tag['search']['s_radius'] = (($config->origin_radius != 0)?($config->origin_radius):"150");
-			$tag['search']['d_radius'] = (($config->destination_radius != 0)?($config->destination_radius):"150");;
-			$tag['search']['starting_point'] = $config->origin;
-			$tag['search']['destination_point'] = $config->destination;
-			$tag['search']['pickup_start_date'] = date("n/j/Y",strtotime($config->from_date));
-			$tag['search']['posted_within'] = 0;
-			$tag['search']['ttype_select[64]'] = 64;
-			$tag['search']['use_attributes'] = 'any';
-			
-			$client->fill($tag['search']);
-			$client->setHeaders($headers);
-			$client->post('http://member.getloaded.com/search/load_search.php');
 			// parsing reponse
 			$doc = new DOMDocument();
 			@$doc->loadHTML($client->getBody());
