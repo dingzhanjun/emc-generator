@@ -6,6 +6,7 @@ Jobboard:
     address: 'https://www.truckersedge.net/a/secure/Login.aspx?app=truckersedge&'
     username: 'southernrt'
     password: 'S4lt4you'
+    multistates_supported: true
     
   Freightview:
     alias: FV
