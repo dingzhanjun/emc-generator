@@ -164,86 +164,115 @@ class GetloadedGenerator
 				));
 			if($config->origin_is_multistates == true || $config->destination_is_multistates == true) {
 			     $tag['search'][' '] = $client->getData();
+			     $array_state = array(
+    					'AK'	=>	'2',
+    					'AL'	=>	'1',
+    					'AZ'	=>	'4',
+    					'AR'	=>	'8',
+    					'CA'	=>	'16',
+    					'CO'	=>	'32',
+    					'CT'	=>	'64',
+    					'DE'	=>	'128',
+    					'DC'	=>	'256',
+    					'FL'	=>	'512',
+    					'GA'	=>	'1024',
+    					'HI'	=>	'0',
+    					'ID'	=>	'2048',
+    					'IL'	=>	'4096',
+    					'IN'	=>	'8192',
+    					'IA'	=>	'16384',
+    					'KS'	=>	'32768',
+    					'KI'	=>	'0',
+    					'LA'	=>	'131072',
+    					'MA'	=>	'1048576',
+    					'MD'	=>	'524288',
+    					'ME'	=>	'262144',
+    					'MI'	=>	'2097152',
+    					'MN'	=>	'4194304',
+    					'MD'	=>	'16777216',
+    					'MS'	=>	'8388608',
+    					'MT'	=>	'33554432',
+    					'NC'	=>	'4294967296',
+    					'ND'	=>	'8589934592',
+    					'NE'	=>	'67108864',
+    					'NH'	=>	'268435456',
+    					'NJ'	=>	'5364870912',
+    					'NM'	=>	'1073741824',
+    					'NV'	=>	'1342177288',
+    					'NY'	=>	'2147483648',
+    					'OH'	=>	'17179869184',
+    					'OK'	=>	'34359738368',
+    					'OR'	=>	'68719476736',
+    					'PA'	=>	'137438953472',
+    					'RI'	=>	'274877906944',
+    					'SC'	=>	'549755813888',
+    					'SD'	=>	'1099511627776',
+    					'TN'	=>	'2199023255552',
+    					'TX'	=>	'4398046511104',
+    					'UT'	=>	'8796093022208',
+    					'VA'	=>	'35184372088832',
+    					'VT'	=>	'17592186044416',
+    					'WA'	=>	'70368744177664',
+    					'WI'	=>	'281474976710656',
+    					'WV'	=>	'140737488355328',
+    					'WY'	=>	'562949953421312'	
+    				);
                  //$client->removeField('selected_equipment_attributes[1024]');
-                 $tag['search']['search_id'] = "";
-                 $tag['search']['search_id_type'] = "";
-                 $tag['search']['search'] = 'Find Loads';
-                 $date = "";
-                 if(isset($config->from_date))
+                $tag['search']['search_id'] = "";
+                $tag['search']['search_id_type'] = "";
+                $tag['search']['search'] = 'Find Loads';
+                $date = "";
+                if(isset($config->from_date))
                     $date .= date("m/d/Y", strtotime($config->from_date));
-                 if(isset($config->to_date))
+                if(isset($config->to_date))
                     $date .= ",".date("m/d/Y", strtotime($config->to_date));
-       	         $tag['search']['pickup_start_date'] = $date;
-                 $tag['search']['sc'] = '';
-    			 $tag['search']['ss'] = '';
-                 $tag['search']['dc'] = '';
-    			 $tag['search']['ds'] = '';
-                 
-                $array_state = array(
-					'AK'	=>	'2',
-					'AL'	=>	'1',
-					'AZ'	=>	'4',
-					'AR'	=>	'8',
-					'CA'	=>	'16',
-					'CO'	=>	'32',
-					'CT'	=>	'64',
-					'DE'	=>	'128',
-					'DC'	=>	'256',
-					'FL'	=>	'512',
-					'GA'	=>	'1024',
-					'HI'	=>	'0',
-					'ID'	=>	'2048',
-					'IL'	=>	'4096',
-					'IN'	=>	'8192',
-					'IA'	=>	'16384',
-					'KS'	=>	'32768',
-					'KI'	=>	'0',
-					'LA'	=>	'131072',
-					'MA'	=>	'1048576',
-					'MD'	=>	'524288',
-					'ME'	=>	'262144',
-					'MI'	=>	'2097152',
-					'MN'	=>	'4194304',
-					'MD'	=>	'16777216',
-					'MS'	=>	'8388608',
-					'MT'	=>	'33554432',
-					'NC'	=>	'4294967296',
-					'ND'	=>	'8589934592',
-					'NE'	=>	'67108864',
-					'NH'	=>	'268435456',
-					'NJ'	=>	'5364870912',
-					'NM'	=>	'1073741824',
-					'NV'	=>	'1342177288',
-					'NY'	=>	'2147483648',
-					'OH'	=>	'17179869184',
-					'OK'	=>	'34359738368',
-					'OR'	=>	'68719476736',
-					'PA'	=>	'137438953472',
-					'RI'	=>	'274877906944',
-					'SC'	=>	'549755813888',
-					'SD'	=>	'1099511627776',
-					'TN'	=>	'2199023255552',
-					'TX'	=>	'4398046511104',
-					'UT'	=>	'8796093022208',
-					'VA'	=>	'35184372088832',
-					'VT'	=>	'17592186044416',
-					'WA'	=>	'70368744177664',
-					'WI'	=>	'281474976710656',
-					'WV'	=>	'140737488355328',
-					'WY'	=>	'562949953421312'	
-				);
+       	        $tag['search']['pickup_start_date'] = $date;
                 $str_origin = explode(",", strip_tags(trim(strtoupper($config->origin))));
 				$str_destination = explode(",", strip_tags(trim(strtoupper($config->destination))));
-				$smask = 0;
-				$dmask = 0;
-				for($i = 0; $i<count($str_origin); $i++) {
-					$smask  += $array_state[trim($str_origin[$i])];
-				}
-				for ($i = 0 ; $i< count($str_destination); $i++) {
-					$dmask += $array_state[trim($str_destination[$i])];
-				}
-                 $tag['search']['smask'] = $smask;
-    			 $tag['search']['dmask'] = $dmask;
+                if(strlen(trim($str_destination[0])) > 2 && strlen(trim($str_origin[0])) <= 2 ) {
+                    $tag['search']['dc'] = $str_destination[0];
+    			    $tag['search']['ds'] = $str_destination[1];
+                    $tag['search']['dmask'] = ' ';
+    				$smask = 0;
+    				for($i = 0; $i<count($str_origin); $i++) {
+    					$smask  += $array_state[trim($str_origin[$i])];
+    				}
+                    $tag['search']['smask'] = $smask;
+                    $tag['search']['sc'] = '';
+        			$tag['search']['ss'] = '';
+                 }
+                 elseif(strlen(trim($str_origin[0])) > 2 && strlen(trim($str_destination[0])) <= 2) {
+                    $tag['search']['sc'] = $str_origin[0];
+    			    $tag['search']['ss'] = $str_origin[1];
+                    $tag['search']['smask'] = ' ';
+                    $tag['search']['dc'] = '';
+    			    $tag['search']['ds'] = '';
+                    $dmask = 0;
+    				for($i = 0; $i<count($str_destination); $i++) {
+    					$dmask  += $array_state[trim($str_destination[$i])];
+    				}
+                    $tag['search']['dmask'] = $dmask;
+                 }
+                 elseif(strlen(trim($str_destination[0])) <= 2 && strlen(trim($str_origin[0])) <= 2 ){
+                    $tag['search']['sc'] = '';
+        			$tag['search']['ss'] = '';
+                    $tag['search']['dc'] = '';
+        			$tag['search']['ds'] = '';
+ 
+        			$smask = 0;
+        			$dmask = 0;
+        			for($i = 0; $i<count($str_origin); $i++) {
+        			    if(strlen(trim($str_origin[$i]) <= 2))
+        					$smask  += $array_state[trim($str_origin[$i])];
+        			  }
+        			for ($i = 0 ; $i< count($str_destination); $i++) {
+        			    if(strlen(trim($str_destination[$i]) <= 2))
+        					$dmask += $array_state[trim($str_destination[$i])];
+        			  }
+                    $tag['search']['smask'] = $smask;
+            		$tag['search']['dmask'] = $dmask;
+                 }
+                 
        	         $tag['search']['search_type'] = 'any_any';
                  $tag['search']['ttype'] = '64';
                  $tag['search']['amask'] = '0';
@@ -267,7 +296,7 @@ class GetloadedGenerator
        	         $client->fill($tag['search']);
     			 $client->setHeaders($headers);
     			 $client->post('http://member.getloaded.com/search/load_search.php');
-                 
+                 $this->create_log('',$client->getBody());
 			 }
              else  {
                 $tag['search'] = $client->getData();
