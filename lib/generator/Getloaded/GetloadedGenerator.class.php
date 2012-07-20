@@ -87,81 +87,81 @@ class GetloadedGenerator
 			$client->get('http://member.getloaded.com/search/load_search.php');
 			$client->load(array('id' => 'load_search_form'));
 			$client->validate(array(
-							'search_id'                             => 'input-hidden',
-							'search_id_type'                        => 'input-hidden',
-							'search'                                => 'input-hidden',
-							'pickup_start_date'                     => 'input-hidden',
-							'sc'                                    => 'input-hidden',
-							'ss'                                    => 'input-hidden',
-							'dc'                                    => 'input-hidden',
-							'ds'                                    => 'input-hidden',
-							'smask'                                 => 'input-hidden',
-							'dmask'                                 => 'input-hidden',
-							'search_type'                           => 'input-hidden',
-							'ttype'                                 => 'input-hidden',
-							'amask'                                 => 'input-hidden',
-							'unknown_start'                         => 'input-hidden',
-							'unknown_dest'                          => 'input-hidden',
-							'saved_search_count'                    => 'input-hidden',
-							'search_status'                         => 'input-hidden',
-							'prevTxt'                               => 'input-hidden',
-							'starting_point'                        => 'input-text',
-							'destination_point'                     => 'input-text',
-							'radius_strict'                         => 'input-radio',
-							's_radius'                              => 'input-text',
-							'd_radius'                              => 'input-text',
-							'posted_within'                         => 'select',
-							'ttype_select[64]'                      => 'input-checkbox',
-							'ttype_select[16384]'                   => 'input-checkbox',
-							'ttype_select[2048]'                    => 'input-checkbox',
-							'ttype_select[1024]'                    => 'input-checkbox',
-							'ttype_select[1]'                       => 'input-checkbox',
-							'ttype_select[2]'                       => 'input-checkbox',
-							'ttype_select[1048576]'                 => 'input-checkbox',
-							'ttype_select[8]'                       => 'input-checkbox',
-							'ttype_select[4]'                       => 'input-checkbox',
-							'ttype_select[32]'                      => 'input-checkbox',
-							'ttype_select[256]'                     => 'input-checkbox',
-							'ttype_select[524288]'                  => 'input-checkbox',
-							'ttype_select[512]'                     => 'input-checkbox',
-							'ttype_select[128]'                     => 'input-checkbox',
-							'ttype_select[262144]'                  => 'input-checkbox',
-							'ttype_select[16]'                      => 'input-checkbox',
-							'ttype_select[32768]'                   => 'input-checkbox',
-							'ttype_select[4096]'                    => 'input-checkbox',
-							'ttype_select[8192]'                    => 'input-checkbox',
-							'ttype_select[131072]'                  => 'input-checkbox',
-							'ttype_select[65536]'                   => 'input-checkbox',
-							'use_attributes'                        => 'input-radio',
-							'selected_equipment_attributes[1024]'   => 'input-checkbox',
-							'selected_equipment_attributes[128]'    => 'input-checkbox',
-							'selected_equipment_attributes[131072]' => 'input-checkbox',
-							'selected_equipment_attributes[16]'     => 'input-checkbox',
-							'selected_equipment_attributes[32768]'  => 'input-checkbox',
-							'selected_equipment_attributes[512]'    => 'input-checkbox',
-							'selected_equipment_attributes[8]'      => 'input-checkbox',
-							'selected_equipment_attributes[256]'    => 'input-checkbox',
-							'selected_equipment_attributes[2]'      => 'input-checkbox',
-							'selected_equipment_attributes[65536]'  => 'input-checkbox',
-							'selected_equipment_attributes[262144]' => 'input-checkbox',
-							'selected_equipment_attributes[4]'      => 'input-checkbox',
-							'selected_equipment_attributes[1]'      => 'input-checkbox',
-							'selected_equipment_attributes[64]'     => 'input-checkbox',
-							'selected_equipment_attributes[4096]'   => 'input-checkbox',
-							'selected_equipment_attributes[8192]'   => 'input-checkbox',
-							'selected_equipment_attributes[16384]'  => 'input-checkbox',
-							'selected_equipment_attributes[32]'     => 'input-checkbox',
-							'selected_equipment_attributes[2048]'   => 'input-checkbox',
-							'team'                                  => 'input-checkbox',
-							'pay_amt'                               => 'input-checkbox',
-							'favorites_only'                        => 'input-checkbox',
-							'overweight'                            => 'input-checkbox',
-							'fp'                                    => 'select',
-							'weight'                                => 'input-text',
-							'save_search_new'                       => 'input-checkbox',
-							'new_search_name'                       => 'input-text',
-							'save'                                  => 'input-button',
-							));
+				'search_id'                             => 'input-hidden',
+				'search_id_type'                        => 'input-hidden',
+				'search'                                => 'input-hidden',
+				'pickup_start_date'                     => 'input-hidden',
+				'sc'                                    => 'input-hidden',
+				'ss'                                    => 'input-hidden',
+				'dc'                                    => 'input-hidden',
+				'ds'                                    => 'input-hidden',
+				'smask'                                 => 'input-hidden',
+				'dmask'                                 => 'input-hidden',
+				'search_type'                           => 'input-hidden',
+				'ttype'                                 => 'input-hidden',
+				'amask'                                 => 'input-hidden',
+				'unknown_start'                         => 'input-hidden',
+				'unknown_dest'                          => 'input-hidden',
+				'saved_search_count'                    => 'input-hidden',
+				'search_status'                         => 'input-hidden',
+				'prevTxt'                               => 'input-hidden',
+				'starting_point'                        => 'input-text',
+				'destination_point'                     => 'input-text',
+				'radius_strict'                         => 'input-radio',
+				's_radius'                              => 'input-text',
+				'd_radius'                              => 'input-text',
+				'posted_within'                         => 'select',
+				'ttype_select[64]'                      => 'input-checkbox',
+				'ttype_select[16384]'                   => 'input-checkbox',
+				'ttype_select[2048]'                    => 'input-checkbox',
+				'ttype_select[1024]'                    => 'input-checkbox',
+				'ttype_select[1]'                       => 'input-checkbox',
+				'ttype_select[2]'                       => 'input-checkbox',
+				'ttype_select[1048576]'                 => 'input-checkbox',
+				'ttype_select[8]'                       => 'input-checkbox',
+				'ttype_select[4]'                       => 'input-checkbox',
+				'ttype_select[32]'                      => 'input-checkbox',
+				'ttype_select[256]'                     => 'input-checkbox',
+				'ttype_select[524288]'                  => 'input-checkbox',
+				'ttype_select[512]'                     => 'input-checkbox',
+				'ttype_select[128]'                     => 'input-checkbox',
+				'ttype_select[262144]'                  => 'input-checkbox',
+				'ttype_select[16]'                      => 'input-checkbox',
+				'ttype_select[32768]'                   => 'input-checkbox',
+				'ttype_select[4096]'                    => 'input-checkbox',
+				'ttype_select[8192]'                    => 'input-checkbox',
+				'ttype_select[131072]'                  => 'input-checkbox',
+				'ttype_select[65536]'                   => 'input-checkbox',
+				'use_attributes'                        => 'input-radio',
+				'selected_equipment_attributes[1024]'   => 'input-checkbox',
+				'selected_equipment_attributes[128]'    => 'input-checkbox',
+				'selected_equipment_attributes[131072]' => 'input-checkbox',
+				'selected_equipment_attributes[16]'     => 'input-checkbox',
+				'selected_equipment_attributes[32768]'  => 'input-checkbox',
+				'selected_equipment_attributes[512]'    => 'input-checkbox',
+				'selected_equipment_attributes[8]'      => 'input-checkbox',
+				'selected_equipment_attributes[256]'    => 'input-checkbox',
+				'selected_equipment_attributes[2]'      => 'input-checkbox',
+				'selected_equipment_attributes[65536]'  => 'input-checkbox',
+				'selected_equipment_attributes[262144]' => 'input-checkbox',
+				'selected_equipment_attributes[4]'      => 'input-checkbox',
+				'selected_equipment_attributes[1]'      => 'input-checkbox',
+				'selected_equipment_attributes[64]'     => 'input-checkbox',
+				'selected_equipment_attributes[4096]'   => 'input-checkbox',
+				'selected_equipment_attributes[8192]'   => 'input-checkbox',
+				'selected_equipment_attributes[16384]'  => 'input-checkbox',
+				'selected_equipment_attributes[32]'     => 'input-checkbox',
+				'selected_equipment_attributes[2048]'   => 'input-checkbox',
+				'team'                                  => 'input-checkbox',
+				'pay_amt'                               => 'input-checkbox',
+				'favorites_only'                        => 'input-checkbox',
+				'overweight'                            => 'input-checkbox',
+				'fp'                                    => 'select',
+				'weight'                                => 'input-text',
+				'save_search_new'                       => 'input-checkbox',
+				'new_search_name'                       => 'input-text',
+				'save'                                  => 'input-button',
+				));
 			if($config->origin_is_multistates == true || $config->destination_is_multistates == true) {
 			     $tag['search'][' '] = $client->getData();
                  //$client->removeField('selected_equipment_attributes[1024]');
@@ -178,6 +178,72 @@ class GetloadedGenerator
     			 $tag['search']['ss'] = '';
                  $tag['search']['dc'] = '';
     			 $tag['search']['ds'] = '';
+                 
+                $array_state = array(
+					'AK'	=>	'2',
+					'AL'	=>	'1',
+					'AZ'	=>	'4',
+					'AR'	=>	'8',
+					'CA'	=>	'16',
+					'CO'	=>	'32',
+					'CT'	=>	'64',
+					'DE'	=>	'128',
+					'DC'	=>	'256',
+					'FL'	=>	'512',
+					'GA'	=>	'1024',
+					'HI'	=>	'0',
+					'ID'	=>	'2048',
+					'IL'	=>	'4096',
+					'IN'	=>	'8192',
+					'IA'	=>	'16384',
+					'KS'	=>	'32768',
+					'KI'	=>	'0',
+					'LA'	=>	'131072',
+					'MA'	=>	'1048576',
+					'MD'	=>	'524288',
+					'ME'	=>	'262144',
+					'MI'	=>	'2097152',
+					'MN'	=>	'4194304',
+					'MD'	=>	'16777216',
+					'MS'	=>	'8388608',
+					'MT'	=>	'33554432',
+					'NC'	=>	'4294967296',
+					'ND'	=>	'8589934592',
+					'NE'	=>	'67108864',
+					'NH'	=>	'268435456',
+					'NJ'	=>	'5364870912',
+					'NM'	=>	'1073741824',
+					'NV'	=>	'1342177288',
+					'NY'	=>	'2147483648',
+					'OH'	=>	'17179869184',
+					'OK'	=>	'34359738368',
+					'OR'	=>	'68719476736',
+					'PA'	=>	'137438953472',
+					'RI'	=>	'274877906944',
+					'SC'	=>	'549755813888',
+					'SD'	=>	'1099511627776',
+					'TN'	=>	'2199023255552',
+					'TX'	=>	'4398046511104',
+					'UT'	=>	'8796093022208',
+					'VA'	=>	'35184372088832',
+					'VT'	=>	'17592186044416',
+					'WA'	=>	'70368744177664',
+					'WI'	=>	'281474976710656',
+					'WV'	=>	'140737488355328',
+					'WY'	=>	'562949953421312'	
+				);
+                $str_origin = explode(",", strip_tags(trim(strtoupper($config->origin))));
+				$str_destination = explode(",", strip_tags(trim(strtoupper($config->destination))));
+				$smask = 0;
+				$dmask = 0;
+				for($i = 0; $i<count($str_origin); $i++) {
+					$smask  += $array_state[trim($str_origin[$i])];
+				}
+				for ($i = 0 ; $i< count($str_destination); $i++) {
+					$dmask += $array_state[trim($str_destination[$i])];
+				}
+                 $tag['search']['smask'] = $smask;
+    			 $tag['search']['dmask'] = $dmask;
        	         $tag['search']['search_type'] = 'any_any';
                  $tag['search']['ttype'] = '64';
                  $tag['search']['amask'] = '0';
@@ -200,10 +266,8 @@ class GetloadedGenerator
                  $tag['search']['post_truck'] = 'yes';
        	         $client->fill($tag['search']);
     			 $client->setHeaders($headers);
-                 var_dump($tag['search']);
     			 $client->post('http://member.getloaded.com/search/load_search.php');
-                 $this->create_log('',$client->getBody());
-                 exit();
+                 
 			 }
              else  {
                 $tag['search'] = $client->getData();
@@ -242,7 +306,7 @@ class GetloadedGenerator
     			$client->fill($tag['search']);
     			$client->setHeaders($headers);
     			$client->post('http://member.getloaded.com/search/load_search.php');
-                $this->create_log('',$client->getBody());
+                
             }
 			
 			// parsing reponse
@@ -256,7 +320,7 @@ class GetloadedGenerator
 				$items = array();
 				foreach ($tds as $td)
 					$items[] = trim($td->nodeValue);
-				$this->addLoads($items);
+				$this->addLoads($items);               
 			}
 		} catch (Exception $ex) {
 			$notify_error = new NotifyError("Getloaded - Jobboard has been changed. Please contact to VTNS.	\n");
