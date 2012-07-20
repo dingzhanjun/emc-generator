@@ -358,7 +358,7 @@ function sort_js(type, default_order) {
 					    echo "<td class='loads_".$indexKey."'>".$date1."<br/>".$date2."</td>"; // pick up
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[8]."</td>"; // truck type
+					    echo "<td class='loads_".$indexKey."'>".(isset($loads[8])?$loads[8]:"")."</td>"; // truck type
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>---</td>"; // no Full/partial
