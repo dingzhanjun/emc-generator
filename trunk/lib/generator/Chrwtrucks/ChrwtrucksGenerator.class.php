@@ -205,7 +205,7 @@ class ChrwtrucksGenerator
 								'11' => 'A', // Hazardous Materials
 							));
 							break;
-						 }
+						}
 						$tag['search']['_ctl0_cphMain_oRadius'] = $config->origin_radius;
 						$tag['search']['_ctl0_cphMain_oRadius_clientState'] = "|0|01" . $config->origin_radius . "||[[[[]],[],[]],[{},[]]," . '"01' . $config->origin_radius . '"' . "]";
 						$tag['search']['_ctl0_cphMain_dradius'] = $config->destination_radius;
@@ -370,7 +370,8 @@ class ChrwtrucksGenerator
 			$doc = new DOMDocument();
 			@$doc->loadHTML($client->getBody());
 			$xpath = new DOMXpath($doc);
-			if ($status_search == "multi_search")
+			
+			if ($status_search == "multi_state")
 				$nodes = $xpath->query("//div[@id = '_ctl0_cphMain_pnlLoadlist']//table//tr");
 			else
 				$nodes = $xpath->query("//div[@id ='_ctl0_cphMain_pnlSearchResult']//table//table//tr");  
