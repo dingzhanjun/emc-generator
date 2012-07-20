@@ -9,3 +9,4 @@ UPDATE `jobboard` SET alias = 'TS' WHERE id = 5;
 
 CREATE TABLE notify (notify_id BIGINT AUTO_INCREMENT, content VARCHAR(255), status TINYINT(1) DEFAULT '0' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(notify_id)) ENGINE = INNODB;
 */
+UPDATE `jobboard` SET multistates_supported = 1 WHERE alias = "TE";
