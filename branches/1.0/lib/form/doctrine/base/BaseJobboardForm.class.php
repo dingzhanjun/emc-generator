@@ -15,27 +15,29 @@ abstract class BaseJobboardForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'             => new sfWidgetFormInputHidden(),
-      'alias'          => new sfWidgetFormInputText(),
-      'name'           => new sfWidgetFormInputText(),
-      'generator_name' => new sfWidgetFormInputText(),
-      'address'        => new sfWidgetFormInputText(),
-      'username'       => new sfWidgetFormInputText(),
-      'password'       => new sfWidgetFormInputText(),
-      'created_at'     => new sfWidgetFormDateTime(),
-      'updated_at'     => new sfWidgetFormDateTime(),
+      'id'                    => new sfWidgetFormInputHidden(),
+      'alias'                 => new sfWidgetFormInputText(),
+      'name'                  => new sfWidgetFormInputText(),
+      'generator_name'        => new sfWidgetFormInputText(),
+      'address'               => new sfWidgetFormInputText(),
+      'username'              => new sfWidgetFormInputText(),
+      'password'              => new sfWidgetFormInputText(),
+      'multistates_supported' => new sfWidgetFormInputCheckbox(),
+      'created_at'            => new sfWidgetFormDateTime(),
+      'updated_at'            => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'alias'          => new sfValidatorString(array('max_length' => 255)),
-      'name'           => new sfValidatorString(array('max_length' => 255)),
-      'generator_name' => new sfValidatorString(array('max_length' => 255)),
-      'address'        => new sfValidatorString(array('max_length' => 255)),
-      'username'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'password'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'created_at'     => new sfValidatorDateTime(),
-      'updated_at'     => new sfValidatorDateTime(),
+      'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'alias'                 => new sfValidatorString(array('max_length' => 255)),
+      'name'                  => new sfValidatorString(array('max_length' => 255)),
+      'generator_name'        => new sfValidatorString(array('max_length' => 255)),
+      'address'               => new sfValidatorString(array('max_length' => 255)),
+      'username'              => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'password'              => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'multistates_supported' => new sfValidatorBoolean(array('required' => false)),
+      'created_at'            => new sfValidatorDateTime(),
+      'updated_at'            => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('jobboard[%s]');

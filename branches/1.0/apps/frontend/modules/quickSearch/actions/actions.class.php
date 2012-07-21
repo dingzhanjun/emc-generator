@@ -45,7 +45,14 @@ class quickSearchActions extends sfActions
                 $jobboard = $jobboard_config->Jobboard;
                 $generator_name = $jobboard->name.'Generator';
                 $generator = new $generator_name($config->id, $jobboard->name);
-                if ($generator) {
+				
+				// generator will run only when origin or destination isn't multistates or origin/destination is multistates and jobboard support multistates
+				$check_multistates = true;
+				if (isset($form_data['origin_is_multistates']) == 'on' || isset($form_data['destination_is_multistates']) == 'on')
+					if (!$jobboard->multistates_supported)
+						$check_multistates = false;
+				
+                if ($generator && $check_multistates) {
                     $generator->execute();
                     $this->loads[$jobboard->alias] = $generator->getLoads();
                 }
@@ -120,6 +127,10 @@ class quickSearchActions extends sfActions
 	  $config_form["config[weight]"] = $config->weight;
 	  $config_form["config[from_date]"] = $config->from_date;
 	  $config_form["config[to_date]"] = $config->to_date;
+	  if ($config->origin_is_multistates)
+		  $config_form['origin_is_multistates'] = 'on';
+	  if ($config->destination_is_multistates)
+		  $config_form['destination_is_multistates'] = 'on';
 	  $this->config_form_new = json_encode($config_form);
 	  $this->updateNotifies();
 	  return SfView::SUCCESS;
@@ -138,6 +149,14 @@ class quickSearchActions extends sfActions
     $config->weight = $form['weight'];
     $config->from_date = date('Y/m/d', strtotime($form['from_date']));
     $config->to_date = date('Y/m/d', strtotime($form['to_date']));
+    if (isset($form['origin_is_multistates']))
+		$config->origin_is_multistates = ($form['origin_is_multistates'] == 'on');
+	else
+	    $config->origin_is_multistates = false;
+    if (isset($form['destination_is_multistates']))
+	   	$config->destination_is_multistates = ($form['destination_is_multistates'] == 'on');
+	else
+		$config->destination_is_multistates = false;
     $config->save();
 
     // jobboard config

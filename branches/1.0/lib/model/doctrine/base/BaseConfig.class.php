@@ -12,8 +12,10 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @property integer $max_age
  * @property string $origin
  * @property integer $origin_radius
+ * @property boolean $origin_is_multistates
  * @property string $destination
  * @property integer $destination_radius
+ * @property boolean $destination_is_multistates
  * @property integer $loads_type
  * @property double $length
  * @property double $weight
@@ -25,40 +27,44 @@ Doctrine_Manager::getInstance()->bindComponent('Config', 'doctrine');
  * @property Doctrine_Collection $JobboardConfigs
  * @property Doctrine_Collection $ConfigTrucks
  * 
- * @method integer             getId()                 Returns the current record's "id" value
- * @method string              getName()               Returns the current record's "name" value
- * @method integer             getMaxAge()             Returns the current record's "max_age" value
- * @method string              getOrigin()             Returns the current record's "origin" value
- * @method integer             getOriginRadius()       Returns the current record's "origin_radius" value
- * @method string              getDestination()        Returns the current record's "destination" value
- * @method integer             getDestinationRadius()  Returns the current record's "destination_radius" value
- * @method integer             getLoadsType()          Returns the current record's "loads_type" value
- * @method double              getLength()             Returns the current record's "length" value
- * @method double              getWeight()             Returns the current record's "weight" value
- * @method date                getFromDate()           Returns the current record's "from_date" value
- * @method date                getToDate()             Returns the current record's "to_date" value
- * @method integer             getFrequence()          Returns the current record's "frequence" value
- * @method integer             getType()               Returns the current record's "type" value
- * @method datetime            getLastExecutedAt()     Returns the current record's "last_executed_at" value
- * @method Doctrine_Collection getJobboardConfigs()    Returns the current record's "JobboardConfigs" collection
- * @method Doctrine_Collection getConfigTrucks()       Returns the current record's "ConfigTrucks" collection
- * @method Config              setId()                 Sets the current record's "id" value
- * @method Config              setName()               Sets the current record's "name" value
- * @method Config              setMaxAge()             Sets the current record's "max_age" value
- * @method Config              setOrigin()             Sets the current record's "origin" value
- * @method Config              setOriginRadius()       Sets the current record's "origin_radius" value
- * @method Config              setDestination()        Sets the current record's "destination" value
- * @method Config              setDestinationRadius()  Sets the current record's "destination_radius" value
- * @method Config              setLoadsType()          Sets the current record's "loads_type" value
- * @method Config              setLength()             Sets the current record's "length" value
- * @method Config              setWeight()             Sets the current record's "weight" value
- * @method Config              setFromDate()           Sets the current record's "from_date" value
- * @method Config              setToDate()             Sets the current record's "to_date" value
- * @method Config              setFrequence()          Sets the current record's "frequence" value
- * @method Config              setType()               Sets the current record's "type" value
- * @method Config              setLastExecutedAt()     Sets the current record's "last_executed_at" value
- * @method Config              setJobboardConfigs()    Sets the current record's "JobboardConfigs" collection
- * @method Config              setConfigTrucks()       Sets the current record's "ConfigTrucks" collection
+ * @method integer             getId()                         Returns the current record's "id" value
+ * @method string              getName()                       Returns the current record's "name" value
+ * @method integer             getMaxAge()                     Returns the current record's "max_age" value
+ * @method string              getOrigin()                     Returns the current record's "origin" value
+ * @method integer             getOriginRadius()               Returns the current record's "origin_radius" value
+ * @method boolean             getOriginIsMultistates()        Returns the current record's "origin_is_multistates" value
+ * @method string              getDestination()                Returns the current record's "destination" value
+ * @method integer             getDestinationRadius()          Returns the current record's "destination_radius" value
+ * @method boolean             getDestinationIsMultistates()   Returns the current record's "destination_is_multistates" value
+ * @method integer             getLoadsType()                  Returns the current record's "loads_type" value
+ * @method double              getLength()                     Returns the current record's "length" value
+ * @method double              getWeight()                     Returns the current record's "weight" value
+ * @method date                getFromDate()                   Returns the current record's "from_date" value
+ * @method date                getToDate()                     Returns the current record's "to_date" value
+ * @method integer             getFrequence()                  Returns the current record's "frequence" value
+ * @method integer             getType()                       Returns the current record's "type" value
+ * @method datetime            getLastExecutedAt()             Returns the current record's "last_executed_at" value
+ * @method Doctrine_Collection getJobboardConfigs()            Returns the current record's "JobboardConfigs" collection
+ * @method Doctrine_Collection getConfigTrucks()               Returns the current record's "ConfigTrucks" collection
+ * @method Config              setId()                         Sets the current record's "id" value
+ * @method Config              setName()                       Sets the current record's "name" value
+ * @method Config              setMaxAge()                     Sets the current record's "max_age" value
+ * @method Config              setOrigin()                     Sets the current record's "origin" value
+ * @method Config              setOriginRadius()               Sets the current record's "origin_radius" value
+ * @method Config              setOriginIsMultistates()        Sets the current record's "origin_is_multistates" value
+ * @method Config              setDestination()                Sets the current record's "destination" value
+ * @method Config              setDestinationRadius()          Sets the current record's "destination_radius" value
+ * @method Config              setDestinationIsMultistates()   Sets the current record's "destination_is_multistates" value
+ * @method Config              setLoadsType()                  Sets the current record's "loads_type" value
+ * @method Config              setLength()                     Sets the current record's "length" value
+ * @method Config              setWeight()                     Sets the current record's "weight" value
+ * @method Config              setFromDate()                   Sets the current record's "from_date" value
+ * @method Config              setToDate()                     Sets the current record's "to_date" value
+ * @method Config              setFrequence()                  Sets the current record's "frequence" value
+ * @method Config              setType()                       Sets the current record's "type" value
+ * @method Config              setLastExecutedAt()             Sets the current record's "last_executed_at" value
+ * @method Config              setJobboardConfigs()            Sets the current record's "JobboardConfigs" collection
+ * @method Config              setConfigTrucks()               Sets the current record's "ConfigTrucks" collection
  * 
  * @package    emc
  * @subpackage model
@@ -92,6 +98,11 @@ abstract class BaseConfig extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => false,
              ));
+        $this->hasColumn('origin_is_multistates', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => false,
+             'default' => false,
+             ));
         $this->hasColumn('destination', 'string', 255, array(
              'type' => 'string',
              'notnull' => false,
@@ -100,6 +111,11 @@ abstract class BaseConfig extends sfDoctrineRecord
         $this->hasColumn('destination_radius', 'integer', null, array(
              'type' => 'integer',
              'notnull' => false,
+             ));
+        $this->hasColumn('destination_is_multistates', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => false,
+             'default' => false,
              ));
         $this->hasColumn('loads_type', 'integer', null, array(
              'type' => 'integer',
