@@ -40,7 +40,7 @@ class TruckersedgeGenerator
 		$client = new WebFormClient();
 		
 		$config = Doctrine_Core::getTable('Config')->find($this->config_id);
-		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date(DATE_ISO8601));
+		$client->setLogPrefix(dirname(dirname(dirname(dirname(__FILE__)))).'/log/'.$this->jobboard_name.' '.date("Y-m-d H-i-s O", time()));
 		if (!$config) {
 			$notify_error = new NotifyError("Truckeredge - Config not found\n");
 			$notify_error->execute();

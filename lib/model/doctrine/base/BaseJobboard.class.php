@@ -14,24 +14,27 @@ Doctrine_Manager::getInstance()->bindComponent('Jobboard', 'doctrine');
  * @property string $address
  * @property string $username
  * @property string $password
+ * @property boolean $multistates_supported
  * @property Doctrine_Collection $Configs
  * 
- * @method integer             getId()             Returns the current record's "id" value
- * @method string              getAlias()          Returns the current record's "alias" value
- * @method string              getName()           Returns the current record's "name" value
- * @method string              getGeneratorName()  Returns the current record's "generator_name" value
- * @method string              getAddress()        Returns the current record's "address" value
- * @method string              getUsername()       Returns the current record's "username" value
- * @method string              getPassword()       Returns the current record's "password" value
- * @method Doctrine_Collection getConfigs()        Returns the current record's "Configs" collection
- * @method Jobboard            setId()             Sets the current record's "id" value
- * @method Jobboard            setAlias()          Sets the current record's "alias" value
- * @method Jobboard            setName()           Sets the current record's "name" value
- * @method Jobboard            setGeneratorName()  Sets the current record's "generator_name" value
- * @method Jobboard            setAddress()        Sets the current record's "address" value
- * @method Jobboard            setUsername()       Sets the current record's "username" value
- * @method Jobboard            setPassword()       Sets the current record's "password" value
- * @method Jobboard            setConfigs()        Sets the current record's "Configs" collection
+ * @method integer             getId()                    Returns the current record's "id" value
+ * @method string              getAlias()                 Returns the current record's "alias" value
+ * @method string              getName()                  Returns the current record's "name" value
+ * @method string              getGeneratorName()         Returns the current record's "generator_name" value
+ * @method string              getAddress()               Returns the current record's "address" value
+ * @method string              getUsername()              Returns the current record's "username" value
+ * @method string              getPassword()              Returns the current record's "password" value
+ * @method boolean             getMultistatesSupported()  Returns the current record's "multistates_supported" value
+ * @method Doctrine_Collection getConfigs()               Returns the current record's "Configs" collection
+ * @method Jobboard            setId()                    Sets the current record's "id" value
+ * @method Jobboard            setAlias()                 Sets the current record's "alias" value
+ * @method Jobboard            setName()                  Sets the current record's "name" value
+ * @method Jobboard            setGeneratorName()         Sets the current record's "generator_name" value
+ * @method Jobboard            setAddress()               Sets the current record's "address" value
+ * @method Jobboard            setUsername()              Sets the current record's "username" value
+ * @method Jobboard            setPassword()              Sets the current record's "password" value
+ * @method Jobboard            setMultistatesSupported()  Sets the current record's "multistates_supported" value
+ * @method Jobboard            setConfigs()               Sets the current record's "Configs" collection
  * 
  * @package    emc
  * @subpackage model
@@ -77,6 +80,11 @@ abstract class BaseJobboard extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => false,
              'length' => 255,
+             ));
+        $this->hasColumn('multistates_supported', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => false,
+             'default' => false,
              ));
     }
 
