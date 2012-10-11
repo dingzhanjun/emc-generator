@@ -1,12 +1,12 @@
 body
 {
-	color:#030824;
-	background:url("/images/body-strip.gif") repeat-x fixed 0 365px #0B2743;
+	color:#000000;
+	background:url("/images/body-strip.gif") repeat-x fixed 0 365px #91c9d8;
 }
 
 body a
 {
-	color:#030824;
+	color:#000000;
 	font-weight:bold;
 }
 
@@ -239,8 +239,8 @@ h1
 {
 	display:none;
 	font-weight:bold;
-	font-size:12px;
-	color:#172259;
+	font-size:13px;
+	color:#000000;
 	position:absolute;
 }
 
@@ -258,7 +258,7 @@ h1
 	display:block;
 	position:absolute;
 	bottom:135px;
-	font-size:12px;
+	font-size:13px;
 	width:128px;
 	text-align:center;
 	font-weight:bold;
@@ -267,12 +267,12 @@ h1
 
 .backend_form input[type=text], .backend_form textarea, .backend_form select, .sf_admin_filter input[type=text], .sf_admin_filter textarea, .sf_admin_filter select
 {
-	padding:3px;
+	padding:7px;
 	border:1px solid #ccc;
 	background:#fff;
-	color:#030824;
+	color:#000000;
 	width:200px;
-	font-size:12px;
+	font-size:13px;
 }
 
 .backend_form select, .sf_admin_filter select
@@ -303,12 +303,12 @@ h1
 
 .backend_form input[type=submit], .backend_form input[type=button], .backend_form input[type=reset], .sf_admin_filter input[type=submit], .sf_admin_filter input[type=button], .sf_admin_filter input[type=reset], .btn a
 {
-	padding:3px 7px;
-	border:1px solid #172259;
-	background:#172259;
+	padding:5px 15px;
+	border:1px solid #000000;
+	background:#000000;
 	color:#fff;
 	font-weight:bold;
-	font-size:12px;
+	font-size:13px;
 	cursor:pointer;
 	display:block;
 	float:left;
@@ -323,7 +323,7 @@ h1
 
 .backend_form input[type=submit]:hover, .backend_form input[type=button]:hover, .backend_form input[type=reset]:hover, .sf_admin_filter input[type=submit]:hover, .sf_admin_filter input[type=button]:hover, .sf_admin_filter input[type=reset]:hover, .btn a:hover
 {
-	border:1px solid #172259;
+	border:1px solid #000000;
 }
 
 .backend_form
@@ -335,7 +335,7 @@ h1
 {
 	padding:5px;
 	text-align:left;
-	font-size:12px;
+	font-size:13px;
 }
 
 .filter_form table
@@ -348,10 +348,10 @@ h1
 {
 	padding:5px 5px;
 	font-size:10px;
-	border-top:1px solid #172259;
-	border-bottom:1px solid #172259;
-	border-left:1px dotted #172259;
-	border-right:1px dotted #172259;
+	border-top:1px solid #666;
+	border-bottom:1px solid #666;
+	border-left:1px dotted #666;
+	border-right:1px dotted #666;
 }
 
 .filter_form tr.light
@@ -367,7 +367,7 @@ h1
 .filter_form th
 {
 	text-align:center;
-	background:#172259;
+	background:#333;
 	color:#fff;
 	font-size:11px;
 }
@@ -384,7 +384,7 @@ h1
 
 h1
 {
-	color:#172259;
+	color:#000000;
 }
 
 #signout
