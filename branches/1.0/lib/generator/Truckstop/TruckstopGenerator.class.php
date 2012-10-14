@@ -343,7 +343,7 @@ class TruckstopGenerator
     			$tag['search']['ctl00_ContentPlaceHolder_originDestinationControl_cityStateOrigin_comboCountry_ClientState'] = '{"logEntries":[],"value":"USA","text":"USA","enabled":true,"checkedIndices":[]}';
     			$origin = explode(",", $config->origin);
     			if (sizeof($origin) <= 2){ // simple state
-    				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = strtoupper(trim($origin[0]));
+    				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textCity'] = trim($origin[0]);
     				$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateOrigin$textState'] = strtoupper(trim($origin[1]));
     			} else { // multiple states
     				
@@ -361,7 +361,7 @@ class TruckstopGenerator
     			if ($config->destination) {
     				$destination = explode(",", $config->destination);
     				if (sizeof($destination) <= 2) {
-    					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'] = strtoupper(trim($destination[0]));
+    					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textCity'] = trim($destination[0]);
     					$tag['search']['ctl00$ContentPlaceHolder$originDestinationControl$cityStateDestination$textState'] = strtoupper(trim($destination[1]));
     				} else { // TODO multiple states
     				
@@ -380,17 +380,34 @@ class TruckstopGenerator
     				
     			$tag['search']['ctl00$ContentPlaceHolder$ucCriteria$radComboSize'] = ($config->loads_type == 0 ? 'All' : ($config->loads_type == 1 ? 'Full' : 'Part'));
     			$tag['search']['ctl00$ContentPlaceHolder$ucLiteEquipmentTypes$listboxEquipment'] = "12"; // Flatbed by default, it's quiet hard to process mapping now, TODO mapping with our trucks list
-    			foreach ($tag['search'] as $key => $value)
-    			    echo $key.':'.$value."\n";
     			$client->fill($tag['search']);
     			$client->post('http://truckstop.com/Lite/Searches/SuperSearch.aspx');
+    			// NEW: post to GetLoadbyCriteria to have searching results
+    			preg_match('#searchCriteria = "([^"]*)#', $client->getBody(), $match);
+    			$searchingCriteria = $match[1];
+    			$data = array("options" => array("pageIndex" => 1, "size" => 200, "orderBy" => array(array("field" => "Age", "dir" => "asc"))), "criteria" => $searchingCriteria);
+    			$data = json_encode($data);
+    			$results = json_decode($client->put_json('http://truckstop.com/Services/Searching.svc/GetLoadsByCriteria', $data));
+    			//foreach ($results as $key => $result)
+    			    //echo $key;
+    			$results = (array) $results;
+    			$results = (array) $results["d"];
+    			$results = $results["SearchingResults"];
+    			foreach ($results as $key => $result) {
+    			    $results[$key] = (array) $result;
+    			    foreach ($results[$key] as $index => $item)
+    			        if ($index == 'DetailUrl') {
+    			            $client->get('http://truckstop.com/'.$item);
+    			            $results[$key]['detailHTML'] = $client->getBody();
+    			        }
+    			    $this->addLoads($results[$key]);
+    			}
             }
-		
             
 			//$this->create_log($jobboard->name.'-loads-'.date(DATE_ISO8601).'.html', $client->getBody());
 	
 			// parsing reponse
-			$doc = new DOMDocument();
+			/*$doc = new DOMDocument();
 			@$doc->loadHTML($client->getBody());
 			$xpath = new DOMXpath($doc);
 	
@@ -402,6 +419,7 @@ class TruckstopGenerator
 					$items[] = trim($td->nodeValue);
 				$this->addLoads($items);
 			}
+			*/
 		//} catch (Exception $ex) {
 		//	$notify_error = new NotifyError("Truckstop - Jobboard have been changed. Please contact to VTNS\n");
 		//	$notify_error->execute();

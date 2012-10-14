@@ -298,43 +298,43 @@ function sort_js(type, default_order) {
 				        echo "<td class='loads_".$indexKey."'>--</td>";
 					} elseif ($jobboard_alias == 'TS') {
 					    $indexKey = 1;
-					    echo "<td class='loads_".$indexKey."'>".$loads[4]."</td>"; // age
+					    echo "<td class='loads_".$indexKey."'>--</td>"; // no age
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>--</td>"; // no deadline
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[6]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads['PickUpDate']."</td>";
 					    
 					    $indexKey++;
 					    echo "<td class='loads_".$indexKey."'>Flatbed</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[5]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads['PartialOrFul']."</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[9]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads["OriginDistance"]."</td>"; // no deadhead
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[7].' '.$loads[8]."</td>"; 
+					    echo "<td class='loads_".$indexKey."'>".$loads['OriginCity'].' '.$loads['OriginState']."</td>"; 
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>-".($loads[20] == "0" ? $loads[21] : $loads[20])."-</td>";
+					    echo "<td class='loads_".$indexKey."'>-".$loads["Miles"]."-</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[10].' '.$loads[11]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads["DesiredDestination"]."</td>";
 					    
                         $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[12]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads["DestinationDistance"]."</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[2]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads["Phone"]."</td>";
 					    
 					    $indexKey++;
-					    echo "<td class='loads_".$indexKey."'>".$loads[18]."</td>";
+					    echo "<td class='loads_".$indexKey."'>".$loads["CompanyName"]."</td>";
 						
 						$indexKey++;
-				        echo "<td class='loads_".$indexKey."'>".$loads[13]."</td>";
+				        echo "<td class='loads_".$indexKey."'>".$loads["Payment"]."</td>";
                     }elseif ($jobboard_alias == 'CH') {
 					    $indexKey = 1;
 					    echo "<td class='loads_".$indexKey."'>--</td>"; // age
